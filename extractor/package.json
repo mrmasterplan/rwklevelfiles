@@ -1,0 +1,36 @@
+{
+  "name": "rwkextractor",
+  "version": "1.0.0",
+  "description": "Extract level files from RWK web version",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node",
+    "build": "tsc",
+    "bundle:win": "npm install && npm run build && npm prune --production && zip -r win.zip -xi node_modules -xi build -xi .env -xi run.cmd",
+    "dev": "ts-node src/app.ts",
+    "start": "node --unhandled-rejections=strict --inspect=5859 -r ts-node/register ./src/app.ts",
+    "start:watch": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrMasterplan/rwklevelfiles.git"
+  },
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/MrMasterplan/rwklevelfiles/issues"
+  },
+  "homepage": "https://github.com/MrMasterplan/rwklevelfiles#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@types/puppeteer": "^5.4.3",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "puppeteer": "^8.0.0",
+    "inquirer": "^8.0.0"
+  }
+}
