@@ -7,3 +7,6 @@ The "1" in the file name is the level name. I checked.
 The standard level with zero manual changes is 549 bytes plus the length of the level name.
 
 My first step is to create a NodeJS TypeScript project to pull this file out using puppeteer.
+The tool will be called the extractor for now and lives on the top level.
+
+I finished the level extractor. I can now start a collection of levels. to compare them.
