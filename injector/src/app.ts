@@ -79,15 +79,17 @@ import rimraf from "rimraf";
                 break;
             }
             default: {
-
+                console.log("Exiting..")
                 exit=true;
                 break;
             }
         }
         if(exit) break;
-        console.log("Exiting..")
+
 
     }
+
+
 
     rwk.close();
 })();
