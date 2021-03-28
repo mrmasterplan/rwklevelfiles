@@ -15,5 +15,11 @@ PROGRESS!!!
 
 I can now successfully back up the state of the entire database and restore it!!
 
-Also, the downloaded.kitty level can be copied to the custom level section and can be edited from there.
+Also, the downloaded.kitty level can be copied to the custom level section (/RAPTISOFT_SANDBOX/RWK/EXTRALEVELS64/)
+and can be edited from there. 
 See the screenshot which shows the level "lost cat" by delphine53.
+
+I have cleaned up the program for publishing.
+
+Note: To make the downloaded.kitty into an editable level, the file name needs to match the 
+level name in the file itself. In the future I may make a program that does this automatically.

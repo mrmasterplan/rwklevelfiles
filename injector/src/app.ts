@@ -4,11 +4,10 @@ import path from 'path'
 
 console.log("RWK Level injector v1.0")
 
-import puppeteer, {Page} from 'puppeteer'
 import inquirer from 'inquirer'
-import { IDBPDatabase } from 'idb';
 import fs from 'fs'
 import {RWKpage} from "./rwkpage";
+import rimraf from "rimraf";
 
 
 
@@ -19,52 +18,74 @@ import {RWKpage} from "./rwkpage";
 
     // Check if we have a DB to restore
     let DBfiles = fs.readdirSync(config.db.backup,{withFileTypes:true});
-    if(!DBfiles.length){
-        console.log("There is no database backup saved.");
-        await rwk.load_full();
-        await inquirer.prompt([{ type: 'input', name: 'ready', message: "Is the game to create a backup DB?" }]);
 
-        // dump the DB
-        const allkeys = await rwk.db_getAllKeys();
-        for(let i=0; i<allkeys.length; i++) {
-            const key = allkeys[i].toString();
-            console.log(key);
-            const obj = await rwk.db_getKey(key);
-            //console.log(obj);
-            const filename = config.db.backup + '/' + key.replace(config.db.name, '');
-
-            const dir = path.dirname(filename);
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir, {recursive: true});
-            }
-            fs.writeFile(filename + '.json', JSON.stringify(obj), (err) => {
-                if (err) throw err;
-            });
-        }
-    }else{
+    if(DBfiles.length){
         // restore the DB
-        console.log(DBfiles)
+        console.log("DB backup found.")
         await rwk.restoreDB(config.db.backup);
-        //await inquirer.prompt([{ type: 'input', name: 'ready', message: "DB restored?" }]);
-
+    }else{
+        console.log("No DB backup found.")
     }
 
     // resotre the DB
     await rwk.load_full();
 
     while(true) {
-        const level_name = (await inquirer.prompt([{ type: 'input', name: 'ready', message: "What is your level called? (Blank to quit)",  }])).ready;
-        if(!level_name) break;
 
-        const level = await rwk.db_getKey(`/RAPTISOFT_SANDBOX/RWK/EXTRALEVELS64/${level_name}.kitty`);
+        const next_action = (await inquirer.prompt([{ type: 'input', name: 'ready', message: "(e)xtract, (i)nject, (s)creenshot, (q)uit?",  }])).ready;
+        let exit = false;
+        switch(next_action) {
+            case 'e': {
+                // extract
+                console.log(`now saving DB backup to ${config.db.backup}`)
+                //clear the backup
+                rimraf.sync(config.db.backup + '/*');
 
-        fs.writeFile(`levels/${level_name}.kitty`,level.contents!,(err)=>{ if(err) throw err;});
-        delete level.contents;
+                // dump the DB
+                const allkeys = await rwk.db_getAllKeys();
+                for (let i = 0; i < allkeys.length; i++) {
+                    const key = allkeys[i].toString();
+                    console.log(key);
+                    const obj = await rwk.db_getKey(key);
+                    //console.log(obj);
+                    const filename = config.db.backup + '/' + key.replace(config.db.name, '');
 
-        console.log(level);
+                    const dir = path.dirname(filename);
+                    if (!fs.existsSync(dir)) {
+                        fs.mkdirSync(dir, {recursive: true});
+                    }
+                    fs.writeFile(filename + '.json', JSON.stringify(obj), (err) => {
+                        if (err) throw err;
+                    });
+                }
 
-        await inquirer.prompt([{ type: 'input', name: 'ready', message: "Ready for screenshot?",  }]);
-        await rwk.screenshot(`levels/${level_name}.png`);
+                break;
+            }
+            case 'i': {
+                //inject
+                console.log(`Now restarting and restoring backup from ${config.db.backup}`)
+
+                await rwk.load_minimal();
+                await rwk.restoreDB(config.db.backup);
+                await rwk.load_full();
+
+                break;
+            }
+            case 's': {
+                //screenshot
+                const path = `${config.screenshots_dir}/${new Date().toISOString().replace(/:/,'.')}.png`;
+                console.log(`Saving screenshot ${path}`);
+                await rwk.screenshot(path);
+                break;
+            }
+            default: {
+
+                exit=true;
+                break;
+            }
+        }
+        if(exit) break;
+        console.log("Exiting..")
 
     }
 

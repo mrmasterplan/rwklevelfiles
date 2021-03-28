@@ -42,14 +42,13 @@ export class RWKpage {
     async load_full(){
         await this.page?.goto(config.rwk_url);
 
+
         // remove all the popups and adverts
         let div_selector_to_remove= "#cmpbox";
-        await this.page?.evaluate((sel) => {
-            var elements = document.querySelectorAll(sel);
-            for(var i=0; i< elements.length; i++){
-                elements[i].parentNode.removeChild(elements[i]);
-            }
-        }, div_selector_to_remove)
+        await this.page!.waitForSelector(div_selector_to_remove)
+        await this.page!.$eval(div_selector_to_remove,el=> {
+            el.parentNode!.removeChild(el)
+        });
 
         return this.prepare_idb();
     }
@@ -125,8 +124,15 @@ export class RWKpage {
                     obj.contents = new constructor(arr.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)))
                 }
             }
-            // @ts-ignore
-            await db.add(config.db.filestore, obj,key);
+            try{
+                // @ts-ignore
+                await db.put(config.db.filestore, obj,key);
+
+            }catch (e){
+                // @ts-ignore
+                await db.add(config.db.filestore, obj,key);
+
+            }
             // @ts-ignore
         }, config, key, obj_h);
 
