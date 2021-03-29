@@ -15,9 +15,29 @@ const config = {
     stats: {
         dir: process.env.RWK_STATS_DIR || "statistics",
         delimiter: process.env.RWK_STATS_DELIMITER || ","
+    },
+
+    levels: {
+        bin_dir:"levels"
+    },
+
+    tile_library:{
+        url:{
+            base:"http://www.raptisoft.com/rwk/tutorial/images/tiles/",
+            name_base: "IMG_",
+            extension:".png",
+            decimals:3,
+        },
+        lowest_index:1,
+        highest_index:74,
+        library_dir: "tiles",
+
+        // these do not exist and we do not want to hit non-existing urls. That makes admins suspicious.
+        blacklisted_indices:[30,37],
+        tile_width:40,
+        tile_height:40,
     }
 }
-
 
 
 if (!fs.existsSync(config.screenshots_dir)){

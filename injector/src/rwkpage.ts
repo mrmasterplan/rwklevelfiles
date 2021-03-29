@@ -4,6 +4,9 @@ import config from "./config";
 import {IDBPDatabase} from "idb";
 import * as fs from "fs";
 import { StatsStore} from "./sniffer";
+import rimraf from "rimraf";
+import path from "path";
+import {Level_analysis} from "./level_analysis";
 
 interface DB_file_browser {
     timestamp:any,
@@ -11,8 +14,8 @@ interface DB_file_browser {
     contents?:Int8Array|Uint8Array,
 }
 
-interface DB_file_hex {
-    timestamp:any,
+export interface DB_file_hex {
+    timestamp:number,
     mode:number,
     contents?:string,
     content_type?:string,
@@ -25,10 +28,15 @@ export class RWKpage {
 
     stats: StatsStore
 
+    anlyzer: Level_analysis
+
     constructor() {
         this.stats=new StatsStore()
+        this.anlyzer = new Level_analysis();
     }
     async ready(){
+        await this.anlyzer.ready();
+
         this.browser = await puppeteer.launch({headless: false});
         this.page = (await this.browser.pages())[0];
 
@@ -59,7 +67,8 @@ export class RWKpage {
     }
 
     async prepare_idb(){
-        //found a good talk about IndexedDB here: https://filipvitas.medium.com/indexeddb-with-promises-and-async-await-3d047dddd313
+        // found a good talk about IndexedDB here: https://filipvitas.medium.com/indexeddb-with-promises-and-async-await-3d047dddd313
+        // this injects a script needed by all the db interactions below
         return this.page!.addScriptTag({ url: 'https://unpkg.com/idb/build/iife/index-min.js' });
     }
 
@@ -89,7 +98,7 @@ export class RWKpage {
             db = await idb.openDB(config.db.name);
 
             const obj= await db.get(config.db.filestore, key);
-            obj.timestamp=+obj.timestamp
+            obj.timestamp= +obj.timestamp
             if(typeof obj.contents != "undefined"){
                 obj.content_type = (obj.contents.constructor === Uint8Array)?"Uint8Array":"Int8Array";
                 obj.contents = buf2hex(obj.contents);
@@ -149,6 +158,13 @@ export class RWKpage {
         await elements[0].screenshot({path})
     }
 
+    DB_avaialble(){
+        let DBfiles = fs.readdirSync(config.db.backup,{withFileTypes:true});
+
+        if(DBfiles.length) return true;
+        return false;
+    }
+
     async restoreDB(path:string,prefix?:string){
         if(!prefix) prefix = config.db.name;
 
@@ -168,10 +184,31 @@ export class RWKpage {
             }
         }
 
-        //         // upload an empty object
-        //         const obj = { timestamp: {}, mode: 16895 }
-        //         this.d
-        //     }
-        // }
+
+    }
+
+    async backupDB(dbpath:string){
+        //clear the backup
+        rimraf.sync(dbpath + '/*');
+
+        // dump the DB
+        const allkeys = await this.db_getAllKeys();
+        for (let i = 0; i < allkeys.length; i++) {
+            const key = allkeys[i].toString();
+            //console.log(key);
+            const obj = await this.db_getKey(key);
+            //console.log(obj);
+            const filename = dbpath + '/' + key.replace(config.db.name, '');
+
+            const dir = path.dirname(filename);
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, {recursive: true});
+            }
+            fs.writeFile(filename + '.json', JSON.stringify(obj), (err) => {
+                if (err) throw err;
+            });
+
+
+        }
     }
 }

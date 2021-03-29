@@ -18,18 +18,23 @@ To run type
 
 The program looks for a database to restore during startup. Otherwise startup is normal.
 You now have the option to 
-- extract
-- inject
-- screenshot
+- start the game which gives you new options:
+    - extract
+    - inject
+    - screenshot
+- analyze the saved .kitty files. This also generates the map.
 - quit
 
-each option is selected by entering the first letter. The default is to quit.
+each option is selected by entering the first letter.
 
 Extraction saves every item from the database in a file on your machine under the folder "db".
 You can view and modify the files here.
 
 Injection restores the database to the browser from you local backup. 
 Injection requires reloading the game which this program will do for you.
+
+Analysis takes the database backup, looks for .kitty files, saves them in binary in the levels/ folder
+and tries to generate a map from the files.
 
 # Background Functions
 
