@@ -11,6 +11,11 @@ const config = {
         backup: process.env.RWK_FULL_DB || "db",
     },
     screenshots_dir: process.env.RWK_SCREENSHOTS || "screenshots",
+
+    stats: {
+        dir: process.env.RWK_STATS_DIR || "statistics",
+        delimiter: process.env.RWK_STATS_DELIMITER || ","
+    }
 }
 
 
@@ -21,6 +26,10 @@ if (!fs.existsSync(config.screenshots_dir)){
 
 if (!fs.existsSync(config.db.backup)){
     fs.mkdirSync(config.db.backup);
+}
+
+if (!fs.existsSync(config.stats.dir)){
+    fs.mkdirSync(config.stats.dir);
 }
 
 export default config;

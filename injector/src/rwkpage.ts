@@ -3,6 +3,7 @@ import puppeteer, {Browser, Page} from 'puppeteer'
 import config from "./config";
 import {IDBPDatabase} from "idb";
 import * as fs from "fs";
+import { StatsStore} from "./sniffer";
 
 interface DB_file_browser {
     timestamp:any,
@@ -22,12 +23,16 @@ export class RWKpage {
     browser:Browser | undefined;
     page: Page | undefined;
 
+    stats: StatsStore
+
     constructor() {
+        this.stats=new StatsStore()
     }
     async ready(){
         this.browser = await puppeteer.launch({headless: false});
         this.page = (await this.browser.pages())[0];
 
+        this.stats.sniff(this.page);
     }
 
     async load_minimal(){

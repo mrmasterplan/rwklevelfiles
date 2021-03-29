@@ -31,5 +31,17 @@ You can view and modify the files here.
 Injection restores the database to the browser from you local backup. 
 Injection requires reloading the game which this program will do for you.
 
+# Background Functions
 
+Any time you view a page in the game that has levels in it, this program will pull the level
+statistics and save them in csv files. Note: This program overwrites the csv files every
+time you restart the program. So back them up somewhere else.
+
+Instructions: To collect statistics on all the levels of one author, you need to look the
+levels up in-game and scroll through the entire list to the bottom. Once you did this, the
+program will have collected all statistics on that author and saved them as csv.
+
+# Configuration
+
+You can change som parameters in the file ".env".
 

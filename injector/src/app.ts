@@ -10,8 +10,8 @@ import {RWKpage} from "./rwkpage";
 import rimraf from "rimraf";
 
 
-
 (async () => {
+
     const rwk = new RWKpage();
     await rwk.ready();
     await rwk.load_minimal();
@@ -29,6 +29,8 @@ import rimraf from "rimraf";
 
     // resotre the DB
     await rwk.load_full();
+
+
 
     while(true) {
 
