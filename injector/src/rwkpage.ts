@@ -34,10 +34,10 @@ export class RWKpage {
         this.stats=new StatsStore()
         this.anlyzer = new Level_analysis();
     }
-    async ready(){
+    async ready(headless=false){
         await this.anlyzer.ready();
 
-        this.browser = await puppeteer.launch({headless: false});
+        this.browser = await puppeteer.launch({headless});
         this.page = (await this.browser.pages())[0];
 
         this.stats.sniff(this.page);
@@ -152,6 +152,21 @@ export class RWKpage {
 
     }
 
+    async  clickOnCoord(coords:{x:number,y:number}) {
+        const element = await this.page!.$("#canvas");
+
+
+        const rect = await this.page!.evaluate(el => {
+            const { top, left, width, height } = el.getBoundingClientRect();
+            return { top, left, width, height };
+        }, element);
+
+        // Use given position or default to center
+        const _x = coords.x !== null ? coords.x : rect.width / 2;
+        const _y = coords.y !== null ? coords.y : rect.height / 2;
+
+        await this.page!.mouse.click(rect.left + _x, rect.top + _y);
+    }
     async screenshot(path:string){
         const elements = await this.page!.$$("#canvas");
 

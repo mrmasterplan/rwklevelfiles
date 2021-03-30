@@ -9,6 +9,7 @@ import fs from 'fs'
 import {RWKpage} from "./rwkpage";
 import rimraf from "rimraf";
 import {Level_analysis} from "./level_analysis";
+import {Fuzzer} from "./fuzzer";
 
 interface CLI_option {
     description:string,
@@ -63,7 +64,7 @@ class CLI {
                 this.options['s']={
                     description:"(s)creenshot",
                     action:async ()=>{
-                        const path = `${config.screenshots_dir}/${new Date().toISOString().replace(/:/,'.')}.png`;
+                        const path = `${config.screenshots_dir}/${new Date().toISOString().replace(/:/g,'.')}.png`;
                         console.log(`Saving screenshot ${path}`);
                         await this.rwk.screenshot(path);
                     }
@@ -81,6 +82,14 @@ class CLI {
                 await this.anlzr.parse_backup();
             }
         }
+        this.options['f']={
+            description: "(fuzz)",
+            action: async ()=>{
+                const fuzz = new Fuzzer(this.rwk);
+                await fuzz.fuzz();
+            }
+        }
+
     }
 
 

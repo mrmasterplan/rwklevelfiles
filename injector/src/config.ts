@@ -36,6 +36,18 @@ const config = {
         blacklisted_indices:[30,37],
         tile_width:40,
         tile_height:40,
+    },
+
+    fuzzer: {
+        dir: "fuzzer",
+        screen:{
+            dir:"screens",
+            start:"startscreen.png",
+        },
+        tiles:"tiles",
+        fuzz_file: process.env.RWK_FUZZ_FILE|| "fuzz.json",
+        db: "db",
+        headless:true,
     }
 }
 

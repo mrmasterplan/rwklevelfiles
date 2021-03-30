@@ -24,14 +24,18 @@ export class Tile_library {
 
     tile_of(i:number){
         let path = this.lib[i]
-        // if(!path){
-        //     console.error(`index ${i.toString(16)} was a miss trying ${(i&0x7f).toString(16)}`)
-        //     path = this.lib[i&0x7f]
-        // }
-        // if(!path){
-        //     console.error(`index ${i} was a miss as was ${i&0x7f}.`)
-        //
-        // }
+        if(!path) {
+            const buf = Buffer.alloc(4)
+            buf.writeUInt32LE(i)
+            const tile_file = `${config.fuzzer.dir}/${config.fuzzer.tiles}/${buf.toString('hex')}.png`
+            if(fs.existsSync(tile_file)){
+                path = tile_file;
+                this.lib[i]=tile_file
+            }else{
+                console.log(`Unknown tile encoding ${buf.toString('hex')}`)
+            }
+        }
+
 
         return path;
     }

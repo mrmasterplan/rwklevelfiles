@@ -26,6 +26,8 @@
     "@types/dotenv": "^8.2.0",
     "@types/inquirer": "^7.3.1",
     "@types/node": "^14.14.37",
+    "@types/pixelmatch": "^5.2.2",
+    "@types/pngjs": "^6.0.0",
     "@types/puppeteer": "^5.4.3",
     "@types/rimraf": "^3.0.0",
     "@types/xml-js": "^1.0.0",
@@ -39,6 +41,8 @@
     "dotenv": "^8.2.0",
     "idb": "^6.0.0",
     "inquirer": "^8.0.0",
+    "pixelmatch": "^5.2.1",
+    "pngjs": "^6.0.0",
     "puppeteer": "^8.0.0",
     "rimraf": "^3.0.2",
     "xml-js": "^1.6.11"
