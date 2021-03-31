@@ -17,12 +17,14 @@ To run type
 # Usage
 
 The program looks for a database to restore during startup. Otherwise startup is normal.
-You now have the option to 
+You now have these options. Each step is a prerequisite for the next
 - start the game which gives you new options:
     - extract
     - inject
     - screenshot
-- analyze the saved .kitty files. This also generates the map.
+- analyze the saved database level files. The results are saved in `levels/`.
+- fuzz takes screenshots of encoded tiles so that they can be used in map generation
+- make maps of the levels in the `levels/` folder.
 - quit
 
 each option is selected by entering the first letter.
