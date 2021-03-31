@@ -10,6 +10,7 @@ import {RWKpage} from "./rwkpage";
 import rimraf from "rimraf";
 import {Level_analysis} from "./level_analysis";
 import {Fuzzer} from "./fuzzer";
+import {MapMaker} from "./map_maker";
 
 interface CLI_option {
     description:string,
@@ -82,13 +83,24 @@ class CLI {
                 await this.anlzr.parse_backup();
             }
         }
+
         this.options['f']={
-            description: "(fuzz)",
+            description: "(f)uzz",
             action: async ()=>{
                 const fuzz = new Fuzzer(this.rwk);
                 await fuzz.fuzz();
             }
         }
+
+        this.options['m']={
+            description: "(m)ake maps",
+            action: async ()=>{
+                const mapm = new MapMaker();
+                await mapm.make_all();
+            }
+        }
+
+
 
     }
 

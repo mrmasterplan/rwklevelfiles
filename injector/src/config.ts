@@ -45,9 +45,11 @@ const config = {
             start:"startscreen.png",
         },
         tiles:"tiles",
+        special_tiles:"specials",
         fuzz_file: process.env.RWK_FUZZ_FILE|| "fuzz.json",
         db: "db",
-        headless:true,
+        sleep: 300,
+        headless:false,
     }
 }
 

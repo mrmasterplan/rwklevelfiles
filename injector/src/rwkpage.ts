@@ -69,7 +69,43 @@ export class RWKpage {
     async prepare_idb(){
         // found a good talk about IndexedDB here: https://filipvitas.medium.com/indexeddb-with-promises-and-async-await-3d047dddd313
         // this injects a script needed by all the db interactions below
-        return this.page!.addScriptTag({ url: 'https://unpkg.com/idb/build/iife/index-min.js' });
+
+        await this.page!.addScriptTag({ url: 'https://unpkg.com/idb/build/iife/index-min.js' });
+
+        //https://www.sqlpac.com/en/documents/javascript-listing-active-event-listeners.html
+        //window.onload = undefined
+        //document.body.onload = undefined
+        function listAllEventListeners() {
+            const allElements = Array.prototype.slice.call(document.querySelectorAll('*'));
+            allElements.push(document);
+            allElements.push(window);
+
+            const types = [];
+
+            for (let ev in window) {
+                if (/^on/.test(ev)) types[types.length] = ev;
+            }
+
+            let elements = [];
+            for (let i = 0; i < allElements.length; i++) {
+                const currentElement = allElements[i];
+                for (let j = 0; j < types.length; j++) {
+                    if (typeof currentElement[types[j]] === 'function') {
+                        if (currentElement.toString() ==='windows' && types[j].toString() ==='onload') currentElement[types[j]]=()=>{}
+                        if (currentElement.toString() ==='body' && types[j].toString() ==='onload') currentElement[types[j]]=()=>{}
+                        // elements.push({
+                        //     "node": currentElement,
+                        //     "type": types[j],
+                        //     "func": currentElement[types[j]].toString(),
+                        // });
+                    }
+                }
+            }
+
+            // return elements.sort(function(a,b) {
+            //     return a.type.localeCompare(b.type);
+            // });
+        }
     }
 
     async close(){
@@ -168,9 +204,16 @@ export class RWKpage {
         await this.page!.mouse.click(rect.left + _x, rect.top + _y);
     }
     async screenshot(path:string){
-        const elements = await this.page!.$$("#canvas");
+        const element = await this.page!.$("#canvas");
+        if(!element){
+            throw new Error('canvas missing')
+        }
 
-        await elements[0].screenshot({path})
+        element.evaluate(el=>{
+            el.setAttribute('style','width: 700px; cursor: default;')
+        })
+
+        await element.screenshot({path})
     }
 
     DB_avaialble(){

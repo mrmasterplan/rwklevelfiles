@@ -6,3 +6,6 @@ All together I should be able to go from 5 seconds per tile to maybe
 5 ms per tile, a speedup of up to 1000.
 
 Then I really just need to figure out the robot and kitty positions.
+
+
+Major update: Much faster
