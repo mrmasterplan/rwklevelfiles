@@ -2,7 +2,7 @@ import {Canvas, createCanvas, Image} from "canvas";
 import config from "./config";
 import fs from "fs";
 import {Level_analysis} from "./level_analysis";
-import * as buffer from "buffer";
+
 import {Tile_library} from "./tile_library";
 import {glob} from "glob";
 

@@ -9,6 +9,7 @@ export class Tile_library {
 
     constructor() {
         this.lib={};
+        this.download_tile_library()
     }
 
     async ready(){
@@ -20,20 +21,14 @@ export class Tile_library {
         if(!path) {
             const buf = Buffer.alloc(4)
             buf.writeUInt32LE(i)
-            const tile_file = `${config.fuzzer.dir}/${config.fuzzer.special_tiles}/${buf.toString('hex')}.png`
-            if(fs.existsSync(tile_file)){
-                path = tile_file;
-                this.lib[i]=tile_file
-            }
-        }
+            const tile_file_name =`${buf.toString('hex')}.png`
 
-        if(!path) {
-            const buf = Buffer.alloc(4)
-            buf.writeUInt32LE(i)
-            const tile_file = `${config.fuzzer.dir}/${config.fuzzer.tiles}/${buf.toString('hex')}.png`
-            if(fs.existsSync(tile_file)){
-                path = tile_file;
-                this.lib[i]=tile_file
+            if(fs.existsSync(`${config.tile_library.library_dir}/${tile_file_name}`)){
+                path = `${config.tile_library.library_dir}/${tile_file_name}`;
+                this.lib[i]=path
+            }else if(fs.existsSync(`${config.fuzzer.dir}/${config.fuzzer.tiles}/${tile_file_name}`)){
+                path = `${config.fuzzer.dir}/${config.fuzzer.tiles}/${tile_file_name}`
+                this.lib[i]=path
             }
         }
 
@@ -43,41 +38,46 @@ export class Tile_library {
         return path;
     }
 
-    // async download_tile_library(){
-    //     // this is downloaded unless already present.
-    //     // I don't want to include the tiles in the git repo so as not to break copyright.
-    //     if (!fs.existsSync(config.tile_library.library_dir)){
-    //         fs.mkdirSync(config.tile_library.library_dir);
-    //     }
-    //
-    //     for(let index = config.tile_library.lowest_index; index<=config.tile_library.highest_index; index++){
-    //         // don't hit the blacklisted ones.
-    //         if(config.tile_library.blacklisted_indices.indexOf(index)>=0) continue;
-    //
-    //         const local = this.path_of_tile(index);
-    //         //console.log(`Looking for tile ${index} at ${local}`)
-    //         if(!fs.existsSync(local)){
-    //             await new Promise((resolve,reject) => {
-    //                 const file = fs.createWriteStream(local);
-    //                 console.log(`Downloading for tile ${index} from ${this.url_of_index(index)}`)
-    //                 http.get(this.url_of_index(index), function(response) {
-    //                     response.pipe(file);
-    //                     // file.close();
-    //                     resolve(true);
-    //                 });
-    //             });
-    //         }
-    //
-    //         // now the file exists and we can load it into the memory library
-    //         // const img = new Image();
-    //         // img.onerror = err => {
-    //         //     console.error(err)
-    //         //     throw err
-    //         // }
-    //         // img.src=local;
-    //
-    //         this.lib[index-1] = local;
-    //
-    //     }
-    // }
+    async download_tile_library(){
+        // this is downloaded unless already present.
+        // I don't want to include the tiles in the git repo so as not to break copyright.
+        if (!fs.existsSync(config.tile_library.library_dir)){
+            fs.mkdirSync(config.tile_library.library_dir);
+        }
+
+        const tutorial_page:string = await new Promise((res,rej)=>http.request(config.tile_library.url.http_opts, (resp)=>{
+            let str:string = '';
+
+            //another chunk of data has been received, so append it to `str`
+            resp.on('data',  (chunk)=>{
+                str += chunk;
+            });
+
+            //the whole response has been received, so we just print it out here
+            resp.on('end',  ()=>{
+                res(str);
+            });
+        }).end());
+
+        const expr = new RegExp( config.tile_library.url.image_link_regex,'ig');
+        let result;
+        while((result = expr.exec(tutorial_page)) !== null) {
+            // console.log(`Found ${result.groups!.path} index ${+(result.groups!.index)}`)
+            const index= +(result.groups!.index);
+            const tile_path = result.groups!.path
+            const tile_file = `${config.tile_library.library_dir}/${(index-1).toString(16).padStart(2,'0')}000000.png`
+            const opts = config.tile_library.url.http_opts
+            this.lib[index-1] = tile_file; // a bit agressive, since we haven't downloaded yet, but I feel lazy
+            if(!fs.existsSync(tile_file)) {
+
+                const file = fs.createWriteStream(tile_file);
+                const url = `http://${opts.host}${opts.path}${tile_path}`
+                console.log(`Downloading for tile ${index} from ${url}`)
+                http.get(url, (response)=> {
+                    response.pipe(file);
+                });
+            }
+        }
+
+    }
 }

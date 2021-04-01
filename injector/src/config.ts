@@ -23,17 +23,16 @@ const config = {
 
     tile_library:{
         url:{
-            base:"http://www.raptisoft.com/rwk/tutorial/images/tiles/",
-            name_base: "IMG_",
-            extension:".png",
-            decimals:3,
+            // base:"http://www.raptisoft.com/rwk/tutorial/",
+            http_opts:{
+                host: "www.raptisoft.com",
+                path: "/rwk/tutorial/"
+            },
+            image_link_regex: '"(?<path>images/tiles/IMG_(?<index>\\d+?)\\.png)"', //make sure the path and index groups exist.
+
         },
-        lowest_index:1,
-        highest_index:74,
         library_dir: "tiles",
 
-        // these do not exist and we do not want to hit non-existing urls. That makes admins suspicious.
-        blacklisted_indices:[30,37],
         tile_width:40,
         tile_height:40,
     },

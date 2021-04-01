@@ -93,18 +93,12 @@ export class RWKpage {
                     if (typeof currentElement[types[j]] === 'function') {
                         if (currentElement.toString() ==='windows' && types[j].toString() ==='onload') currentElement[types[j]]=()=>{}
                         if (currentElement.toString() ==='body' && types[j].toString() ==='onload') currentElement[types[j]]=()=>{}
-                        // elements.push({
-                        //     "node": currentElement,
-                        //     "type": types[j],
-                        //     "func": currentElement[types[j]].toString(),
-                        // });
+
                     }
                 }
             }
 
-            // return elements.sort(function(a,b) {
-            //     return a.type.localeCompare(b.type);
-            // });
+
         }
     }
 
@@ -148,9 +142,7 @@ export class RWKpage {
     }
 
     async db_addKey(key:string, obj_h:DB_file_hex) {
-        // console.log("asked to put key, object:")
-        // console.log(key)
-        // console.log(obj_h)
+
 
         await this.page!.evaluate(async (config,key:string,obj_h:DB_file_hex) => {
 

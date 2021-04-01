@@ -17,14 +17,7 @@ const level_structure = {
     }
 }
 
-// extension to save binary levels
-// if(key.endsWith('.kitty')){
-//     const hexstring = obj.contents;
-//     // @ts-ignore
-//     const buf = Buffer.from(hexstring,'hex')
-//     this.anlyzer.analyze(buf);
-//
-// }
+
 
 export class CellGrid {
     public bytes_per_cell:number
@@ -150,14 +143,6 @@ export class Level_analysis {
         console.log(`block array size: ${grid.buf.length} bytes`)
         console.log(`level size without name or array is ${filesize - name.length - grid.buf.length}`)
 
-        // // create the map of the level
-        // let canvas: Canvas;
-        // try {
-        //     canvas = createCanvas(grid.cols * config.tile_library.tile_width, grid.rows * config.tile_library.tile_height)
-        // } catch (e) {
-        //     console.log(`unable to create canvas of size ${grid.cols * config.tile_library.tile_width}, ${grid.rows * config.tile_library.tile_height}`)
-        //     return
-        // }
 
         // cell block bytes
         const cell_array_file = fs.createWriteStream(`${config.levels.bin_dir}/${filename}.cells.txt`)
@@ -173,38 +158,16 @@ export class Level_analysis {
         for (let j = 0; j < grid.rows; j++) {
             for (let i = 0; i < grid.cols; i++) {
 
-                // const byte_offset = grid.offset + (j * grid.cols + i) * 4; //4 bytes per cell
-                // const cell_byte = buf.readUInt8(byte_offset) & 0x7f
-                //console.log(`cell index ${cell_byte}`)
-                // const img = this.tiles.tile_of(cell_byte);
-                // const full_cell_data = buf.readUInt32LE(byte_offset)
                 const full_cell_data = grid.getCellAsNumber(i,j)
 
                 // add to leaderboard
                 cell_values[full_cell_data]=true;
 
-                // const cell_type = full_cell_data
-                // // const cell_type = cell_byte; //full_cell_data % 100
-                // const path = this.tiles.tile_of(cell_type)
-                //
-                // if (!path) {
-                //     //console.log(`no tile data for cell(${i},${j}), type ${cell_type} byte offset is ${byte_offset}, buffer is ${buf.slice(byte_offset, byte_offset + 4)}`)
-                // }else {
-                //     const img = new Image()
-                //     img.onload = () => ccont.drawImage(img, i * config.tile_library.tile_width, j * config.tile_library.tile_height)
-                //     img.onerror = err => {
-                //         throw err
-                //     }
-                //     img.src = this.tiles.tile_of(cell_type)
-                // }
-                // // ccont.drawImage(img,i*config.tile_library.tile_width,j*config.tile_library.tile_height)
 
             }
 
             // write cell data as text array of integers
             for (let i = 0; i < grid.cols; i++) {
-                // const byte_offset = grid.offset + (j * grid.cols + i) * 4; //4 bytes per cell
-                // const full_cell_data = buf.readUInt32LE(byte_offset)
                 const full_cell_data = grid.getCellAsNumber(i,j)
 
                 await cell_array_file.write(full_cell_data.toString().padStart(9, '0') + "    ")
@@ -214,7 +177,6 @@ export class Level_analysis {
             // write cell data as text array of integers
             for (let i = 0; i < grid.cols; i++) {
                 const buf = grid.getCellAsBuff(i,j)
-                // const byte_offset = grid.offset + (j * grid.cols + i) * 4; //4 bytes per cell
 
                 await cell_array_file.write(buf.toString('hex').padStart(9, ' ') + "    ")
             }
@@ -230,15 +192,8 @@ export class Level_analysis {
             }
             await cell_array_file.write("\n\n\n");
         }
-        // canvas.getContext('2d').getImageData()
-        // ccont.putImageData({data:Uint8ClampedArray},0,0)
-        // fs.writeFileSync( `${config.levels.bin_dir}/${filename}.map.png`,canvas.toBuffer('image/png'))
 
         const all_values = Object.keys(cell_values).map(k=>+k);
         fs.writeFileSync( `${config.levels.bin_dir}/${filename}.fuzz.json`,JSON.stringify(all_values))
-        // const sort_values = all_values.sort((a,b)=>a<b?-1:a==b?0:1);
-        // console.log("Highest and lowest seen cell values:")
-        // console.log(sort_values.slice(0,80))
-        // console.log(sort_values.slice(-20))
     }
 }

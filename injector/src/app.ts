@@ -1,13 +1,11 @@
 
 import config from './config'
-import path from 'path'
 
-console.log("RWK Level injector v1.0")
+
+console.log("RWK Level injector v2.0")
 
 import inquirer from 'inquirer'
-import fs from 'fs'
 import {RWKpage} from "./rwkpage";
-import rimraf from "rimraf";
 import {Level_analysis} from "./level_analysis";
 import {Fuzzer} from "./fuzzer";
 import {MapMaker} from "./map_maker";
