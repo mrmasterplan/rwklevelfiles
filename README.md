@@ -22,6 +22,50 @@ I want to make use of puppeteer for nodejs to remote control the Chrome browser 
 
 # File structure
 
+What we know:
+- A level file is comprised of a header, the cell array, and a footer.
+- The serialization format does not use a table of contents. We know this because
+  the level name is a variable length string in the header and nothing else changes
+  when this name grows. All the following bytes just move along.
+- The file uses little endian byte ordering.
+- the cell array
+   - The cell array is saved row after row.
+   - The size of the array is recorded in the header that is before the array
+   - each cell is recorded in 4 bytes.
+   - for unpainted cells, the lowest 7 bits record all necessary information.
+     Below I will refer to the type-byte and the three paint-bytes, but note that
+     this is not correct, as we have seen.
+   - painted cells use all 4 bytes.
+   - some relationships exist between painted cells such as differences of +-1 in
+     the three high bytes referring to cells of adjacent orientations.
+   - there are cells with identical look and function, but different paint bytes.
+   - in some cases the paint information changes the type-byte, but not by single 
+     bit differences. That means that for painted cells the type can not reliably
+     be extracted from the type-byte.
+   - Hypotheses as to the variablility:
+      - maybe there is more information saved beyond the type and paint.
+      - maybe there are tiny differences in the optical apprearance and the game
+        intentionally randomizes them to make it more visually interesting.
+- the header
+   - The header is of fixed size besides the length of the level name.
+   - Contents of the header:
+      - the array width and height.
+      - the name
+      - level winnability (assumed)
+      - conveyor speed (assumed)
+      - level tags (assumed)
+- the footer 
+   - The level footer grows with the size of the level.
+   - We currently don't know how to read anything in the footer
+   - The footer contains (but we don't know how)
+      - Robot position
+      - kitty position
+      - links to the tunes that each of the music boxes refer to
+      - the radio callout texts
+   
+   
+  
+
 Hypotheses:
 1. The level is saved as a bitmap using one byte per cell. This seems like the simplest approach and is consistent with my understanding of the game mechanics (Doors, sad computer blocks, virus doors, etc.)
 2. I have no idea yet how paint might be saved in the level file.
