@@ -55,22 +55,11 @@ What we know:
       - conveyor speed (assumed)
       - level tags (assumed)
 - the footer 
-   - The level footer grows with the size of the level.
-   - We currently don't know how to read anything in the footer
-   - The footer contains (but we don't know how)
-      - Robot position
-      - kitty position
-      - links to the tunes that each of the music boxes refer to
-      - the radio callout texts
+  - after the end of the main cell array there follows immediately another array of 1 byte per cell
+    the contents of this array is assumed to relate to the cells, but it is not clear what it contains.
+  - following this, there is a structure that describes the callout texts. each callout is referenced by coordinate in the cell array
+  - the next section contains the robot and kitty positions. 
+  - the final section contains the links to the music.
    
    
   
-
-Hypotheses:
-1. The level is saved as a bitmap using one byte per cell. This seems like the simplest approach and is consistent with my understanding of the game mechanics (Doors, sad computer blocks, virus doors, etc.)
-2. I have no idea yet how paint might be saved in the level file.
-3. I expect that there are some details that are saved as fixed metadata in the level file. These include
-    - Robot position
-    - kitty position
-    - conveyor speed
-4. I have no idea how music might be saved in the level file. 

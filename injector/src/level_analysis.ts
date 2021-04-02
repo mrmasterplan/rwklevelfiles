@@ -17,6 +17,65 @@ const level_structure = {
     }
 }
 
+export class PostGrid {
+    public bytes_per_cell:number
+
+    constructor(public cols:number, public rows:number,public buf:Buffer, public offset:number) {
+        this.bytes_per_cell=1;
+
+    }
+    getCellAsNumber(x:number,y:number){
+        return this.buf.readUInt8((y * this.cols + x) * this.bytes_per_cell)
+    }
+    getCellAsBuff(x:number,y:number){
+        const offset = (y * this.cols + x) * this.bytes_per_cell
+        return this.buf.slice(offset,offset+this.bytes_per_cell)
+    }
+    isZero(){
+        return !Buffer.compare(this.buf,Buffer.alloc(this.buf.length,0))
+    }
+}
+
+interface Callout {
+    cell:{i:number,j:number},
+    msg:string
+}
+
+export class CalloutList {
+    offset_after:number
+    callouts:Callout[]
+    constructor(level:Buffer, offset:number) {
+        this.callouts=[]
+
+        const callout_field_offset = offset
+        const should_be_1 = level.readUInt32LE(callout_field_offset);
+        if(should_be_1!=1){
+            console.log(`ERROR: Should be 1: ${should_be_1}. Expect trouble.`)
+        }
+
+        const size_of_callout_field = level.readUInt32LE(callout_field_offset+4);
+        // console.log(`size_of_callout_field: ${size_of_callout_field}`)
+
+        // this.offset_after = offset + 4 + 4 + size_of_callout_field
+
+        const n_callouts = level.readUInt32LE(callout_field_offset+8);
+        // console.log(`Number callouts: ${n_callouts}`)
+        let callout_running_offset = callout_field_offset+4+4+4;
+        for(let i=0; i<n_callouts; i++){
+            const x_coord = level.readUInt32LE(callout_running_offset);
+            callout_running_offset+=4;
+            const y_coord = level.readUInt32LE(callout_running_offset);
+            callout_running_offset+=4;
+            const n_bytes = level.readUInt32LE(callout_running_offset);
+            callout_running_offset+=4;
+            const callout_text = level.slice(callout_running_offset,callout_running_offset+n_bytes-1).toString('utf-8')
+            callout_running_offset+=n_bytes;
+            this.callouts.push({cell:{i:x_coord,j:y_coord},msg:callout_text})
+            // console.log(`Callout number ${i+1}, (${x_coord},${y_coord}): ${callout_text}`)
+        }
+        this.offset_after = callout_running_offset
+    }
+}
 
 
 export class CellGrid {
@@ -46,6 +105,59 @@ export class CellGrid {
     }
     getCellID(x:number,y:number){
         return (y * this.cols + x);
+    }
+}
+
+
+
+export class LevelDetails {
+    name:string
+    grid:CellGrid
+    pgrid:PostGrid
+    callouts:CalloutList
+    constructor(public inbuf:Buffer) {
+        this.name = this._extractName()
+        this.grid = this._extractGrid()
+        this.pgrid = this._extractPostGrid()
+        this.callouts = new CalloutList(inbuf,this.pgrid.offset+this.pgrid.buf.length)
+    }
+
+    _extractName(){
+        // get the name:
+        const end_of_name = this.inbuf.indexOf(Buffer.alloc(1, 0), level_structure.header.name_start);
+        //console.log(`name ends at byte ${end_of_name}`)
+        this.name = this.inbuf.slice(level_structure.header.name_start, end_of_name).toString('utf-8')
+        //console.log(`Level name: "${name}"`)
+        return this.name
+    }
+    _extractGrid(){
+
+        const num_columns = this.inbuf.readUInt32LE(this.name.length + level_structure.header.col_num_start)
+        const num_rows = this.inbuf.readUInt32LE(this.name.length + level_structure.header.row_num_start)
+
+        const offset=level_structure.block_data.array_offset + this.name.length;
+        const size_bytes = num_rows*num_columns*4;
+
+        return new CellGrid(num_columns,num_rows,this.inbuf.slice(offset, offset+size_bytes),offset);
+    }
+    _extractPostGrid(){
+        const postgrid_offset = this.grid.offset+this.grid.buf.length
+        return new PostGrid(this.grid.cols,this.grid.rows,this.inbuf.slice(postgrid_offset,postgrid_offset+this.grid.cols*this.grid.rows),postgrid_offset)
+    }
+
+    next10numbers(){
+        let offset = this.callouts.offset_after;
+
+        console.log(`next 10 numbers:`)
+
+        for(let i =0;i<10;i++){
+            // console.log(this.inbuf.readUInt32LE(offset))
+            console.log(this.inbuf.slice(offset,offset+4).toString('hex'))
+            offset+=4;
+
+        }
+
+
     }
 }
 
@@ -124,10 +236,12 @@ export class Level_analysis {
     async analyze(buf:Buffer) {
         console.log("Level analysis started.")
 
+        const lvl = new LevelDetails(buf)
+
         // get the name:
-        const name = this.getName(buf)
-        console.log(`Level name: "${name}"`)
-        const filename = name.replace(/[^a-z0-9]/gi, '_').toLowerCase()
+        // const name = this.getName(buf)
+        console.log(`Level name: "${lvl.name}"`)
+        const filename = lvl.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()
 
         await fs.writeFileSync(`${config.levels.bin_dir}/${filename}.kitty`, buf);
         console.log(`Saved raw to ${config.levels.bin_dir}/${filename}.kitty`)
@@ -135,47 +249,54 @@ export class Level_analysis {
         const filesize = buf.length
         console.log(`Size of file is ${filesize}`)
 
-        const grid = this.getGrid(buf);
+        const grid = lvl.grid;
+        // const grid = this.getGrid(buf);
 
         console.log(`columns: ${grid.cols}`)
         console.log(`rows: ${grid.rows}`)
 
         console.log(`block array size: ${grid.buf.length} bytes`)
-        console.log(`level size without name or array is ${filesize - name.length - grid.buf.length}`)
-        console.log(`footer size ${filesize - name.length - grid.buf.length - level_structure.block_data.array_offset}`)
+        console.log(`level size without name or array is ${filesize - lvl.name.length - grid.buf.length}`)
+        console.log(`footer size ${filesize - lvl.name.length - grid.buf.length - level_structure.block_data.array_offset}`)
 
-        const post_grid_offset = level_structure.block_data.array_offset + name.length + grid.buf.length
-        const post_grid_array = buf.slice(post_grid_offset,post_grid_offset+grid.rows*grid.cols)
-        const is_post_grid_zero = Buffer.compare(post_grid_array,Buffer.alloc(grid.rows*grid.cols,0))
-        console.log(`Is post_grid zero: ${is_post_grid_zero?'no':'yes'}`)
-        if(is_post_grid_zero!=0){
-            console.log(post_grid_array.toString('hex'))
-        }
 
-        try{
-            const callout_field_offset = post_grid_offset + grid.rows*grid.cols
-            const should_be_1 = buf.readUInt32LE(callout_field_offset);
-            console.log(`Should be 1: ${should_be_1}`)
-            const size_of_callout_field = buf.readUInt32LE(callout_field_offset+4);
-            console.log(`size_of_callout_field: ${size_of_callout_field}`)
-            const n_callouts = buf.readUInt32LE(callout_field_offset+8);
-            console.log(`Number callouts: ${n_callouts}`)
-            let callout_running_offset = callout_field_offset+4+4+4;
-            for(let i=0; i<n_callouts; i++){
-                const x_coord = buf.readUInt32LE(callout_running_offset);
-                callout_running_offset+=4;
-                const y_coord = buf.readUInt32LE(callout_running_offset);
-                callout_running_offset+=4;
-                const n_bytes = buf.readUInt32LE(callout_running_offset);
-                callout_running_offset+=4;
-                const callout_text = buf.slice(callout_running_offset,callout_running_offset+n_bytes-1).toString('utf-8')
-                callout_running_offset+=n_bytes;
-                console.log(`Callout number ${i+1}, (${x_coord},${y_coord}): ${callout_text}`)
-            }
-        }catch (e){
-            console.log("Callout analysis failed:")
-            console.log(e)
+        // const post_grid_offset = level_structure.block_data.array_offset + name.length + grid.buf.length
+        // const post_grid_array = buf.slice(post_grid_offset,post_grid_offset+grid.rows*grid.cols)
+        const is_post_grid_zero = lvl.pgrid.isZero()
+        // const is_post_grid_zero = Buffer.compare(post_grid_array,Buffer.alloc(grid.rows*grid.cols,0))
+        console.log(`Is post_grid zero: ${is_post_grid_zero?'yes':'no'}`)
+        // if(!is_post_grid_zero){
+        //     console.log(lvl.pgrid.buf.toString('hex'))
+        // }
+
+        for(let call of lvl.callouts.callouts){
+            console.log(`Callout for cell (${call.cell.i},${call.cell.j}): ${call.msg}`)
         }
+        //
+        // try{
+        //     const callout_field_offset = post_grid_offset + grid.rows*grid.cols
+        //     const should_be_1 = buf.readUInt32LE(callout_field_offset);
+        //     console.log(`Should be 1: ${should_be_1}`)
+        //     const size_of_callout_field = buf.readUInt32LE(callout_field_offset+4);
+        //     console.log(`size_of_callout_field: ${size_of_callout_field}`)
+        //     const n_callouts = buf.readUInt32LE(callout_field_offset+8);
+        //     console.log(`Number callouts: ${n_callouts}`)
+        //     let callout_running_offset = callout_field_offset+4+4+4;
+        //     for(let i=0; i<n_callouts; i++){
+        //         const x_coord = buf.readUInt32LE(callout_running_offset);
+        //         callout_running_offset+=4;
+        //         const y_coord = buf.readUInt32LE(callout_running_offset);
+        //         callout_running_offset+=4;
+        //         const n_bytes = buf.readUInt32LE(callout_running_offset);
+        //         callout_running_offset+=4;
+        //         const callout_text = buf.slice(callout_running_offset,callout_running_offset+n_bytes-1).toString('utf-8')
+        //         callout_running_offset+=n_bytes;
+        //         console.log(`Callout number ${i+1}, (${x_coord},${y_coord}): ${callout_text}`)
+        //     }
+        // }catch (e){
+        //     console.log("Callout analysis failed:")
+        //     console.log(e)
+        // }
 
         // cell block bytes
         const cell_array_file = fs.createWriteStream(`${config.levels.bin_dir}/${filename}.cells.txt`)
@@ -183,11 +304,11 @@ export class Level_analysis {
         await cell_array_file.write("# the first number is decimal,\n")
         await cell_array_file.write("# the second number below is the hex representation BE in file order\n")
         await cell_array_file.write("# The third number is hex LE which is more human readable\n\n")
+        await cell_array_file.write("# The fourth number is the post-grid value for the cell\n\n")
 
         // lets get some leaderboards ready to make a reference for fuzzing.
         const cell_values:{[key:number]:true}={}
 
-        // const ccont = canvas.getContext('2d')
         for (let j = 0; j < grid.rows; j++) {
             for (let i = 0; i < grid.cols; i++) {
 
@@ -223,10 +344,22 @@ export class Level_analysis {
                 BEbuf.writeUInt32BE(full_cell_data)
                 await cell_array_file.write(BEbuf.toString('hex').padStart(9, ' ') + "    ")
             }
+            await cell_array_file.write("\n");
+
+            // write cell data as text array of integers
+            for (let i = 0; i < grid.cols; i++) {
+                const full_cell_data = lvl.pgrid.getCellAsNumber(i,j)
+
+                await cell_array_file.write(full_cell_data.toString().padStart(9, ' ') + "    ")
+            }
+
+
             await cell_array_file.write("\n\n\n");
         }
 
         const all_values = Object.keys(cell_values).map(k=>+k);
         fs.writeFileSync( `${config.levels.bin_dir}/${filename}.fuzz.json`,JSON.stringify(all_values))
+
+        lvl.next10numbers()
     }
 }

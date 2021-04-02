@@ -16,3 +16,23 @@
      - y coord of callout
      - nbytes in callout
      - bytes of text
+
+- callout deciphering done. Next I want to figure out what is in the post-grid.
+- I found one level so far that has any data in the field: codebreaker too easy by JamesH
+- All other levels are zero here.
+- in codebreaker, there is some correlation between 0 in both grids, but not complete.
+- a lot of similar values are grouped
+- no real clue yet.
+
+- move on to kitty position
+- kitty position is just strange. The values make no sense to me.
+
+- Plan to a level editor: If we assume that the different paint code points don't matter
+  and the postgrid dosn't matter.
+  We could create a few tile-sets for the tiled editor where base block
+  is supposed to be used in one layer, and paint is supposed to be used in another.
+  callouts can be done as text objects in an object layer.
+  Then we could make some tools that enforce consistency somewhat.
+  Then an external tool could probably grab them, transform them into a meaningful level
+  and then it would be playable.
+  
