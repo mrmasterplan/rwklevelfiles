@@ -14,6 +14,7 @@ const config = {
 
     stats: {
         dir: process.env.RWK_STATS_DIR || "statistics",
+
         delimiter: process.env.RWK_STATS_DELIMITER || ","
     },
 

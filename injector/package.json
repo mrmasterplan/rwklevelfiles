@@ -1,6 +1,6 @@
 {
   "name": "rwkextractor",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Extract level files from RWK web version",
   "main": "app.ts",
   "scripts": {
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "canvas": "^2.7.0",
+    "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^8.2.0",
     "glob": "^7.1.6",

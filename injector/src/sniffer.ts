@@ -2,6 +2,9 @@ import {Page} from "puppeteer";
 import convert from "xml-js";
 import * as csv from 'csv-writer'
 import config from "./config";
+import parser from 'csv-parser'
+import {glob} from "glob";
+import * as fs from "fs";
 
 interface csv_header {
     id:string,
@@ -24,8 +27,21 @@ export class StatsStore {
     by_author: {
         [author:string]:{[id:string]:Level}
     }
+
     constructor() {
         this.by_author={}
+
+        // update state from existing csv
+        for(let lvl of glob.sync(`${config.stats.dir}/*`)){
+            fs.createReadStream(lvl)
+                .pipe(parser())
+                .on('data', (data) => {
+                    // console.log(data)
+                    const auth = this.by_author[data['AUTHOR']] || {}
+                    auth[data['ID']] = data
+                    this.by_author[data['AUTHOR']] = auth
+                })
+        }
     }
 
     async addLevels(rls:RawLevel[]){
