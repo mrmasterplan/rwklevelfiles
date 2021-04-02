@@ -142,7 +142,40 @@ export class Level_analysis {
 
         console.log(`block array size: ${grid.buf.length} bytes`)
         console.log(`level size without name or array is ${filesize - name.length - grid.buf.length}`)
+        console.log(`footer size ${filesize - name.length - grid.buf.length - level_structure.block_data.array_offset}`)
 
+        const post_grid_offset = level_structure.block_data.array_offset + name.length + grid.buf.length
+        const post_grid_array = buf.slice(post_grid_offset,post_grid_offset+grid.rows*grid.cols)
+        const is_post_grid_zero = Buffer.compare(post_grid_array,Buffer.alloc(grid.rows*grid.cols,0))
+        console.log(`Is post_grid zero: ${is_post_grid_zero?'no':'yes'}`)
+        if(is_post_grid_zero!=0){
+            console.log(post_grid_array.toString('hex'))
+        }
+
+        try{
+            const callout_field_offset = post_grid_offset + grid.rows*grid.cols
+            const should_be_1 = buf.readUInt32LE(callout_field_offset);
+            console.log(`Should be 1: ${should_be_1}`)
+            const size_of_callout_field = buf.readUInt32LE(callout_field_offset+4);
+            console.log(`size_of_callout_field: ${size_of_callout_field}`)
+            const n_callouts = buf.readUInt32LE(callout_field_offset+8);
+            console.log(`Number callouts: ${n_callouts}`)
+            let callout_running_offset = callout_field_offset+4+4+4;
+            for(let i=0; i<n_callouts; i++){
+                const x_coord = buf.readUInt32LE(callout_running_offset);
+                callout_running_offset+=4;
+                const y_coord = buf.readUInt32LE(callout_running_offset);
+                callout_running_offset+=4;
+                const n_bytes = buf.readUInt32LE(callout_running_offset);
+                callout_running_offset+=4;
+                const callout_text = buf.slice(callout_running_offset,callout_running_offset+n_bytes-1).toString('utf-8')
+                callout_running_offset+=n_bytes;
+                console.log(`Callout number ${i+1}, (${x_coord},${y_coord}): ${callout_text}`)
+            }
+        }catch (e){
+            console.log("Callout analysis failed:")
+            console.log(e)
+        }
 
         // cell block bytes
         const cell_array_file = fs.createWriteStream(`${config.levels.bin_dir}/${filename}.cells.txt`)
