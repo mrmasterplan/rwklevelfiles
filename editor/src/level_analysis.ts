@@ -47,10 +47,12 @@ interface Callout {
     msg:string
 }
 
+
+
 export class CalloutList {
     offset_after:number
     callouts:Callout[]
-    constructor(level:Buffer, offset:number) {
+    constructor(public level:Buffer, public offset:number) {
         this.callouts=[]
 
         const callout_field_offset = offset
@@ -253,6 +255,12 @@ export class Level_analysis {
 
         return final_buf
 
+    }
+    setCallouts(lvl:Buffer,callouts:Buffer){
+        const detail = new LevelDetails(lvl)
+        const header = lvl.slice(0,detail.callouts.offset)
+        const footer = lvl.slice(detail.callouts.offset_after)
+        return Buffer.concat([header,callouts,footer])
     }
 
 

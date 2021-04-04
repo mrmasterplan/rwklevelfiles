@@ -15,7 +15,9 @@ tiles from the game. You only need to execute it once, so go ahead and do that n
     # on the prompt type f
 
 Now you have all the tiles. You can open the Tiled editor and open the tileset
-definitions that are saved under `resources\tilesets`.
+definitions that are saved under `resources\tilesets`. 
+
+It is recommended that you set Tiled to snap everyting to the grid. Do this under view>Snapping>Snap to grid.
 
 Next create a new map in Tiled. Make sure to select
 - orientation:orthogonal
@@ -43,6 +45,21 @@ If you now want to inject the level into the game, do this:
 You will need to fix the robot and kitty position in the in-game level editor. These settings are not suppoted yet.
 
 Have fun.
+
+### Extras
+
+#### Updated .kitty file
+The converter will discover if there is already a .kitty file in the target location.
+If there is, features that the converter does not support will not be overwritten.
+Said another way, the converter adds supported features into the .kitty files and leaves 
+unsupported stuff intact.
+
+You can fix your robot and kitty positions, music, conveyor speed etc in a level, extract the level,
+and copy it into the `level_in/` folder, and these parts will remain set as they were on the next conversion.
+
+#### Radio Beacons
+The editor now supports callout texts. Simply create an object layer and add text boxes in the same location
+as a radio beacon tile. The converter will associate the two based on position.
 
 ## Installation
 

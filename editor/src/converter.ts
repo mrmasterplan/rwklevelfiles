@@ -77,6 +77,46 @@ interface GridCell {
     paint:number
 }
 
+interface Callout {
+    pos:{x:number,y:number},
+    text:string
+}
+
+class CalloutListWriter{
+    callouts:Callout[]
+    constructor() {
+        this.callouts=[]
+    }
+    add(pos:{x:number,y:number},text:string){
+        this.callouts.push({pos,text});
+    }
+    getBuffer(){
+        let tot_size=0
+        const callbuffers:Buffer[]=[]
+        for(let call of this.callouts){
+            const size = 13 + call.text.length
+            const buf = Buffer.alloc(size,0)
+
+            buf.writeUInt32LE(call.pos.x)
+            buf.writeUInt32LE(call.pos.y,4)
+            buf.writeUInt32LE(call.text.length+1,8)
+            Buffer.from(call.text,'utf-8').copy(buf,12)
+
+            callbuffers.push(buf)
+            tot_size+=size
+
+        }
+        const size_of_callout_field = tot_size+4
+        const buf = Buffer.alloc(size_of_callout_field+4+4)
+
+        buf.writeUInt32LE(1) //magic number unknown reason
+        buf.writeUInt32LE(size_of_callout_field,4)
+        buf.writeUInt32LE(callbuffers.length,8)
+        Buffer.concat(callbuffers).copy(buf,12)
+        return buf
+    }
+}
+
 export class LevelConverter {
     isbad:boolean
     name:string
@@ -84,12 +124,13 @@ export class LevelConverter {
     grid?:CellGrid
     offset?:{x:number,y:number}
     gridCells?:GridCell[][]
-
+    calls:CalloutListWriter
     constructor(public filename:string, public lvljson:MapFile) {
         console.log(`Now converting ${filename}`)
         this.name = path.basename(filename,'.json')
         this.isbad=false
         this.tile_gid={}
+        this.calls = new CalloutListWriter()
         if(lvljson.type!=='map'){
             this.isbad=true
             return
@@ -101,7 +142,34 @@ export class LevelConverter {
         this._parseLevelIntoGridCells()
         this._transferGridCellsIntoGrid()
 
+        this._extractCallouts()
 
+    }
+
+    _extractCallouts(){
+        for(let layer of this.lvljson.layers) {
+            if (layer.type !== 'objectgroup') {
+                continue; // only object layers can contain callouts
+            }
+            for(let obj of layer.objects){
+                if(!obj.text){
+                    // not a text. we don't care
+                    continue
+                }
+                const text = obj.text.text
+                const x = Math.round(obj.x/this.lvljson.tilewidth) + this.offset!.x
+                const y = Math.round(obj.y/this.lvljson.tileheight)+ this.offset!.y
+
+                // check that there really is a callout:
+                const cell = this.gridCells![y][x]
+                // console.log(cell)
+                if(cell.base!=70){
+                    console.log(`Text id ${obj.id} "${text}" in cell (${Math.round(obj.x/this.lvljson.tilewidth)},${Math.round(obj.y/this.lvljson.tileheight)}) is not as a Radio Beacon and will be ignored.`)
+                }else{
+                    this.calls.add({x,y},text)
+                }
+            }
+        }
     }
 
     _transferGridCellsIntoGrid(){
@@ -167,8 +235,7 @@ export class LevelConverter {
 
         // set the cell array that we end up exporting
         const cellBuffer = Buffer.alloc(rows*cols*4,0)
-        const grid = new CellGrid(cols,rows,cellBuffer,0)
-        this.grid = grid
+        this.grid = new CellGrid(cols, rows, cellBuffer, 0)
 
         // set the cell array for intermediate analysis
         this.gridCells = []
@@ -258,7 +325,8 @@ export class LevelConverter {
         const lvlana = new Level_analysis()
         const buf = lvlana.setName(base,this.name)
 
-        const outbuf= lvlana.setGrid(buf,this.grid!)
-        fs.writeFileSync(filename,outbuf)
+        const outbuf_w_grid= lvlana.setGrid(buf,this.grid!)
+        const outbuf_final = lvlana.setCallouts(outbuf_w_grid,this.calls.getBuffer())
+        fs.writeFileSync(filename,outbuf_final)
     }
 }

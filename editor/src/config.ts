@@ -21,6 +21,7 @@ const config = {
     editor:{
         resources: "resources",
         tilesets: "tilesets",
+        level_conversion_dir: "levels_to_convert",
         level_conversion: "levels_to_convert/*.json",
         fuzz: "fuzz",
         tiles: "tiles",
@@ -129,6 +130,10 @@ const config = {
     }
 }
 
+
+if (!fs.existsSync(config.editor.level_conversion_dir)){
+    fs.mkdirSync(config.editor.level_conversion_dir);
+}
 
 if (!fs.existsSync(config.screenshots_dir)){
     fs.mkdirSync(config.screenshots_dir);
