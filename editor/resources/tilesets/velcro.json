@@ -1,0 +1,266 @@
+{
+  "columns": 0,
+  "grid": {
+    "height": 1,
+    "orientation": "orthogonal",
+    "width": 1
+  },
+  "margin": 0,
+  "name": "velcro",
+  "spacing": 0,
+  "tilecount": 19,
+  "tiledversion": "1.5.0",
+  "tileheight": 40,
+  "tiles": [
+    {
+      "id": 0,
+      "image": "../tiles/80d380fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202746752
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "image": "../tiles/00d480fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202746880
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "image": "../tiles/80d480fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747008
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "image": "../tiles/00d580fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747136
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "image": "../tiles/80d580fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747264
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "image": "../tiles/00d680fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747392
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "image": "../tiles/00d780fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747648
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "image": "../tiles/80d780fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747776
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "image": "../tiles/00d880fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202747904
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "image": "../tiles/80d880fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202748032
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "image": "../tiles/00d980fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202748160
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "image": "../tiles/80dc80fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202749056
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "image": "../tiles/00de80fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202749440
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "image": "../tiles/80df80fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202749824
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "image": "../tiles/00e180fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202750208
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "image": "../tiles/00e980fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202752256
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "image": "../tiles/80e980fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202752384
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "image": "../tiles/00ea80fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202752512
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "image": "../tiles/80ea80fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202752640
+        }
+      ]
+    }
+  ],
+  "tilewidth": 40,
+  "type": "tileset",
+  "version": 1.5
+}

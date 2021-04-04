@@ -1,0 +1,266 @@
+{
+  "columns": 0,
+  "grid": {
+    "height": 1,
+    "orientation": "orthogonal",
+    "width": 1
+  },
+  "margin": 0,
+  "name": "grate",
+  "spacing": 0,
+  "tilecount": 19,
+  "tiledversion": "1.5.0",
+  "tileheight": 40,
+  "tiles": [
+    {
+      "id": 0,
+      "image": "../tiles/0047805a.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1518356224
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "image": "../tiles/0048805a.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1518356480
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "image": "../tiles/805c805a.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1518361728
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "image": "../tiles/80488061.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1635797120
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "image": "../tiles/00498061.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1635797248
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "image": "../tiles/004a8061.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1635797504
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "image": "../tiles/805d8061.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1635802496
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "image": "../tiles/005d8062.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1652579584
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "image": "../tiles/004b8063.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1669352192
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "image": "../tiles/804b8063.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1669352320
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "image": "../tiles/00518063.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1669353728
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "image": "../tiles/804a8064.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1686129280
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "image": "../tiles/004c8064.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1686129664
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "image": "../tiles/00548064.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1686131712
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "image": "../tiles/804f8065.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1702907776
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "image": "../tiles/80528065.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1702908544
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "image": "../tiles/005c8065.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1702910976
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "image": "../tiles/8046806f.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1870677632
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "image": "../tiles/8047806f.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 1870677888
+        }
+      ]
+    }
+  ],
+  "tilewidth": 40,
+  "type": "tileset",
+  "version": 1.5
+}
