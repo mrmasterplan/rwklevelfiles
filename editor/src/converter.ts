@@ -292,8 +292,13 @@ export class LevelConverter {
     _parseTilesets(tlsts:MapTileseReference[]){
         // parse the tileset references and insert into the gid to byte database
         for(let tlst of tlsts){
-            const path_to_tileset = path.join(path.dirname(this.filename),tlst.source)
-            const tiledata = JSON.parse(fs.readFileSync(path_to_tileset,'utf-8'))
+            let tiledata:any
+            if(tlst.source){
+                const path_to_tileset = path.join(path.dirname(this.filename),tlst.source)
+                tiledata = JSON.parse(fs.readFileSync(path_to_tileset,'utf-8'))
+            }else{
+                tiledata = tlst
+            }
             // go through the tiles in the set
             for(let tile of tiledata.tiles){
                 // this is how tile ids are handled in Tiled. ID in set + firstgid of tileset
@@ -309,12 +314,7 @@ export class LevelConverter {
         }
     }
 
-    // getBuffer(){
-    //     const lvlana = new Level_analysis()
-    //     const buf = lvlana.setName(base_level,this.name)
-    //
-    //     return lvlana.setGrid(buf,this.grid!)
-    // }
+
     writeToTarget(filename:string){
         let base:Buffer;
         if(fs.existsSync(filename)){
