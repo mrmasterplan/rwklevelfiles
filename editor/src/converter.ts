@@ -86,6 +86,7 @@ export class LevelConverter {
     gridCells?:GridCell[][]
 
     constructor(public filename:string, public lvljson:MapFile) {
+        console.log(`Now converting ${filename}`)
         this.name = path.basename(filename,'.json')
         this.isbad=false
         this.tile_gid={}
@@ -156,8 +157,8 @@ export class LevelConverter {
         let cols = max_x-min_x+1;
         let rows = max_y-min_y+1;
 
-        if(cols<10)cols=10
-        if(rows<7)rows=7
+        // if(cols<10)cols=10
+        // if(rows<7)rows=7
 
         this.offset={
             x:-min_x,
@@ -191,6 +192,7 @@ export class LevelConverter {
             if(layer.type!=='tilelayer'){
                 continue; // object layers do not contribute to level size
             }
+            //console.log(`getting extent from layer ${layer.name}`)
 
             // TODO: This entire section can be accelerated if we look at the entire chunk and see that no cell in it
             // has a chance to contribute.
@@ -204,8 +206,9 @@ export class LevelConverter {
                             const y = j+chunk.y
                             if(typeof min_x == 'undefined' || x<min_x) min_x=x;
                             if(typeof max_x == 'undefined' || x>max_x) max_x=x;
-                            if(typeof min_y == 'undefined' || x<min_y) min_y=y;
-                            if(typeof max_y == 'undefined' || x>max_y) max_y=y;
+                            if(typeof min_y == 'undefined' || y<min_y) min_y=y;
+                            if(typeof max_y == 'undefined' || y>max_y) max_y=y;
+                           // console.log(`${x},${y}: y max, min ${max_y}, ${min_y}`)
                         }
                     }
 

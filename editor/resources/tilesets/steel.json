@@ -8,267 +8,592 @@
   "margin": 0,
   "name": "steel",
   "spacing": 0,
-  "tilecount": 20,
+  "tilecount": 45,
   "tiledversion": "1.5.0",
   "tileheight": 40,
   "tiles": [
     {
       "id": 0,
-      "image": "../tiles/00a3801d.png",
+      "image": "../tiles/008d0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 494969600
+          "value": 67144960
         }
       ]
     },
     {
       "id": 1,
-      "image": "../tiles/808d801e.png",
+      "image": "../tiles/808d0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 511741312
+          "value": 67145088
         }
       ]
     },
     {
       "id": 2,
-      "image": "../tiles/808e801e.png",
+      "image": "../tiles/008e0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 511741568
+          "value": 67145216
         }
       ]
     },
     {
       "id": 3,
-      "image": "../tiles/008f801f.png",
+      "image": "../tiles/808e0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 528518912
+          "value": 67145344
         }
       ]
     },
     {
       "id": 4,
-      "image": "../tiles/8090801f.png",
+      "image": "../tiles/00910004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 528519296
+          "value": 67145984
         }
       ]
     },
     {
       "id": 5,
-      "image": "../tiles/00a4801f.png",
+      "image": "../tiles/80910004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 528524288
+          "value": 67146112
         }
       ]
     },
     {
       "id": 6,
-      "image": "../tiles/808f8023.png",
+      "image": "../tiles/00920004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 595627904
+          "value": 67146240
         }
       ]
     },
     {
       "id": 7,
-      "image": "../tiles/80908023.png",
+      "image": "../tiles/80920004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 595628160
+          "value": 67146368
         }
       ]
     },
     {
       "id": 8,
-      "image": "../tiles/80a38025.png",
+      "image": "../tiles/00960004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 629187456
+          "value": 67147264
         }
       ]
     },
     {
       "id": 9,
-      "image": "../tiles/80918028.png",
+      "image": "../tiles/80970004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 679514496
+          "value": 67147648
         }
       ]
     },
     {
       "id": 10,
-      "image": "../tiles/00928028.png",
+      "image": "../tiles/00990004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 679514624
+          "value": 67148032
         }
       ]
     },
     {
       "id": 11,
-      "image": "../tiles/80978028.png",
+      "image": "../tiles/809a0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 679516032
+          "value": 67148416
         }
       ]
     },
     {
       "id": 12,
-      "image": "../tiles/0091802c.png",
+      "image": "../tiles/809d0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 746623232
+          "value": 67149184
         }
       ]
     },
     {
       "id": 13,
-      "image": "../tiles/8092802c.png",
+      "image": "../tiles/009e0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 746623616
+          "value": 67149312
         }
       ]
     },
     {
       "id": 14,
-      "image": "../tiles/0096802c.png",
+      "image": "../tiles/809e0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 746624512
+          "value": 67149440
         }
       ]
     },
     {
       "id": 15,
-      "image": "../tiles/0099802c.png",
+      "image": "../tiles/009f0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 746625280
+          "value": 67149568
         }
       ]
     },
     {
       "id": 16,
-      "image": "../tiles/809a802c.png",
+      "image": "../tiles/809f0004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 746625664
+          "value": 67149696
         }
       ]
     },
     {
       "id": 17,
-      "image": "../tiles/80a2802c.png",
+      "image": "../tiles/00a00004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 746627712
+          "value": 67149824
         }
       ]
     },
     {
       "id": 18,
-      "image": "../tiles/008d802e.png",
+      "image": "../tiles/80a00004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 780176640
+          "value": 67149952
         }
       ]
     },
     {
       "id": 19,
-      "image": "../tiles/008e802e.png",
+      "image": "../tiles/00a10004.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "bytes",
           "type": "int",
-          "value": 780176896
+          "value": 67150080
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "image": "../tiles/80a10004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 67150208
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "image": "../tiles/00a20004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 67150336
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "image": "../tiles/80a20004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 67150464
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "image": "../tiles/80a30004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 67150720
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "image": "../tiles/00a40004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 67150848
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "image": "../tiles/008f8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75534080
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "image": "../tiles/808f8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75534208
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "image": "../tiles/00908004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75534336
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "image": "../tiles/80908004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75534464
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "image": "../tiles/00938004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75535104
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "image": "../tiles/80938004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75535232
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "image": "../tiles/00948004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75535360
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "image": "../tiles/80948004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75535488
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "image": "../tiles/00958004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75535616
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "image": "../tiles/80958004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75535744
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "image": "../tiles/80968004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75536000
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "image": "../tiles/00978004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75536128
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "image": "../tiles/00988004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75536384
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "image": "../tiles/80988004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75536512
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "image": "../tiles/80998004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75536768
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "image": "../tiles/009a8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75536896
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "image": "../tiles/009b8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75537152
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "image": "../tiles/809b8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75537280
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "image": "../tiles/009c8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75537408
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "image": "../tiles/809c8004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 75537536
         }
       ]
     }

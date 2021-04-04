@@ -116,10 +116,11 @@ class CLI {
                         console.log(`opened level ${lvl.name}, ${lvl.grid.rows} ${lvl.grid.cols}`)
 
                         const magic_row = 1;
+                        const magic_skip = 4;
                         const tileset = new Tileset(lvl.name)
-                        for(let j = 0; j<lvl.grid.cols; j++){
+                        for(let i = 0; i<lvl.grid.cols; i+=magic_skip){
                             // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
-                            const buf = lvl.grid.getCellAsBuff(j,magic_row)
+                            const buf = lvl.grid.getCellAsBuff(i,magic_row)
                             buf.writeUInt8(buf.readUInt8()&0x80) // null out the block type
                             const val = buf.readUInt32LE()
                             if(val)
