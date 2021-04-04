@@ -17,7 +17,7 @@ export async function convertAllLevels(){
     for(let filename of glob.sync(config.editor.level_conversion)){
 
         const conv = new LevelConverter(filename,JSON.parse(fs.readFileSync(filename,'utf-8')))
-        fs.writeFileSync(`${config.db.levels_in}/${conv.name}.kitty`,conv.getBuffer())
+        conv.writeToTarget(`${config.db.levels_in}/${conv.name}.kitty`)
     }
 }
 
@@ -242,10 +242,23 @@ export class LevelConverter {
         }
     }
 
-    getBuffer(){
+    // getBuffer(){
+    //     const lvlana = new Level_analysis()
+    //     const buf = lvlana.setName(base_level,this.name)
+    //
+    //     return lvlana.setGrid(buf,this.grid!)
+    // }
+    writeToTarget(filename:string){
+        let base:Buffer;
+        if(fs.existsSync(filename)){
+            base = fs.readFileSync(filename)
+        }else{
+            base = Buffer.from(base_level)
+        }
         const lvlana = new Level_analysis()
-        const buf = lvlana.setName(base_level,this.name)
+        const buf = lvlana.setName(base,this.name)
 
-        return lvlana.setGrid(buf,this.grid!)
+        const outbuf= lvlana.setGrid(buf,this.grid!)
+        fs.writeFileSync(filename,outbuf)
     }
 }

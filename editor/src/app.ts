@@ -50,7 +50,7 @@ class CLI {
                         console.log(`now saving DB backup to ${config.db.backup}, and levels to ${config.db.levels_out}`)
                         const db:RWK_db = await rwk.extractDB()
                         for(let key of Object.keys(db)){
-                            if(key.startsWith(custom_level_key_root) && key.endsWith('.kitty')){
+                            if( key.endsWith('.kitty')){
                                 const buf = Buffer.from(db[key].contents!,'hex')
                                 const name = new LevelDetails(buf).name
                                 fs.writeFileSync(`${config.db.levels_out}/${name}.kitty`,buf)
@@ -67,7 +67,8 @@ class CLI {
                         //inject
                         console.log(`Now restarting and restoring backup from ${config.db.backup}`)
                         const db_handler = new RWK_db_handler()
-                        db_handler.update( JSON.parse(fs.readFileSync(config.db.backup,'utf-8')))
+                        if(fs.existsSync(config.db.backup))
+                            db_handler.update( JSON.parse(fs.readFileSync(config.db.backup,'utf-8')))
                         console.log('base DB loaded. Now adding levels to inject')
                         for(let filename of glob.sync(config.db.levels_in+'/*.kitty')){
                             console.log(`injecting ${filename}`)
