@@ -74,12 +74,12 @@ To run type
 
     npm run start
 
+For nicer instructions, see fnanfne's google doc: https://drive.google.com/file/d/1YmfD1LGdjqfsaaoUsTzDh1THV9dXwUgk/view?usp=sharing
 
 # TODO
 
 Not supported yet:
-- Radio Beacon texts. They are next on the list and will make use of the object layer in the Tiled editor. The structure is understood, and we just need to code this.
-- Kitty and Robot postions. The structure is unknown.
+- Kitty and Robot positions. The structure is unknown.
 - exporting levels from the game into the Tiled editor format is not supported yet. The full structure of how paint is encoded is not understood yet. 
 - conveyor speed setting. We havn't worked on it yet.
 - Level Tags. We havn't worked on it yet.
