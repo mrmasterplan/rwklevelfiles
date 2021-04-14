@@ -180,6 +180,7 @@ const config = {
             { index: 65-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_065.png" },
             { index: 66-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_066.png" },
             { index: 67-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_067.png" },
+            { index: 68-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_068.png" },
             { index: 69-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_069.png" },
             { index: 70-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_070.png" },
             { index: 71-1, url:"http://www.raptisoft.com/rwk/tutorial/images/tiles/IMG_071.png" },
