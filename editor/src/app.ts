@@ -134,7 +134,7 @@ class CLI {
                         const magic_skip = 4;
                         const magic_row = 1 + base_row; // after empty rows are skipped
                         const tileset = new Tileset(lvl.name)
-                        for(let i = magic_skip; i<lvl.grid.cols; i+=magic_skip){
+                        for(let i = 0; i<lvl.grid.cols; i+=magic_skip){
                             // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
                             const buf = lvl.grid.getCellAsBuff(i,magic_row)
                             // extra special hack for the base tile set coming up:

@@ -8,7 +8,7 @@
   "margin": 0,
   "name": "alu",
   "spacing": 0,
-  "tilecount": 46,
+  "tilecount": 47,
   "tiledversion": "1.5.0",
   "tileheight": 40,
   "tiles": [
@@ -607,6 +607,19 @@
           "name": "bytes",
           "type": "int",
           "value": 58720384
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "image": "../tiles/00160004.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 67114496
         }
       ]
     }
