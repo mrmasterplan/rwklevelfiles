@@ -10,7 +10,7 @@ import {Level_analysis, LevelDetails} from "./level_analysis";
 import {custom_level_key_root, Fuzzer, RWK_db_handler} from "./fuzzer";
 import {glob} from "glob";
 import * as fs from "fs";
-import {base_tileset, Tileset} from "./tileset";
+import {Tileset} from "./tileset";
 import {Tile_library} from "./tile_library";
 import {convertAllLevels} from "./converter";
 import path from "path";
@@ -98,10 +98,10 @@ class CLI {
         this.options['f']={
             description: "(f)uzz",
             action: async ()=>{
-                const fuzz = new Fuzzer();
-                await fuzz.fuzz()
                 const tilelib = new Tile_library()
                 await tilelib.download_tile_library()
+                const fuzz = new Fuzzer();
+                await fuzz.fuzz()
 
             }
         }
@@ -116,13 +116,31 @@ class CLI {
                         const lvl = new LevelDetails(fullbuf);
                         console.log(`opened level ${lvl.name}, ${lvl.grid.rows} ${lvl.grid.cols}`)
 
-                        const magic_row = 1;
+                        let base_row=0;
+                        let block_found = false;
+                        while(!block_found) {
+                            for (let i = 0; i < lvl.grid.cols; i ++) {
+                                if(lvl.grid.getCellAsNumber(i,base_row)){
+                                    block_found=true;
+                                    break;
+                                }
+                            }
+                            if(!block_found){
+                                base_row++
+                            }
+                        }
+
+
                         const magic_skip = 4;
+                        const magic_row = 1 + base_row; // after empty rows are skipped
                         const tileset = new Tileset(lvl.name)
-                        for(let i = 0; i<lvl.grid.cols; i+=magic_skip){
+                        for(let i = magic_skip; i<lvl.grid.cols; i+=magic_skip){
                             // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
                             const buf = lvl.grid.getCellAsBuff(i,magic_row)
-                            buf.writeUInt8(buf.readUInt8()&0x80) // null out the block type
+                            // extra special hack for the base tile set coming up:
+                            const is_base_tileset = reflvl.endsWith("base.kitty")
+                            if(!is_base_tileset)
+                                buf.writeUInt8(buf.readUInt8()&0x80) // null out the block type
                             const val = buf.readUInt32LE()
                             if(val)
                                 tileset.addTile(val,`../${config.editor.tiles}/${buf.toString('hex')}.png`)
@@ -132,7 +150,7 @@ class CLI {
                         fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${lvl.name}.json`,JSON.stringify(tileset.getTileset(),null,2))
                         fs.writeFileSync(`${config.editor.resources}/${config.editor.fuzz}/${lvl.name}.fuzz.json`,JSON.stringify(tileset.getValues(),null,2))
                     }
-                    fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${base_tileset.name}.json`,JSON.stringify(base_tileset.getTileset(),null,2))
+                    // fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${base_tileset.name}.json`,JSON.stringify(base_tileset.getTileset(),null,2))
                 }
             }
         }

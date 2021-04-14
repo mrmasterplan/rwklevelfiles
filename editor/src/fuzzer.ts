@@ -238,7 +238,6 @@ export class Fuzzer{
         let count_allocations = 0
         // We now need to create a map of what tiles to fuzz
         for(let byteval of fuzz_numbers) {
-            // WORK IN PROGRESS
 
             const buf = Buffer.alloc(4)
             buf.writeUInt32LE(byteval )
@@ -247,7 +246,7 @@ export class Fuzzer{
             // buf.fill(0,0,1)
             const tile_file = `${config.fuzzer.tiles}/${buf.toString('hex')}.png`
             // if tile exists, we don't need to fuzz it.
-            //if (fs.existsSync(tile_file)) continue
+            if (fs.existsSync(tile_file)) continue
 
             // we now know
             // - fuzz value

@@ -8,7 +8,7 @@
   "margin": 0,
   "name": "base",
   "spacing": 0,
-  "tilecount": 70,
+  "tilecount": 73,
   "tiledversion": "1.5.0",
   "tileheight": 40,
   "tiles": [
@@ -27,19 +27,6 @@
     },
     {
       "id": 1,
-      "image": "../tiles/02000000.png",
-      "imageheight": 40,
-      "imagewidth": 40,
-      "properties": [
-        {
-          "name": "bytes",
-          "type": "int",
-          "value": 2
-        }
-      ]
-    },
-    {
-      "id": 2,
       "image": "../tiles/03000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -52,7 +39,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 2,
       "image": "../tiles/04000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -65,7 +52,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": 3,
       "image": "../tiles/05000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -78,7 +65,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": 4,
       "image": "../tiles/06000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -91,7 +78,7 @@
       ]
     },
     {
-      "id": 6,
+      "id": 5,
       "image": "../tiles/07000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -104,7 +91,7 @@
       ]
     },
     {
-      "id": 7,
+      "id": 6,
       "image": "../tiles/08000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -117,7 +104,7 @@
       ]
     },
     {
-      "id": 8,
+      "id": 7,
       "image": "../tiles/09000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -130,7 +117,7 @@
       ]
     },
     {
-      "id": 9,
+      "id": 8,
       "image": "../tiles/0a000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -143,7 +130,7 @@
       ]
     },
     {
-      "id": 10,
+      "id": 9,
       "image": "../tiles/0b000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -156,7 +143,7 @@
       ]
     },
     {
-      "id": 11,
+      "id": 10,
       "image": "../tiles/0c000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -169,7 +156,7 @@
       ]
     },
     {
-      "id": 12,
+      "id": 11,
       "image": "../tiles/0d000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -182,7 +169,7 @@
       ]
     },
     {
-      "id": 13,
+      "id": 12,
       "image": "../tiles/0e000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -191,6 +178,19 @@
           "name": "bytes",
           "type": "int",
           "value": 14
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "image": "../tiles/0f000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 15
         }
       ]
     },
@@ -209,6 +209,19 @@
     },
     {
       "id": 15,
+      "image": "../tiles/11000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 17
+        }
+      ]
+    },
+    {
+      "id": 16,
       "image": "../tiles/12000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -221,7 +234,20 @@
       ]
     },
     {
-      "id": 16,
+      "id": 17,
+      "image": "../tiles/13000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 19
+        }
+      ]
+    },
+    {
+      "id": 18,
       "image": "../tiles/14000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -234,7 +260,7 @@
       ]
     },
     {
-      "id": 17,
+      "id": 19,
       "image": "../tiles/15000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -247,7 +273,7 @@
       ]
     },
     {
-      "id": 18,
+      "id": 20,
       "image": "../tiles/16000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -260,7 +286,7 @@
       ]
     },
     {
-      "id": 19,
+      "id": 21,
       "image": "../tiles/17000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -273,7 +299,7 @@
       ]
     },
     {
-      "id": 20,
+      "id": 22,
       "image": "../tiles/18000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -286,7 +312,7 @@
       ]
     },
     {
-      "id": 21,
+      "id": 23,
       "image": "../tiles/19000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -299,7 +325,7 @@
       ]
     },
     {
-      "id": 22,
+      "id": 24,
       "image": "../tiles/1a000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -312,7 +338,7 @@
       ]
     },
     {
-      "id": 23,
+      "id": 25,
       "image": "../tiles/1b000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -325,7 +351,7 @@
       ]
     },
     {
-      "id": 24,
+      "id": 26,
       "image": "../tiles/1c000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -338,7 +364,7 @@
       ]
     },
     {
-      "id": 25,
+      "id": 27,
       "image": "../tiles/1d000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -351,7 +377,7 @@
       ]
     },
     {
-      "id": 26,
+      "id": 28,
       "image": "../tiles/1e000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -364,7 +390,7 @@
       ]
     },
     {
-      "id": 27,
+      "id": 29,
       "image": "../tiles/1f000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -377,7 +403,7 @@
       ]
     },
     {
-      "id": 28,
+      "id": 30,
       "image": "../tiles/20000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -390,7 +416,7 @@
       ]
     },
     {
-      "id": 29,
+      "id": 31,
       "image": "../tiles/21000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -403,7 +429,7 @@
       ]
     },
     {
-      "id": 30,
+      "id": 32,
       "image": "../tiles/22000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -416,7 +442,7 @@
       ]
     },
     {
-      "id": 31,
+      "id": 33,
       "image": "../tiles/23000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -429,7 +455,7 @@
       ]
     },
     {
-      "id": 32,
+      "id": 34,
       "image": "../tiles/24000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -442,7 +468,7 @@
       ]
     },
     {
-      "id": 33,
+      "id": 35,
       "image": "../tiles/25000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -455,7 +481,7 @@
       ]
     },
     {
-      "id": 34,
+      "id": 36,
       "image": "../tiles/26000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -468,7 +494,7 @@
       ]
     },
     {
-      "id": 35,
+      "id": 37,
       "image": "../tiles/27000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -481,7 +507,7 @@
       ]
     },
     {
-      "id": 36,
+      "id": 38,
       "image": "../tiles/28000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -494,7 +520,7 @@
       ]
     },
     {
-      "id": 37,
+      "id": 39,
       "image": "../tiles/29000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -507,7 +533,7 @@
       ]
     },
     {
-      "id": 38,
+      "id": 40,
       "image": "../tiles/2a000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -520,7 +546,7 @@
       ]
     },
     {
-      "id": 39,
+      "id": 41,
       "image": "../tiles/2b000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -533,7 +559,7 @@
       ]
     },
     {
-      "id": 40,
+      "id": 42,
       "image": "../tiles/2c000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -546,7 +572,7 @@
       ]
     },
     {
-      "id": 41,
+      "id": 43,
       "image": "../tiles/2d000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -559,7 +585,7 @@
       ]
     },
     {
-      "id": 42,
+      "id": 44,
       "image": "../tiles/2e000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -572,7 +598,7 @@
       ]
     },
     {
-      "id": 43,
+      "id": 45,
       "image": "../tiles/2f000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -585,7 +611,7 @@
       ]
     },
     {
-      "id": 44,
+      "id": 46,
       "image": "../tiles/30000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -598,7 +624,7 @@
       ]
     },
     {
-      "id": 45,
+      "id": 47,
       "image": "../tiles/31000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -611,7 +637,7 @@
       ]
     },
     {
-      "id": 46,
+      "id": 48,
       "image": "../tiles/32000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -624,7 +650,7 @@
       ]
     },
     {
-      "id": 47,
+      "id": 49,
       "image": "../tiles/33000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -637,7 +663,20 @@
       ]
     },
     {
-      "id": 48,
+      "id": 50,
+      "image": "../tiles/34000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 52
+        }
+      ]
+    },
+    {
+      "id": 51,
       "image": "../tiles/35000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -650,7 +689,7 @@
       ]
     },
     {
-      "id": 49,
+      "id": 52,
       "image": "../tiles/36000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -663,7 +702,7 @@
       ]
     },
     {
-      "id": 50,
+      "id": 53,
       "image": "../tiles/37000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -676,7 +715,7 @@
       ]
     },
     {
-      "id": 51,
+      "id": 54,
       "image": "../tiles/38000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -689,7 +728,7 @@
       ]
     },
     {
-      "id": 52,
+      "id": 55,
       "image": "../tiles/39000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -702,7 +741,7 @@
       ]
     },
     {
-      "id": 53,
+      "id": 56,
       "image": "../tiles/3a000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -715,7 +754,7 @@
       ]
     },
     {
-      "id": 54,
+      "id": 57,
       "image": "../tiles/3b000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -728,7 +767,7 @@
       ]
     },
     {
-      "id": 55,
+      "id": 58,
       "image": "../tiles/3c000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -741,7 +780,7 @@
       ]
     },
     {
-      "id": 56,
+      "id": 59,
       "image": "../tiles/3d000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -754,7 +793,7 @@
       ]
     },
     {
-      "id": 57,
+      "id": 60,
       "image": "../tiles/3e000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -767,7 +806,7 @@
       ]
     },
     {
-      "id": 58,
+      "id": 61,
       "image": "../tiles/3f000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -780,7 +819,7 @@
       ]
     },
     {
-      "id": 59,
+      "id": 62,
       "image": "../tiles/40000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -793,7 +832,7 @@
       ]
     },
     {
-      "id": 60,
+      "id": 63,
       "image": "../tiles/41000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -806,7 +845,7 @@
       ]
     },
     {
-      "id": 61,
+      "id": 64,
       "image": "../tiles/42000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -819,7 +858,7 @@
       ]
     },
     {
-      "id": 62,
+      "id": 65,
       "image": "../tiles/43000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -832,7 +871,7 @@
       ]
     },
     {
-      "id": 63,
+      "id": 66,
       "image": "../tiles/44000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -845,7 +884,7 @@
       ]
     },
     {
-      "id": 64,
+      "id": 67,
       "image": "../tiles/45000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -858,7 +897,7 @@
       ]
     },
     {
-      "id": 65,
+      "id": 68,
       "image": "../tiles/46000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -871,7 +910,7 @@
       ]
     },
     {
-      "id": 66,
+      "id": 69,
       "image": "../tiles/47000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -884,7 +923,7 @@
       ]
     },
     {
-      "id": 67,
+      "id": 70,
       "image": "../tiles/48000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -897,7 +936,7 @@
       ]
     },
     {
-      "id": 68,
+      "id": 71,
       "image": "../tiles/49000000.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -910,7 +949,7 @@
       ]
     },
     {
-      "id": 69,
+      "id": 72,
       "image": "../tiles/51000000.png",
       "imageheight": 40,
       "imagewidth": 40,

@@ -54,7 +54,7 @@ export class Tileset {
     }
 
 }
-export const base_tileset = new Tileset('base')
-for(let val of config.editor.base_tile_values){
-    base_tileset.addTile(val,`../${config.editor.tiles}/${val.toString(16).padStart(2,'0')}000000.png`)
-}
+// export const base_tileset = new Tileset('base')
+// for(let val of config.editor.base_tile_values){
+//     base_tileset.addTile(val,`../${config.editor.tiles}/${val.toString(16).padStart(2,'0')}000000.png`)
+// }
