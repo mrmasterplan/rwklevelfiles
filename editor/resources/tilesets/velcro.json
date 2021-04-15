@@ -8,7 +8,7 @@
   "margin": 0,
   "name": "velcro",
   "spacing": 0,
-  "tilecount": 45,
+  "tilecount": 46,
   "tiledversion": "1.5.0",
   "tileheight": 40,
   "tiles": [
@@ -573,6 +573,19 @@
     },
     {
       "id": 43,
+      "image": "../tiles/80e980fa.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 4202752384
+        }
+      ]
+    },
+    {
+      "id": 44,
       "image": "../tiles/00ea80fa.png",
       "imageheight": 40,
       "imagewidth": 40,
@@ -585,7 +598,7 @@
       ]
     },
     {
-      "id": 44,
+      "id": 45,
       "image": "../tiles/80ea80fa.png",
       "imageheight": 40,
       "imagewidth": 40,

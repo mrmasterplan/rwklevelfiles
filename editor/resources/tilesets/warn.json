@@ -8,7 +8,7 @@
   "margin": 0,
   "name": "warn",
   "spacing": 0,
-  "tilecount": 45,
+  "tilecount": 46,
   "tiledversion": "1.5.0",
   "tileheight": 40,
   "tiles": [
@@ -594,6 +594,19 @@
           "name": "bytes",
           "type": "int",
           "value": 83897984
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "image": "../tiles/802d8005.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 92286336
         }
       ]
     }

@@ -8,7 +8,7 @@
   "margin": 0,
   "name": "lava",
   "spacing": 0,
-  "tilecount": 45,
+  "tilecount": 46,
   "tiledversion": "1.5.0",
   "tileheight": 40,
   "tiles": [
@@ -594,6 +594,19 @@
           "name": "bytes",
           "type": "int",
           "value": 8418560
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "image": "../tiles/00740001.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "bytes",
+          "type": "int",
+          "value": 16806912
         }
       ]
     }
