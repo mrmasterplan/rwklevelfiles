@@ -152,7 +152,7 @@ export class LevelDetails {
 
         for(let i =0;i<10;i++){
             // console.log(this.inbuf.readUInt32LE(offset))
-            console.log(this.inbuf.slice(offset,offset+4).toString('hex'))
+            console.log(this.inbuf.slice(offset,offset+4).toString('hex'), this.inbuf.slice(offset,offset+4).readUInt32LE(), this.inbuf.slice(offset,offset+4).readFloatLE())
             offset+=4;
 
         }
