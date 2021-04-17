@@ -39,6 +39,18 @@ export class RWKpage {
 
         this.browser = await puppeteer.launch({headless});
         this.page = (await this.browser.pages())[0];
+        await this.page.setRequestInterception(true)
+        this.page.on('request', (request) => {
+            if (request.url().endsWith('.js') && !request.url().startsWith('http://robotwantskitty.com')) {
+                request.respond({
+                    status: 200,
+                    contentType: 'application/javascript; charset=utf-8',
+                    body: `console.log("blocked ${request.url()}");`
+                });
+            } else {
+                request.continue();
+            }
+        });
 
 
     }
@@ -56,12 +68,12 @@ export class RWKpage {
         await this.page?.goto(config.rwk_url);
 
 
-        // remove all the popups and adverts
-        let div_selector_to_remove= "#cmpbox";
-        await this.page!.waitForSelector(div_selector_to_remove)
-        await this.page!.$eval(div_selector_to_remove,el=> {
-            el.parentNode!.removeChild(el)
-        });
+        // // remove all the popups and adverts
+        // let div_selector_to_remove= "#cmpbox";
+        // await this.page!.waitForSelector(div_selector_to_remove)
+        // await this.page!.$eval(div_selector_to_remove,el=> {
+        //     el.parentNode!.removeChild(el)
+        // });
 
         return this.prepare_idb();
     }
