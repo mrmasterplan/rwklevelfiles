@@ -41,7 +41,7 @@ export class RWKpage {
         this.page = (await this.browser.pages())[0];
         await this.page.setRequestInterception(true)
         this.page.on('request', (request) => {
-            if (request.url().endsWith('.js') && !request.url().startsWith('http://robotwantskitty.com')) {
+            if (request.url().endsWith('.js') && !(request.url().startsWith('http://robotwantskitty.com')|| request.url().startsWith('https://unpkg.com/idb'))) {
                 request.respond({
                     status: 200,
                     contentType: 'application/javascript; charset=utf-8',
