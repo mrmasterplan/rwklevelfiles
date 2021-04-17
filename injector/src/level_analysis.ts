@@ -120,6 +120,144 @@ export class LevelDetails {
         this.grid = this._extractGrid()
         this.pgrid = this._extractPostGrid()
         this.callouts = new CalloutList(inbuf,this.pgrid.offset+this.pgrid.buf.length)
+        this.blockRundown()
+    }
+    blockRundown(){
+        let offset = 0;
+        const blocks:{b:Buffer,kind:string}[]=[]
+
+
+        // start block: Unknown function
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(blocksize!=16) console.warn(`Start block is not size 16: size ${blocksize}`)
+
+            blocks.push({kind:"start",b: this.inbuf.slice(offset, offset + blocksize)})
+            offset += blocksize
+        }
+
+        //level name:
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            const blockbuf = this.inbuf.slice(offset, offset + blocksize)
+            offset += blocksize
+            blocks.push({kind:"name",b: blockbuf })
+
+            // contents
+            console.log(`level name: ${blockbuf.toString('utf-8')}`)
+        }
+
+        // tags
+        {
+            blocks.push({kind:"tags",b: this.inbuf.slice(offset, offset + 4)})
+            offset += 4
+        }
+
+        // 15 unknown bytes
+        {
+            offset += 15
+        }
+
+        // the level grid
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            const blockbuf = this.inbuf.slice(offset, offset + blocksize)
+            offset += blocksize
+            blocks.push({kind:"grid",b: blockbuf})
+
+            const gridx = blockbuf.readUInt32LE(0)
+            const gridy = blockbuf.readUInt32LE(4)
+
+            console.log(`Got grid of size ${gridx} by ${gridy}`)
+            if(blocksize!=(gridy*gridx)*5+8) console.log(`grid block malformed. size ${blocksize}`)
+
+        }
+
+        // the callouts section
+        {
+            const magic_one = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(magic_one!=1) console.warn(`Callout magic 1 is not 1 but ${magic_one}`)
+
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            const blockbuf = this.inbuf.slice(offset, offset + blocksize)
+            offset += blocksize
+            blocks.push({kind:"callouts",b: blockbuf})
+
+            console.log(`Number of callouts: ${blockbuf.readUInt32LE(0)}`)
+        }
+
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(blocksize) console.warn(`unknown zero block f0 is not zero: size ${blocksize}`)
+        }
+        // robot position
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(blocksize!=8) console.log("robot position section not 8!!")
+            const blockbuf = this.inbuf.slice(offset, offset + blocksize)
+            offset += blocksize
+            blocks.push({kind:"robot",b: blockbuf})
+
+            console.log(`Robot position pixel x,y: ${blockbuf.readFloatLE(0)},${blockbuf.readFloatLE(4)}`)
+        }
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(blocksize) console.warn(`unknown zero block f1 is not zero: size ${blocksize}`)
+        }
+
+        // kitty position
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(blocksize!=8) console.log("kitty position section not 8!!")
+            const blockbuf = this.inbuf.slice(offset, offset + blocksize)
+            offset += blocksize
+            blocks.push({kind:"kitty",b: blockbuf})
+
+            console.log(`Kitty position pixel x,y: ${blockbuf.readFloatLE(0)},${blockbuf.readFloatLE(4)}`)
+
+        }
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(blocksize) console.warn(`unknown zero block f2 is not zero: size ${blocksize}`)
+        }
+
+        // footer position
+        {
+            const blocksize = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            blocks.push({kind:"footer",b: this.inbuf.slice(offset, offset + blocksize)})
+            offset += blocksize
+
+            // footer contains
+        }
+
+        // two more zeroes
+        {
+            const first = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(first) console.warn(`first finishing zero is not zero:  ${first}`)
+
+            const second = this.inbuf.readUInt32LE(offset);
+            offset += 4
+            if(second) console.warn(`first finishing zero is not zero:  ${second}`)
+
+        }
+        if(offset<this.inbuf.length){
+            console.log(`Expected end of level, but there is more:`)
+            console.log(this.inbuf.slice(offset))
+        }
+
+
     }
 
     _extractName(){
@@ -240,24 +378,24 @@ export class Level_analysis {
 
         // get the name:
         // const name = this.getName(buf)
-        console.log(`Level name: "${lvl.name}"`)
+        // console.log(`Level name: "${lvl.name}"`)
         const filename = lvl.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()
 
         await fs.writeFileSync(`${config.levels.bin_dir}/${filename}.kitty`, buf);
         console.log(`Saved raw to ${config.levels.bin_dir}/${filename}.kitty`)
 
         const filesize = buf.length
-        console.log(`Size of file is ${filesize}`)
+        // console.log(`Size of file is ${filesize}`)
 
         const grid = lvl.grid;
         // const grid = this.getGrid(buf);
 
-        console.log(`columns: ${grid.cols}`)
-        console.log(`rows: ${grid.rows}`)
+        // console.log(`columns: ${grid.cols}`)
+        // console.log(`rows: ${grid.rows}`)
 
-        console.log(`block array size: ${grid.buf.length} bytes`)
-        console.log(`level size without name or array is ${filesize - lvl.name.length - grid.buf.length}`)
-        console.log(`footer size ${filesize - lvl.name.length - grid.buf.length - level_structure.block_data.array_offset}`)
+        // console.log(`block array size: ${grid.buf.length} bytes`)
+        // console.log(`level size without name or array is ${filesize - lvl.name.length - grid.buf.length}`)
+        // console.log(`footer size ${filesize - lvl.name.length - grid.buf.length - level_structure.block_data.array_offset}`)
 
 
         // const post_grid_offset = level_structure.block_data.array_offset + name.length + grid.buf.length
@@ -360,6 +498,6 @@ export class Level_analysis {
         const all_values = Object.keys(cell_values).map(k=>+k);
         fs.writeFileSync( `${config.levels.bin_dir}/${filename}.fuzz.json`,JSON.stringify(all_values))
 
-        lvl.next10numbers()
+        // lvl.next10numbers()
     }
 }

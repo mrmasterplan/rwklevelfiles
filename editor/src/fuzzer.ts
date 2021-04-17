@@ -5,6 +5,7 @@ import inquirer from "inquirer";
 import {createCanvas, loadImage} from "canvas";
 import {CellGrid, Level_analysis, LevelDetails} from "./level_analysis";
 import {glob} from "glob";
+import {Level} from "./level";
 
 export const minimal_DB: {[key:string]:DB_file_hex} = {}
 minimal_DB[`/RAPTISOFT_SANDBOX/RWK`]={"timestamp":1617120257370,"mode":16895}
@@ -45,6 +46,7 @@ export class RWK_db_handler {
 }
 
 const tile_size={w:40,h:40}
+
 const visible_grid_start_screen_coords = {x:18,y:1}
 const start_x_control_area = 550
 const lvlana = new Level_analysis()
@@ -186,8 +188,115 @@ class FuzzLevel{
 
 }
 
+class RobotFuzzLevel{
+
+
+    constructor(public name:string) {
+    }
+
+    hasFreeCells(){
+        return false
+    }
+
+    allocate(val:number,filename:string){
+        throw new Error("cannot allocate to robot level")
+    }
+
+    getDBFile(){
+        // 8394112 is blank alu
+        const lvl = new Level({
+            name:this.name,
+            grid:{x:20,y:20,val:8394112},
+            robot:{x:180,y:220},
+            kitty:{x:260,y:220},
+        })
+
+        const fuzz_level = {...level_base_obj}
+        fuzz_level.contents=lvl.serialize().toString('hex')
+        return fuzz_level
+    }
+
+    async processScreenshot(screenshot_file:string){
+
+        // measured in paint.net from the screenshot:
+        // robot ul 334,152
+        // lr 371,200
+
+        // kitty ul 409,178
+        // kitty lr 451,204
+        // let's cut these out
+
+        const tasks = [
+            {
+                name:'robot',
+                ul:{
+                    x:334,
+                    y:152
+                },
+                lr:{
+                    x:372,
+                    y:201
+                }
+            },
+            {
+                name:'kitty',
+                ul:{
+                    x:409,
+                    y:178
+                },
+                lr:{
+                    x:452,
+                    y:205
+                }
+            },
+        ]
+
+        const full = await loadImage(screenshot_file);
+        const full_cv = createCanvas(full.width, full.height)
+        const full_ctx = full_cv.getContext('2d')
+        full_ctx.drawImage(full, 0, 0)
+
+        const pixel_tolerance = 10
+
+        for(let task of tasks){
+            const width = task.lr.x-task.ul.x
+            const height = task.lr.y-task.ul.y
+            const tile_cv = createCanvas(width, height)
+            const ctx = tile_cv.getContext('2d')
+
+
+            await ctx.drawImage(full_cv,task.ul.x,task.ul.y,width,height,0,0,width,height)
+
+            // the canvas data will have to be manipulated to select the background and make it transparent.
+            // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas
+            // https://github.com/Automattic/node-canvas/blob/master/examples/indexed-png-image-data.js
+
+            const idata = ctx.getImageData(0,0,width,height)
+            // we grab the color info of the top left pixel. We know this pixel is background.
+            const [bkg_r,bkg_g,bkg_b,bkg_a] = [idata.data[0],idata.data[1],idata.data[2],idata.data[3]]
+            // console.log(`bkg pixel: ${bkg_r}, ${bkg_g}, ${bkg_b}, ${bkg_a}, `)
+            // now look through all pixels. if they match, make them transparent
+            for(let i=0; i+3<idata.data.length ;i+=4){
+                if(!(bkg_r-pixel_tolerance < idata.data[i+0] && idata.data[i+0]< bkg_r+pixel_tolerance)) continue;
+                if(!(bkg_g-pixel_tolerance < idata.data[i+1] && idata.data[i+1]< bkg_g+pixel_tolerance)) continue;
+                if(!(bkg_b-pixel_tolerance < idata.data[i+2] && idata.data[i+2]< bkg_b+pixel_tolerance)) continue;
+                if(!(bkg_a-pixel_tolerance < idata.data[i+3] && idata.data[i+3]< bkg_a+pixel_tolerance)) continue;
+
+                [idata.data[i+0],idata.data[i+1],idata.data[i+2],idata.data[i+3]]=[0,0,0,0]
+            }
+            ctx.putImageData(idata, 0, 0)
+
+            fs.writeFileSync( `${config.fuzzer.tiles}/${task.name}.png`,tile_cv.toBuffer('image/png'))
+            console.log(`Captured tile ${task.name}.png`)
+        }
+
+
+    }
+
+}
+
 class FuzzLevelLibrary{
-    lvls:FuzzLevel[]
+    lvls:(FuzzLevel|RobotFuzzLevel)[]
 
     constructor() {
         this.lvls=[]
@@ -198,6 +307,10 @@ class FuzzLevelLibrary{
             this.lvls.push(new FuzzLevel(`${this.lvls.length+1}`.padStart(4,"0")))
         }
         return this.lvls[this.lvls.length-1]
+    }
+
+    addRobotLevel(){
+        this.lvls.push(new RobotFuzzLevel(`${this.lvls.length+1}`.padStart(4,"0")))
     }
 
     getFullDB(){
@@ -263,6 +376,13 @@ export class Fuzzer{
 
         }
 
+        // we also need to fuzz the robot and kitty tiles, which are very different
+        if(!fs.existsSync(`${config.fuzzer.tiles}/robot.png`) || !fs.existsSync(`${config.fuzzer.tiles}/kitty.png`)){
+            // we need to fuzz robot and kitty
+            count_allocations+=2 // just for reporting
+            lib.addRobotLevel()
+        }
+
         if(!count_allocations){
             console.log("nothing to fuzz. You already have all recessary tiles.")
             return
@@ -325,3 +445,16 @@ export class Fuzzer{
 
 
 }
+
+function robot(){
+    function dummyTestLevel(){
+        const lvl = new Level()
+        lvl.name = "robot"
+        lvl.robot.x = 180
+        lvl.robot.y = 220
+        lvl.kitty.x = 260
+        lvl.kitty.y = 220
+        fs.writeFileSync(`${config.db.levels_in}/${lvl.name}.kitty`,lvl.serialize())
+    }
+}
+
