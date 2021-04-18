@@ -111,7 +111,4 @@ For nicer instructions, see fnanfne's google doc: https://drive.google.com/file/
 # TODO
 
 Not supported yet:
-- exporting levels from the game into the Tiled editor format is not supported yet. The full structure of how paint is encoded is not understood yet. 
-- conveyor speed setting. 
-- Level Tags. 
-- Custom music settings. 
+- exporting levels from the game into the Tiled editor format is not supported yet. The full structure of how paint is encoded is not understood yet.
