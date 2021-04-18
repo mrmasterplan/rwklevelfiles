@@ -4,9 +4,7 @@ import config from "./config";
 import {IDBPDatabase} from "idb";
 import * as fs from "fs";
 
-import rimraf from "rimraf";
-import path from "path";
-import {Level_analysis} from "./level_analysis";
+// import {Level_analysis} from "./level_analysis";
 
 interface DB_file_browser {
     timestamp:any,
@@ -28,11 +26,11 @@ export class RWKpage {
     browser:Browser | undefined;
     page: Page | undefined;
 
-    anlyzer: Level_analysis
+    // anlyzer: Level_analysis
 
     constructor() {
 
-        this.anlyzer = new Level_analysis();
+        // this.anlyzer = new Level_analysis();
     }
     async ready(headless=false){
         // await this.anlyzer.ready();

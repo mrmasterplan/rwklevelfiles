@@ -51,19 +51,6 @@ on the prompt type `f`
 Now you have all the tiles. You can open the Tiled editor and open the tileset
 definitions that are saved under `resources\tilesets`.
 
-[comment]: <> (### Updated .kitty file)
-
-[comment]: <> (The converter will discover if there is already a .kitty file in the target location.)
-
-[comment]: <> (If there is, features that the converter does not support will not be overwritten.)
-
-[comment]: <> (Said another way, the converter adds supported features into the .kitty files and leaves )
-
-[comment]: <> (unsupported stuff intact.)
-
-[comment]: <> (You can fix your robot and kitty positions, music, conveyor speed etc in a level, extract the level,)
-
-[comment]: <> (and copy it into the `level_in/` folder, and these parts will remain set as they were on the next conversion.)
 
 ### Radio Beacons
 The editor supports callout texts. Simply create an object layer and add text boxes in the same location
@@ -75,6 +62,36 @@ Robot and kitty are special tiles in the tileset called `robot`. Placing any mor
 will not work in the conversion stage. Robot and kitty do not need to be placed in the grid.
 If you turn off snapping to grid, and use an Object Layer (like for callouts), you can add the two
 on boundaries, or outside the cell grid.
+
+### Conveyor speed
+
+You can set the conveyor speed for the level in Tiled. Open the map properties from the
+toolbar `Map`>`Map Properties`. Using the '+' below the custom properties section, add 
+a property of type `float` and call it `conveyor_speed`. Change this value to the desired
+conveyor speed in the game.
+- 0.1 is the lowest slider value in game.
+- 1.1 is the highest slider value in game.
+- 0.6 is the default value of the slider
+- 0.75 corresponds exactly to the robot waling speed
+
+
+### Level Tags
+
+You can set the level tags in Tiled. Open the map properties from the
+toolbar `Map`>`Map Properties`. Using the '+' below the custom properties section, add 
+a property of type `string` and call it `tags`. Write the desired tags, separating them with
+comma `,`. In the game, only three tags are allowed. Using any non-existing tags will cause
+an error.
+
+
+### Custom Music
+
+You can set the custom music links in Tiled. Open the map properties from the
+toolbar `Map`>`Map Properties`. Using the '+' below the custom properties section, add 
+a property of type `string` and call it `music_red`, `music_green` or `music_blue`. 
+Paste your music link urls into these boxes. The color refers to the music block
+of the same color.
+
 
 ## Installation
 

@@ -6,7 +6,7 @@ console.log("RWK Level Editor toolbox v1.0")
 
 import inquirer from 'inquirer'
 import {RWK_db, RWKpage} from "./rwkpage";
-import {Level_analysis, LevelDetails} from "./level_analysis";
+// import { LevelDetails} from "./level_analysis";
 import {custom_level_key_root, Fuzzer, RWK_db_handler} from "./fuzzer";
 import {glob} from "glob";
 import * as fs from "fs";
@@ -14,6 +14,7 @@ import {Tileset} from "./tileset";
 import {Tile_library} from "./tile_library";
 import {convertAllLevels} from "./converter";
 import path from "path";
+import {extractLevelName, Level} from "./level";
 
 interface CLI_option {
     description:string,
@@ -52,7 +53,7 @@ class CLI {
                         for(let key of Object.keys(db)){
                             if( key.endsWith('.kitty')){
                                 const buf = Buffer.from(db[key].contents!,'hex')
-                                const name = new LevelDetails(buf).name
+                                const name = extractLevelName(buf)
                                 fs.writeFileSync(`${config.db.levels_out}/${name}.kitty`,buf)
                                 //delete db[key]
                             }
@@ -113,14 +114,14 @@ class CLI {
                 action:async ()=>{
                     for(let reflvl of glob.sync(config.dev.base_levels+"/*")){
                         const fullbuf = fs.readFileSync(reflvl)
-                        const lvl = new LevelDetails(fullbuf);
-                        console.log(`opened level ${lvl.name}, ${lvl.grid.rows} ${lvl.grid.cols}`)
+                        const lvl = Level.from(fullbuf);
+                        console.log(`opened level ${lvl.name}, ${lvl.grid.size_x} ${lvl.grid.size_y}`)
 
                         let base_row=0;
                         let block_found = false;
                         while(!block_found) {
-                            for (let i = 0; i < lvl.grid.cols; i ++) {
-                                if(lvl.grid.getCellAsNumber(i,base_row)){
+                            for (let i = 0; i < lvl.grid.size_x; i ++) {
+                                if(lvl.grid.getCell(i,base_row)){
                                     block_found=true;
                                     break;
                                 }
@@ -134,23 +135,28 @@ class CLI {
                         const magic_skip = 4;
                         const magic_row = 1 + base_row; // after empty rows are skipped
                         const tileset = new Tileset(lvl.name)
-                        for(let i = 0; i<lvl.grid.cols; i+=magic_skip){
+                        for(let i = 0; i<lvl.grid.size_x; i+=magic_skip){
                             // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
-                            const buf = lvl.grid.getCellAsBuff(i,magic_row)
+                            let val = lvl.grid.getCell(i,magic_row)
+                            // const buf = lvl.grid.getCellAsBuff(i,magic_row)
+
                             // extra special hack for the base tile set coming up:
                             const is_base_tileset = reflvl.endsWith("base.kitty")
                             if(!is_base_tileset)
-                                buf.writeUInt8(buf.readUInt8()&0x80) // null out the block type
-                            const val = buf.readUInt32LE()
-                            if(val)
+                                val = val & 0xffffff80
+                            //in the base tileset we actually want to have the full tile type.
+                            // for all other tilesets, we only want the paint part and unpainted cells might as well be 0
+                            if(val){
+                                const buf = Buffer.alloc(4,0)
+                                buf.writeUInt32LE(val)
                                 tileset.addTile(val,`../${config.editor.tiles}/${buf.toString('hex')}.png`)
+                            }
                         }
 
 
                         fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${lvl.name}.json`,JSON.stringify(tileset.getTileset(),null,2))
                         fs.writeFileSync(`${config.editor.resources}/${config.editor.fuzz}/${lvl.name}.fuzz.json`,JSON.stringify(tileset.getValues(),null,2))
                     }
-                    // fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${base_tileset.name}.json`,JSON.stringify(base_tileset.getTileset(),null,2))
                 }
             }
         }

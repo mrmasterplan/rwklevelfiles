@@ -9,7 +9,6 @@ import {glob} from "glob";
 import config from "./config";
 import * as fs from "fs";
 import path from "path";
-import {CellGrid, Level_analysis} from "./level_analysis";
 
 import {Level} from './level'
 
@@ -24,6 +23,18 @@ export async function convertAllLevels(){
     // dummyTestLevel()
 }
 
+interface StringProperty {
+    "name":string,
+    "type":"string",
+    "value":string
+}
+interface NumberProperty {
+    "name":string,
+    "type":"float"|"int",
+    "value":number
+}
+
+type CustomProperty = NumberProperty|StringProperty
 
 interface TileChunk {
     data:number[],
@@ -45,16 +56,29 @@ interface TileLayer {
     x:number,
     y:number,
 }
-interface ObjectLayerObject {
+interface ObjectLayerObjectBase {
     id:number,
-    text?:
-        {
-            text:string,
-        },
-    gid?:number,
+    // text?:
+    //     {
+    //         text:string,
+    //     },
+    // gid?:number,
     x:number,
     y:number
 }
+
+interface ObjectLayerText extends ObjectLayerObjectBase {
+    text:
+        {
+            text:string,
+        }
+}
+interface ObjectLayerTile extends ObjectLayerObjectBase {
+    gid: number
+}
+type ObjectLayerObject = ObjectLayerText | ObjectLayerTile
+
+
 interface ObjectGroupLayer {
     id:number,
     name:string,
@@ -75,6 +99,7 @@ interface MapFile {
     tileheight:number, // this will be used when we calculate which tile a callout belongs to
     tilewidth:number,
     layers: (TileLayer|ObjectGroupLayer)[]
+    properties?:CustomProperty[]
 }
 
 interface GridCell {
@@ -82,54 +107,14 @@ interface GridCell {
     paint:number
 }
 
-interface Callout {
-    pos:{x:number,y:number},
-    text:string
-}
-
-class CalloutListWriter{
-    callouts:Callout[]
-    constructor() {
-        this.callouts=[]
-    }
-    add(pos:{x:number,y:number},text:string){
-        this.callouts.push({pos,text});
-    }
-    getBuffer(){
-        let tot_size=0
-        const callbuffers:Buffer[]=[]
-        for(let call of this.callouts){
-            const size = 13 + call.text.length
-            const buf = Buffer.alloc(size,0)
-
-            buf.writeUInt32LE(call.pos.x)
-            buf.writeUInt32LE(call.pos.y,4)
-            buf.writeUInt32LE(call.text.length+1,8)
-            Buffer.from(call.text,'utf-8').copy(buf,12)
-
-            callbuffers.push(buf)
-            tot_size+=size
-
-        }
-        const size_of_callout_field = tot_size+4
-        const buf = Buffer.alloc(size_of_callout_field+4+4)
-
-        buf.writeUInt32LE(1) //magic number unknown reason
-        buf.writeUInt32LE(size_of_callout_field,4)
-        buf.writeUInt32LE(callbuffers.length,8)
-        Buffer.concat(callbuffers).copy(buf,12)
-        return buf
-    }
-}
-
 export class LevelConverter {
     isbad:boolean
     name:string
     tile_gid:{[gid:number]:number}
-    // grid?:CellGrid
+
     offset?:{x:number,y:number}
     gridCells?:GridCell[][]
-    // calls:CalloutListWriter
+
     lvl:Level
     robot_gid?:number
     kitty_gid?:number
@@ -159,7 +144,49 @@ export class LevelConverter {
 
         this._processObjectLayers()
 
+        this._parseLevelProperties()
     }
+
+    _parseLevelProperties(){
+        if(!this.lvljson.properties) return
+        for(let prop of this.lvljson.properties){
+            switch (prop.name){
+                case 'tags': {
+                    if( prop.type!='string') break;
+                    const tags = prop.value.toString().split(',').map(t=>t.trim().toLowerCase())
+                    for(let tag of tags){
+                        this.lvl.tags.set_tag(tag)
+                    }
+                    break
+                }
+                case 'conveyor_speed': {
+                    if( prop.type!='float') break;
+                    this.lvl.footer.belt_speed = prop.value
+                    break
+                }
+                case 'music_red': {
+                    if( prop.type!='string') break;
+                    this.lvl.footer.music[0] = prop.value
+                    break
+                }
+
+                case 'music_green': {
+                    if( prop.type!='string') break;
+                    this.lvl.footer.music[1] = prop.value
+                    break
+                }
+
+                case 'music_blue': {
+                    if( prop.type!='string') break;
+                    this.lvl.footer.music[2] = prop.value
+                    break
+                }
+
+
+            }
+        }
+    }
+
     _processKittyAndRobotPosition(gid:number,x:number,y:number){
         if(gid==this.robot_gid){
             this.lvl.robot.x=x
@@ -173,8 +200,8 @@ export class LevelConverter {
 
     _processObjectLayers(){
 
-        const processCallout=(obj:ObjectLayerObject)=>{
-            if(!obj.text) return
+        const processCallout=(obj:ObjectLayerText)=>{
+            // console.log(`Processing text ${obj.text.text}`)
             const text = obj.text.text
             const x = Math.round(obj.x/this.lvljson.tilewidth) + this.offset!.x
             const y = Math.round(obj.y/this.lvljson.tileheight)+ this.offset!.y
@@ -189,8 +216,8 @@ export class LevelConverter {
             }
         }
 
-        const processTile=(obj:ObjectLayerObject)=>{
-            if(!obj.gid || ![this.robot_gid,this.kitty_gid].includes(obj.gid)) return
+        const processTile=(obj:ObjectLayerTile)=>{
+            if(![this.robot_gid,this.kitty_gid].includes(obj.gid)) return
             const x = obj.x + this.offset!.x*this.lvljson.tilewidth
             const y = obj.y+ this.offset!.y*this.lvljson.tileheight
             this._processKittyAndRobotPosition(obj.gid,x+this.lvljson.tilewidth/2,y-this.lvljson.tileheight/2)
@@ -201,15 +228,12 @@ export class LevelConverter {
                 continue; // only object layers can contain callouts
             }
             for(let obj of layer.objects){
-                if (obj.text){
+                if ("text" in obj ){
                     processCallout(obj)
-                    continue
                 }
-                if(obj.gid){
+                if('gid' in obj){
                     processTile(obj)
-                    continue
                 }
-
             }
         }
     }

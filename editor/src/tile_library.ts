@@ -2,7 +2,6 @@ import fs from "fs";
 import http from "http";
 import config from "./config";
 import {glob} from "glob";
-// import {Image} from "canvas";
 
 export class Tile_library {
 

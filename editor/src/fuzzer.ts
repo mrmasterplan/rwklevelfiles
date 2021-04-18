@@ -3,9 +3,9 @@ import config from "./config";
 import fs from "fs";
 import inquirer from "inquirer";
 import {createCanvas, loadImage} from "canvas";
-import {CellGrid, Level_analysis, LevelDetails} from "./level_analysis";
+// import {CellGrid, Level_analysis } from "./level_analysis";
 import {glob} from "glob";
-import {Level} from "./level";
+import {extractLevelName, Level} from "./level";
 
 export const minimal_DB: {[key:string]:DB_file_hex} = {}
 minimal_DB[`/RAPTISOFT_SANDBOX/RWK`]={"timestamp":1617120257370,"mode":16895}
@@ -30,7 +30,7 @@ export class RWK_db_handler {
     }
     addCustomKitty(buf:Buffer){
         console.log('db handler extract name')
-        const name = new LevelDetails(buf).name
+        const name = extractLevelName(buf)
         console.log(`got name ${name}`)
         this.db[custom_level_key_root+name+".kitty"]={
             ...level_base_obj,
@@ -49,22 +49,21 @@ const tile_size={w:40,h:40}
 
 const visible_grid_start_screen_coords = {x:18,y:1}
 const start_x_control_area = 550
-const lvlana = new Level_analysis()
-const base_grid = lvlana.getGrid(Buffer.from(level_base_obj.contents,'hex'))
+const base_lvl = Level.from(Buffer.from(level_base_obj.contents,'hex'))
 const cells_visible={
     first:{i:1,j:1},
     last:{i:13,j:8},
     //this masks out the control areas
     blacklist:[
-        base_grid.getCellID(1,1),base_grid.getCellID(1,2), //test game button upper left
+        base_lvl.grid.getCellID(1,1),base_lvl.grid.getCellID(1,2), //test game button upper left
 
-        base_grid.getCellID(8,4),base_grid.getCellID(8,5),//robot in middle
+        base_lvl.grid.getCellID(8,4),base_lvl.grid.getCellID(8,5),//robot in middle
 
         // the movement area in the bottom
-        base_grid.getCellID(1,5),base_grid.getCellID(2,5),base_grid.getCellID(3,5),
-        base_grid.getCellID(1,6),base_grid.getCellID(2,6),base_grid.getCellID(3,6),base_grid.getCellID(4,6),
-        base_grid.getCellID(1,7),base_grid.getCellID(2,7),base_grid.getCellID(3,7),base_grid.getCellID(4,7),
-        base_grid.getCellID(1,8),base_grid.getCellID(2,8),base_grid.getCellID(3,8),base_grid.getCellID(4,8),
+        base_lvl.grid.getCellID(1,5),base_lvl.grid.getCellID(2,5),base_lvl.grid.getCellID(3,5),
+        base_lvl.grid.getCellID(1,6),base_lvl.grid.getCellID(2,6),base_lvl.grid.getCellID(3,6),base_lvl.grid.getCellID(4,6),
+        base_lvl.grid.getCellID(1,7),base_lvl.grid.getCellID(2,7),base_lvl.grid.getCellID(3,7),base_lvl.grid.getCellID(4,7),
+        base_lvl.grid.getCellID(1,8),base_lvl.grid.getCellID(2,8),base_lvl.grid.getCellID(3,8),base_lvl.grid.getCellID(4,8),
 
     ], //that's 87 cells per screenshot
 
@@ -98,21 +97,18 @@ interface FuzzCellAllocation {
 
 class FuzzLevel{
 
-    buf:Buffer
-    lvlanl:Level_analysis
-    grid:CellGrid
+    lvl:Level
 
     all_cell_list:{i:number,j:number}[]
     allocations:FuzzCellAllocation[]
 
     constructor(public name:string) {
-        this.lvlanl = new Level_analysis()
-        this.buf = this.lvlanl.setName( Buffer.from(level_base_obj.contents,'hex'), name)
-        this.grid = this.lvlanl.getGrid(this.buf)
+        this.lvl = Level.from( Buffer.from(level_base_obj.contents,'hex'))
+        this.lvl.name = name
         this.all_cell_list = []
         for(let j=cells_visible.first.j; j<=cells_visible.last.j; j++)
         for(let i=cells_visible.first.i; i<=cells_visible.last.i; i++){
-            const id = this.grid.getCellID(i,j)
+            const id = this.lvl.grid.getCellID(i,j)
             if(cells_visible.blacklist.indexOf(id)>=0){
                 //cell is backlisted
                 continue
@@ -131,17 +127,17 @@ class FuzzLevel{
         const next_coord = this.all_cell_list[this.allocations.length]
         this.allocations.push({
             pos:next_coord,
-            id:this.grid.getCellID(next_coord.i,next_coord.j),
+            id:this.lvl.grid.getCellID(next_coord.i,next_coord.j),
             filename,
             fuzzval:val
         });
-        this.grid.writeCellNumber(next_coord.i,next_coord.j,val);
+        this.lvl.grid.setCell(next_coord.i,next_coord.j,val);
         // console.log(`Allocated ${val}, ${filename}`)
     }
 
     getDBFile(){
         const fuzz_level = {...level_base_obj}
-        fuzz_level.contents=this.buf.toString('hex')
+        fuzz_level.contents=this.lvl.serialize().toString('hex')
         return fuzz_level
     }
 
