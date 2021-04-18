@@ -72,7 +72,7 @@ conveyor speed in the game.
 - 0.1 is the lowest slider value in game.
 - 1.1 is the highest slider value in game.
 - 0.6 is the default value of the slider
-- 0.75 corresponds exactly to the robot waling speed
+- 0.75 corresponds exactly to the robot walking speed
 
 
 ### Level Tags
