@@ -218,6 +218,10 @@ export class Level {
         return issues
     }
 
+    changeGridSize(x_size:number,y_size:number){
+        this.grid = new Grid(x_size,y_size)
+    }
+
     serialize(){
         if(this.check_issues().length) throw new Error("Attempted to serialize level with remaining issues.")
 

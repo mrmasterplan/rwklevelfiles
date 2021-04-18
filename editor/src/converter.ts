@@ -47,10 +47,11 @@ interface TileLayer {
 }
 interface ObjectLayerObject {
     id:number,
-    text:
+    text?:
         {
             text:string,
         },
+    gid?:number,
     x:number,
     y:number
 }
@@ -125,16 +126,25 @@ export class LevelConverter {
     isbad:boolean
     name:string
     tile_gid:{[gid:number]:number}
-    grid?:CellGrid
+    // grid?:CellGrid
     offset?:{x:number,y:number}
     gridCells?:GridCell[][]
-    calls:CalloutListWriter
+    // calls:CalloutListWriter
+    lvl:Level
+    robot_gid?:number
+    kitty_gid?:number
+    tile_w:number
+    tile_h:number
+
     constructor(public filename:string, public lvljson:MapFile) {
         console.log(`Now converting ${filename}`)
+        this.tile_w=40
+        this.tile_h=40
         this.name = path.basename(filename,'.json')
         this.isbad=false
         this.tile_gid={}
-        this.calls = new CalloutListWriter()
+        this.lvl = new Level({name:this.name})
+        // this.calls = new CalloutListWriter()
         if(lvljson.type!=='map'){
             this.isbad=true
             return
@@ -142,47 +152,74 @@ export class LevelConverter {
         this._parseTilesets(lvljson.tilesets)
 
         this._setCellArrayLimits()
-        console.log(`cols:${this.grid?.cols}, rows:${this.grid?.rows}`)
+        console.log(`cols:${this.lvl.grid.size_x}, rows:${this.lvl.grid.size_y}`)
+
         this._parseLevelIntoGridCells()
         this._transferGridCellsIntoGrid()
 
-        this._extractCallouts()
+        this._processObjectLayers()
 
     }
+    _processKittyAndRobotPosition(gid:number,x:number,y:number){
+        if(gid==this.robot_gid){
+            this.lvl.robot.x=x
+            this.lvl.robot.y=y
+        }
+        if(gid==this.kitty_gid){
+            this.lvl.kitty.x=x
+            this.lvl.kitty.y=y-5
+        }
+    }
 
-    _extractCallouts(){
+    _processObjectLayers(){
+
+        const processCallout=(obj:ObjectLayerObject)=>{
+            if(!obj.text) return
+            const text = obj.text.text
+            const x = Math.round(obj.x/this.lvljson.tilewidth) + this.offset!.x
+            const y = Math.round(obj.y/this.lvljson.tileheight)+ this.offset!.y
+
+            // check that there really is a callout:
+            const cell = this.gridCells![y][x]
+            // console.log(cell)
+            if(cell.base!=70){
+                console.log(`Text id ${obj.id} "${text}" in cell (${Math.round(obj.x/this.lvljson.tilewidth)},${Math.round(obj.y/this.lvljson.tileheight)}) is not as a Radio Beacon and will be ignored.`)
+            }else{
+                this.lvl.callouts.addCallout(x,y,text)
+            }
+        }
+
+        const processTile=(obj:ObjectLayerObject)=>{
+            if(!obj.gid || ![this.robot_gid,this.kitty_gid].includes(obj.gid)) return
+            const x = obj.x + this.offset!.x*this.lvljson.tilewidth
+            const y = obj.y+ this.offset!.y*this.lvljson.tileheight
+            this._processKittyAndRobotPosition(obj.gid,x+this.lvljson.tilewidth/2,y-this.lvljson.tileheight/2)
+        }
+
         for(let layer of this.lvljson.layers) {
             if (layer.type !== 'objectgroup') {
                 continue; // only object layers can contain callouts
             }
             for(let obj of layer.objects){
-                if(!obj.text){
-                    // not a text. we don't care
+                if (obj.text){
+                    processCallout(obj)
                     continue
                 }
-                const text = obj.text.text
-                const x = Math.round(obj.x/this.lvljson.tilewidth) + this.offset!.x
-                const y = Math.round(obj.y/this.lvljson.tileheight)+ this.offset!.y
-
-                // check that there really is a callout:
-                const cell = this.gridCells![y][x]
-                // console.log(cell)
-                if(cell.base!=70){
-                    console.log(`Text id ${obj.id} "${text}" in cell (${Math.round(obj.x/this.lvljson.tilewidth)},${Math.round(obj.y/this.lvljson.tileheight)}) is not as a Radio Beacon and will be ignored.`)
-                }else{
-                    this.calls.add({x,y},text)
+                if(obj.gid){
+                    processTile(obj)
+                    continue
                 }
+
             }
         }
     }
 
     _transferGridCellsIntoGrid(){
-        for(let j=0;j<this.grid!.rows;j++){
-            for(let i=0;i<this.grid!.cols;i++){
+        for(let j=0;j<this.lvl.grid.size_y;j++){
+            for(let i=0;i<this.lvl.grid.size_x;i++){
                 const cell = this.gridCells![j][i]
-                this.grid?.writeCellNumber(i,j,cell.base+cell.paint)
+                this.lvl.grid.setCell(i,j,cell.base+cell.paint)
             }
-
         }
     }
 
@@ -197,23 +234,33 @@ export class LevelConverter {
                     for(let i = 0; i<chunk.width; i++){
                         const gid = chunk.data[i+j*chunk.width]
                         if(gid){// if data is not null
-                            const val = this.tile_gid[gid]
                             const x = i+chunk.x + this.offset!.x
                             const y = j+chunk.y +  this.offset!.y
+
+                            if(gid == this.robot_gid || gid == this.kitty_gid){
+                                this._processKittyAndRobotPosition(gid,(x+0.5)*this.tile_w,(y+0.5)*this.tile_h)
+                            }
+
+                            const val = this.tile_gid[gid]
+                            if(!val) continue  // this will be the case for robot and kitty tiles
                             const cell = this.gridCells![y][x] || {base:0,paint:0}
-                            if(val<config.editor.max_base_value){
+                            //determine the kind of cell base vs paint vs combined.
+                            const base_val = val & 0x7f
+                            const paint_val = val & 0xffffff80
+                            if(base_val){
                                 // it's a base value
                                 if(cell.base != 0 ){
                                     console.warn(`WARNING: The level cell at pos x,y=${i+chunk.x},${j+chunk.y} has more than one base value assignment. Ignoring the second one.`)
                                 }else{
-                                    cell.base = val
+                                    cell.base = base_val
                                 }
-                            }else{
+                            }
+                            if(paint_val){
                                 // it's a paint value
                                 if(cell.paint != 0 ){
                                     console.warn(`WARNING: The level cell at pos x,y=${i+chunk.x},${j+chunk.y} has more than one paint value assignment. Ignoring the second one.`)
                                 }else{
-                                    cell.paint = val
+                                    cell.paint = paint_val
                                 }
                             }
                         }
@@ -238,14 +285,13 @@ export class LevelConverter {
         }
 
         // set the cell array that we end up exporting
-        const cellBuffer = Buffer.alloc(rows*cols*4,0)
-        this.grid = new CellGrid(cols, rows, cellBuffer, 0)
+        this.lvl.changeGridSize(cols,rows)
 
         // set the cell array for intermediate analysis
         this.gridCells = []
-        for(let j=0;j<this.grid.rows;j++){
+        for(let j=0;j<this.lvl.grid.size_y;j++){
             this.gridCells[j]=[]
-            for(let i=0;i<this.grid.cols;i++){
+            for(let i=0;i<this.lvl.grid.size_x;i++){
                 this.gridCells[j][i]={base:0,paint:0}
             }
 
@@ -272,7 +318,8 @@ export class LevelConverter {
             for(let chunk of layer.chunks){
                 for(let j = 0; j<chunk.height; j++)
                     for(let i = 0; i<chunk.width; i++){
-                        if(chunk.data[i+j*chunk.width]){// if data is not null
+                        const chunk_gid = chunk.data[i+j*chunk.width]
+                        if(chunk_gid && chunk_gid!=this.robot_gid && chunk_gid!=this.kitty_gid){// if data is not null
                             const x = i+chunk.x
                             const y = j+chunk.y
                             if(typeof min_x == 'undefined' || x<min_x) min_x=x;
@@ -313,6 +360,18 @@ export class LevelConverter {
                         this.tile_gid[gid]=prop.value
                         break;
                     }
+                    if(prop.name == 'kind'){
+                        if(prop.value == 'robot'){
+                            if(this.robot_gid) console.warn("You have loaded more than one tileset with the robot tile. Only one of them will work.")
+                            this.robot_gid = gid
+                            break
+                        }
+                        if(prop.value == 'kitty'){
+                            if(this.kitty_gid) console.warn("You have loaded more than one tileset with the kitty tile. Only one of them will work.")
+                            this.kitty_gid = gid
+                            break
+                        }
+                    }
                 }
             }
         }
@@ -320,17 +379,17 @@ export class LevelConverter {
 
 
     writeToTarget(filename:string){
-        let base:Buffer;
-        if(fs.existsSync(filename)){
-            base = fs.readFileSync(filename)
-        }else{
-            base = Buffer.from(base_level)
-        }
-        const lvlana = new Level_analysis()
-        const buf = lvlana.setName(base,this.name)
-
-        const outbuf_w_grid= lvlana.setGrid(buf,this.grid!)
-        const outbuf_final = lvlana.setCallouts(outbuf_w_grid,this.calls.getBuffer())
-        fs.writeFileSync(filename,outbuf_final)
+        // let base:Buffer;
+        // if(fs.existsSync(filename)){
+        //     base = fs.readFileSync(filename)
+        // }else{
+        //     base = Buffer.from(base_level)
+        // }
+        // const lvlana = new Level_analysis()
+        // const buf = lvlana.setName(base,this.name)
+        //
+        // const outbuf_w_grid= lvlana.setGrid(buf,this.grid!)
+        // const outbuf_final = lvlana.setCallouts(outbuf_w_grid,this.calls.getBuffer())
+        fs.writeFileSync(filename,this.lvl.serialize())
     }
 }

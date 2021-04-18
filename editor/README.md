@@ -79,7 +79,7 @@ For nicer instructions, see fnanfne's google doc: https://drive.google.com/file/
 # TODO
 
 Not supported yet:
-- Kitty and Robot positions. The structure is unknown.
+- Kitty and Robot positions. The structure has been deciphered the feature is under preparation.
 - exporting levels from the game into the Tiled editor format is not supported yet. The full structure of how paint is encoded is not understood yet. 
 - conveyor speed setting. We havn't worked on it yet.
 - Level Tags. We havn't worked on it yet.
