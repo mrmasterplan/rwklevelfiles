@@ -6,18 +6,9 @@ Check out installation instructions for the tools in this project blow.
 
 ## How to make RWK levels with this tool:
 
-To start with, you will need to grab the tiles from the game. The tiles are not
-included in this project because they are proprietary artwork from raptisoft.
-This tool includes a function, called the fuzzer, to automatically grab all relevant 
-tiles from the game. You only need to execute it once, so go ahead and do that now:
-
-    npm run start 
-    # on the prompt type f
-
-Now you have all the tiles. You can open the Tiled editor and open the tileset
-definitions that are saved under `resources\tilesets`. 
-
-It is recommended that you set Tiled to snap everyting to the grid. Do this under view>Snapping>Snap to grid.
+It is recommended that you set Tiled to snap everything to the grid when working 
+tile layers. 
+Do this under view>Snapping>Snap to grid.
 
 Next create a new map in Tiled. Make sure to select
 - orientation:orthogonal
@@ -31,6 +22,7 @@ You can now create your map by placing tiles from the tileset. Please follow the
 - a cell may have at most one base tile and at most one paint tile. Any more does not work.
 - base tiles (from the base tileset) determine cell behavior. Paint tiles (all the others) only change the look.
 - the number of layers, their names, their order does not matter. You can mix base and paint tiles in every layer as long as you follow the rules above.
+- Make sure you place exactly one kitty and one robot tile anywhere.
 
 When you are done, save the map as a ".json" file and place it into the folder `levels_to_convert\`
 
@@ -46,20 +38,43 @@ You will need to fix the robot and kitty position in the in-game level editor. T
 
 Have fun.
 
-### Extras
+### One time setup
 
-#### Updated .kitty file
-The converter will discover if there is already a .kitty file in the target location.
-If there is, features that the converter does not support will not be overwritten.
-Said another way, the converter adds supported features into the .kitty files and leaves 
-unsupported stuff intact.
+The fist time you run this tool, you will need to grab the tiles from the game. The tiles are not
+included in this project because they are proprietary artwork from raptisoft.
+This tool includes a function, called the fuzzer, to automatically grab all relevant
+tiles from the game. You only need to execute it once, so go ahead and do that now:
 
-You can fix your robot and kitty positions, music, conveyor speed etc in a level, extract the level,
-and copy it into the `level_in/` folder, and these parts will remain set as they were on the next conversion.
+    npm run start 
+on the prompt type `f`
 
-#### Radio Beacons
-The editor now supports callout texts. Simply create an object layer and add text boxes in the same location
+Now you have all the tiles. You can open the Tiled editor and open the tileset
+definitions that are saved under `resources\tilesets`.
+
+[comment]: <> (### Updated .kitty file)
+
+[comment]: <> (The converter will discover if there is already a .kitty file in the target location.)
+
+[comment]: <> (If there is, features that the converter does not support will not be overwritten.)
+
+[comment]: <> (Said another way, the converter adds supported features into the .kitty files and leaves )
+
+[comment]: <> (unsupported stuff intact.)
+
+[comment]: <> (You can fix your robot and kitty positions, music, conveyor speed etc in a level, extract the level,)
+
+[comment]: <> (and copy it into the `level_in/` folder, and these parts will remain set as they were on the next conversion.)
+
+### Radio Beacons
+The editor supports callout texts. Simply create an object layer and add text boxes in the same location
 as a radio beacon tile. The converter will associate the two based on position.
+
+### Robot and Kitty
+
+Robot and kitty are special tiles in the tileset called `robot`. Placing any more than one of each 
+will not work in the conversion stage. Robot and kitty do not need to be placed in the grid.
+If you turn off snapping to grid, and use an Object Layer (like for callouts), you can add the two
+on boundaries, or outside the cell grid.
 
 ## Installation
 
@@ -79,8 +94,7 @@ For nicer instructions, see fnanfne's google doc: https://drive.google.com/file/
 # TODO
 
 Not supported yet:
-- Kitty and Robot positions. The structure has been deciphered the feature is under preparation.
 - exporting levels from the game into the Tiled editor format is not supported yet. The full structure of how paint is encoded is not understood yet. 
-- conveyor speed setting. We havn't worked on it yet.
-- Level Tags. We havn't worked on it yet.
-- Custom music settings. We havn't worked on it yet.
+- conveyor speed setting. 
+- Level Tags. 
+- Custom music settings. 
