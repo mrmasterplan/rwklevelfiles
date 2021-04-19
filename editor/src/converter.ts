@@ -270,7 +270,9 @@ export class LevelConverter {
                             const cell = this.gridCells![y][x] || {base:0,paint:0}
                             //determine the kind of cell base vs paint vs combined.
                             const base_val = val & 0x7f
-                            const paint_val = val & 0xffffff80
+
+                            let paint_val = val & 0xffffff80
+                            if(paint_val<0) paint_val+=4294967296;
                             if(base_val){
                                 // it's a base value
                                 if(cell.base != 0 ){
