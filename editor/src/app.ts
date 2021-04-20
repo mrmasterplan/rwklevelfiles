@@ -10,7 +10,7 @@ import {RWK_db, RWKpage} from "./rwkpage";
 import {custom_level_key_root, Fuzzer, RWK_db_handler} from "./fuzzer";
 import {glob} from "glob";
 import * as fs from "fs";
-import {Tileset} from "./tileset";
+import {CreateTilesets, Tileset} from "./tileset";
 import {Tile_library} from "./tile_library";
 import {convertAllLevels} from "./converter";
 import path from "path";
@@ -111,53 +111,8 @@ class CLI {
         if(process.argv[process.argv.length-1]=='dev'){
             this.options['r']={
                 description: "(r)esource pack from ref",
-                action:async ()=>{
-                    for(let reflvl of glob.sync(config.dev.base_levels+"/*")){
-                        const fullbuf = fs.readFileSync(reflvl)
-                        const lvl = Level.from(fullbuf);
-                        console.log(`opened level ${lvl.name}, ${lvl.grid.size_x} ${lvl.grid.size_y}`)
+                action:CreateTilesets,
 
-                        let base_row=0;
-                        let block_found = false;
-                        while(!block_found) {
-                            for (let i = 0; i < lvl.grid.size_x; i ++) {
-                                if(lvl.grid.getCell(i,base_row)){
-                                    block_found=true;
-                                    break;
-                                }
-                            }
-                            if(!block_found){
-                                base_row++
-                            }
-                        }
-
-
-                        const magic_skip = 4;
-                        const magic_row = 1 + base_row; // after empty rows are skipped
-                        const tileset = new Tileset(lvl.name)
-                        for(let i = 0; i<lvl.grid.size_x; i+=magic_skip){
-                            // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
-                            let val = lvl.grid.getCell(i,magic_row)
-                            // const buf = lvl.grid.getCellAsBuff(i,magic_row)
-
-                            // extra special hack for the base tile set coming up:
-                            const is_base_tileset = reflvl.endsWith("base.kitty")
-                            if(!is_base_tileset)
-                                val = val & 0xffffff80
-                            //in the base tileset we actually want to have the full tile type.
-                            // for all other tilesets, we only want the paint part and unpainted cells might as well be 0
-                            if(val){
-                                const buf = Buffer.alloc(4,0)
-                                buf.writeUInt32LE(val)
-                                tileset.addTile(val,`../${config.editor.tiles}/${buf.toString('hex')}.png`)
-                            }
-                        }
-
-
-                        fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${lvl.name}.json`,JSON.stringify(tileset.getTileset(),null,2))
-                        fs.writeFileSync(`${config.editor.resources}/${config.editor.fuzz}/${lvl.name}.fuzz.json`,JSON.stringify(tileset.getValues(),null,2))
-                    }
-                }
             }
         }
 

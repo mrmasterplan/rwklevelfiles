@@ -181,7 +181,7 @@ class Grid {
         this.celldata[y][x]=val
     }
     getCell(x:number,y:number){
-        if(x>=this.size_x || y>=this.size_y || x<0 || y<0) throw new Error('invalid grid index')
+        if(x>=this.size_x || y>=this.size_y || x<0 || y<0) return 0;
 
         return this.celldata[y][x]
     }
