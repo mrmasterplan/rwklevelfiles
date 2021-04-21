@@ -1,8 +1,8 @@
 
-import * as t from './tiled_object'
+import {tiled} from './tiled_object'
 import './tool'
 
-t.log("hello world")
+tiled.log("hello world")
 
 import {TiledMap} from 'tiled-types'
 
@@ -11,7 +11,7 @@ var customMapFormat = {
     extension: "kitty",
 
     write: function(map:TiledMap, fileName:string) {
-        t.log("not supported yet")
+        tiled.log("not supported yet")
     },
 }
 
