@@ -195,6 +195,11 @@ const config = {
 
         tile_width:40,
         tile_height:40,
+
+        map_base_tile: "resources/base_tiles/basic_map_tile.png",
+        special_tiles: [
+            "resources/base_tiles/51000000.png"
+        ],
     },
 
     fuzzer: {

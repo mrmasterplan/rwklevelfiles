@@ -2,6 +2,7 @@ import fs from "fs";
 import http from "http";
 import config from "./config";
 import {glob} from "glob";
+import path from "path";
 
 export class Tile_library {
 
@@ -23,6 +24,11 @@ export class Tile_library {
         if (!fs.existsSync(config.tile_library.library_dir)){
             fs.mkdirSync(config.tile_library.library_dir);
         }
+
+        // copy special tiles
+        config.tile_library.special_tiles.forEach(tile_path=>{
+            fs.copyFile(tile_path,config.tile_library.library_dir+'/'+path.basename(tile_path),()=>{})
+        })
 
         // const tutorial_page:string = await new Promise((res,rej)=>http.request(config.tile_library.url.http_opts, (resp)=>{
         //     let str:string = '';
@@ -55,10 +61,16 @@ export class Tile_library {
                 console.log(`Downloading for tile ${tile.index} from ${tile.url}`)
                 http.get(tile.url, (response)=> {
                     response.pipe(file);
+                    response.on('close',()=>{createBaseDerivedMapTile(tile.index,tile_file)})
                 });
             }
         }
 
     }
+
+}
+
+function createBaseDerivedMapTile(index:number,tile_file:string){
+
 
 }

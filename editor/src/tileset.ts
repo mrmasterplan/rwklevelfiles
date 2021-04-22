@@ -93,7 +93,7 @@ export class Tileset {
     }
 
     getValues(){
-        return Object.keys(this.tiles).map(i=>+i)
+        return this.tiles.map(t=>t.val)
     }
 
     getTileset(){
