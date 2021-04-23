@@ -3,6 +3,7 @@ import http from "http";
 import config from "./config";
 import {glob} from "glob";
 import path from "path";
+import {createCanvas, loadImage} from "canvas";
 
 export class Tile_library {
 
@@ -27,7 +28,11 @@ export class Tile_library {
 
         // copy special tiles
         config.tile_library.special_tiles.forEach(tile_path=>{
-            fs.copyFile(tile_path,config.tile_library.library_dir+'/'+path.basename(tile_path),()=>{})
+            const final_name = config.tile_library.library_dir+'/'+path.basename(tile_path)
+            // console.log(`copy ${tile_path} to ${final_name}`)
+            fs.copyFileSync(tile_path,final_name)
+            const index = Buffer.from(path.basename(tile_path,'.png'),'hex').readUInt32LE()
+            createBaseDerivedMapTile(index,final_name)
         })
 
         // const tutorial_page:string = await new Promise((res,rej)=>http.request(config.tile_library.url.http_opts, (resp)=>{
@@ -63,6 +68,8 @@ export class Tile_library {
                     response.pipe(file);
                     response.on('close',()=>{createBaseDerivedMapTile(tile.index,tile_file)})
                 });
+            }else{
+                createBaseDerivedMapTile(tile.index,tile_file)
             }
         }
 
@@ -70,7 +77,23 @@ export class Tile_library {
 
 }
 
-function createBaseDerivedMapTile(index:number,tile_file:string){
+async function createBaseDerivedMapTile(index:number,tile_file:string){
+    const final_name = tile_file.slice(0,-10)+".map.png"
+    if(fs.existsSync(final_name)) return
+    console.log(`Now creating map tile for index ${index}`)
 
+    const base_tile = await loadImage(tile_file);
+
+    const h_scale = (config.tile_library.map_tile.reduced_w/config.tile_library.tile_width)
+    const v_scale = (config.tile_library.map_tile.reduced_h/config.tile_library.tile_height)
+
+    const bkg = await loadImage(config.tile_library.map_base_tile);
+    const final_cv = createCanvas(bkg.width, bkg.height)
+    const final_ctx = final_cv.getContext('2d')
+    final_ctx.drawImage(bkg, 0, 0)
+    final_ctx.translate(-(config.tile_library.map_tile.reduced_w-config.tile_library.tile_width)/2,-(config.tile_library.map_tile.reduced_h-config.tile_library.tile_height)/2)
+    final_ctx.scale(h_scale,v_scale)
+    final_ctx.drawImage(base_tile, 0, 0)
+    fs.writeFileSync( final_name,final_cv.toBuffer('image/png'))
 
 }
