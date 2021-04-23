@@ -12,9 +12,9 @@ const tiled_extension_dir = isWin?
 
 const fs = require('fs');
 
-fs.readdir('./build/', (err:any, files:string[]) => {
+fs.readdir('./dist/', (err:any, files:string[]) => {
     files.forEach((file) => {
-        fse.copy('./build/'+file,tiled_extension_dir+file)
+        fse.copy('./dist/'+file,tiled_extension_dir+file)
         console.log(file);
     });
 });
