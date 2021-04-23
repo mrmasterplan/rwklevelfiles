@@ -1,3 +1,4 @@
+import {Tool} from "./Tool";
 
 interface tiled_object {
     version : string ,//[read‑only]	Currently used version of Tiled.
@@ -14,10 +15,13 @@ interface tiled_object {
 
     log:(msg:string)=>void,
     alert:(msg:string,title?:string)=>void,
+    registerTool:(name:string,tool:Tool)=>void,
+
 }
 
-// export function Tiled():tiled_object{
-//     // @ts-ignore
-//     return tiled;
-// }
-export let tiled:tiled_object
+export function Tiled():tiled_object{
+    // @ts-ignore
+    return tiled;
+}
+
+export const t:tiled_object = Tiled()

@@ -60,7 +60,7 @@ interface JsonTileset {
 export class Tileset {
     tiles:Tile[]
 
-    constructor(public name:string, public is_paintable=false) {
+    constructor(public name:string, public is_paintable=false, public map_tileset=false) {
         this.tiles=[]
     }
 
@@ -88,6 +88,15 @@ export class Tileset {
                     value:tile.paint_grid
                 })
             }
+            if(this.map_tileset){
+                // erase the other properties. this prevents collision
+                json.properties=[{
+                    name:"map",
+                    type:"int",
+                    value:tile.val
+                }]
+            }
+
             return json
         })
     }
@@ -125,6 +134,7 @@ export class Tileset {
                 value: !!this.is_paintable
             })
         }
+
         return proto_tileset
     }
 
@@ -161,6 +171,9 @@ export async function CreateTilesets(){
         const magic_row = 1 + base_row; // after empty rows are skipped
 
         const tileset = new Tileset(lvl.name,!is_base_tileset)
+        let map_tileset:Tileset|undefined;
+        if(is_base_tileset) map_tileset = new Tileset('map',false,true)
+
         for(let i = 0; i<lvl.grid.size_x; i+=magic_skip){
             // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
             let val = lvl.grid.getCell(i,magic_row)
@@ -180,7 +193,8 @@ export async function CreateTilesets(){
 
             if(is_base_tileset){
                 tileset.addTile(val,`../${config.editor.tiles}/${buf.toString('hex')}.png`)
-
+                if(map_tileset)
+                    map_tileset.addTile(val,`../${config.editor.tiles}/${buf.toString('hex').slice(0,2)}.map.png`)
             }else{
                 // for all paintable cells, we now need to find the surrounding paint pattern
                 const x=i
@@ -205,7 +219,9 @@ export async function CreateTilesets(){
 
         }
 
-
+        if(map_tileset){
+            fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${map_tileset.name}.json`,JSON.stringify(map_tileset.getTileset(),null,2))
+        }
         fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${lvl.name}.json`,JSON.stringify(tileset.getTileset(),null,2))
         fs.writeFileSync(`${config.editor.resources}/${config.editor.fuzz}/${lvl.name}.fuzz.json`,JSON.stringify(tileset.getValues(),null,2))
     }

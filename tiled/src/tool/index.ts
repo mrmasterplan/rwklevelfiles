@@ -1,50 +1,48 @@
 // this is the tool that will paint beautiful maps
 
-import {tiled} from "../tiled_object";
+import {t} from "../tiled_object";
 import {Point} from "../tiled_object/Point";
+import {Tool} from "../tiled_object/Tool";
 
 
 
-class PaintTool {
-    name= "Nice Painter"
-    static pressed=false
-    static tilePosition:Point
-    static enabled:boolean = false
+const PaintTool = {
+    name:'kitty',
+    pressed:false,
+    tilePosition:{x:1,y:1} as Point,
+    tilePositionChanged:function(){
+        if(this!.pressed) this.executeOnCurrentPos()
+    },
 
-    static tilePositionChanged(){
-        if(this.pressed) this.executeOnCurrentPos()
-    }
+    isPaintable:function(){
+        // t.log(Object.keys(t.mapEditor.tilesetsView.currentTileset.properties()).toString())
+        return !!t.mapEditor.tilesetsView.currentTileset.properties().is_paintable
+    },
 
-    static isPaintable():boolean{
 
-        return !!tiled.mapEditor.tilesetsView.currentTileset.properties().paint_tileset
-    }
-
-    static executeOnCurrentPos(){
+    executeOnCurrentPos:function(){
         if(!this.isPaintable()) {
-            tiled.alert("Error in script.")
+            t.alert("Error in script.")
             return
         }
-        tiled.log(`Painting ${this.tilePosition.x},${this.tilePosition.y}`)
+        t.log(`Painting ${this.tilePosition?.x},${this.tilePosition?.y}`)
 
         // this.map.currentLayer
-    }
-
-    static getLayer(){
+    },
+    getLayer: function(){
         //
         // return this.map.currentLayer
-    }
-
-    static mousePressed(){
+    },
+    mousePressed: function(){
         if(!this.isPaintable()){
-            // @ts-ignore
-            tiled.alert("Current tileset is not a paint tileset. Tool will not work.","Warning")
+            t.alert("Current tileset is not a paint tileset. Tool will not work.","Warning")
             return
         }
         this.pressed = true
         this.executeOnCurrentPos()
-    }
-    static mouseReleased (){
+    },
+
+    mouseReleased: function(){
         this.pressed = false
     }
 
@@ -64,7 +62,12 @@ class PaintTool {
     // }
 }
 
-
-
 // @ts-ignore
-tiled.registerTool(PaintTool.name, PaintTool)
+// PaintTool.name = 'kitty'
+
+export function register(){
+    t.log("Now registering Kitty paint tool.")
+
+    // @ts-ignore
+    t.registerTool('kitty paint', PaintTool)
+}

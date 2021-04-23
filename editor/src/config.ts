@@ -200,6 +200,10 @@ const config = {
         special_tiles: [
             "resources/base_tiles/51000000.png"
         ],
+        map_tile:{
+            reduced_w:30,
+            reduced_h:30,
+        }
     },
 
     fuzzer: {
