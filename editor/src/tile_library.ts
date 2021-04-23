@@ -66,8 +66,8 @@ export class Tile_library {
                 console.log(`Downloading for tile ${tile.index} from ${tile.url}`)
                 http.get(tile.url, (response)=> {
                     response.pipe(file);
-                    response.on('close',()=>{createBaseDerivedMapTile(tile.index,tile_file)})
                 });
+                file.on('close',()=>{createBaseDerivedMapTile(tile.index,tile_file)})
             }else{
                 createBaseDerivedMapTile(tile.index,tile_file)
             }
