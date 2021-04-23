@@ -2,7 +2,9 @@ import bitwise from "bitwise";
 
 
 const level_defaults ={
-    header : Buffer.from('00000000050000001c000000ffffffff','hex'),
+    // header : Buffer.from('000000000500000026000000ffffffff','hex'),
+    header_1 : Buffer.from('0000000005000000','hex'),
+    header_2 : Buffer.from('ffffffff','hex'),
 
     footer_head: Buffer.from('0100000000010000000000000000000000000000000000000000000000006666663f0000000000000000b800bc000000000000000000000000000000','hex'),
     footer: Buffer.from('0100000000010000000000000000000000000000000000000000000000006666663f0000000000000000b800bc0000000000000000000000000000000000003f0000003f010000000001000000000100000000','hex')
@@ -328,24 +330,41 @@ class Footer {
 
 class Header {
 
-    buf:Buffer
+    // buf:Buffer
+    name:string
     constructor() {
-        this.buf = Buffer.from(level_defaults.header)
+        this.name = ''
+        // this.buf = Buffer.from(level_defaults.header)
     }
 
-    setBuf(buf:Buffer){
-        this.buf = Buffer.from(buf)
-    }
+    // setBuf(buf:Buffer){
+    //     this.buf = Buffer.from(buf)
+    // }
 
     serialize(){
-        return delimitedBuffer(this.buf)
+        const namebuf = Buffer.from(this.name,'utf-8')
+        const parts1:Buffer[]=[]
+        parts1.push(level_defaults.header_1)
+        parts1.push(new ExpectValue(4+level_defaults.header_1.length+4+level_defaults.header_2.length+4+namebuf.length).serialize())
+        parts1.push(level_defaults.header_2)
+
+        const name_part = Buffer.alloc(5+namebuf.length,0)
+        name_part.writeUInt32LE(namebuf.length+1)
+        namebuf.copy(name_part,4)
+
+        return Buffer.concat([
+            delimitedBuffer(Buffer.concat(parts1)),
+            name_part])
     }
 
     deserialize(buf:Buffer,offset:number){
         const length = buf.readUInt32LE(offset)
+        offset+=4+length
+        const name_length = buf.readUInt32LE(offset)
         offset+=4
-        this.buf = Buffer.from(buf.slice(offset,offset+length))
-        return offset+length
+        this.name = buf.slice(offset,name_length-1).toString('utf-8')
+        offset+=name_length
+        return offset
     }
 }
 
@@ -383,7 +402,6 @@ class ExpectValue {
 
 export class Level {
     header:Header
-    name:string
     tags: Tags
     grid:Grid
     callouts:CalloutList
@@ -395,7 +413,7 @@ export class Level {
 
     constructor(options?:level_options) {
         this.header = new Header()
-        this.name = options?.name||''
+        this.header.name = options?.name||''
         this.tags = new Tags()
         this.grid = new Grid(options?.grid?.x,options?.grid?.y,options?.grid?.val)
         this.callouts = new CalloutList()
@@ -404,6 +422,12 @@ export class Level {
         this.footer = new Footer()
         this.zero = new ExpectValue(0)
         this.one = new ExpectValue(1)
+    }
+    set name(s:string){
+        this.header.name = s
+    }
+    get name(){
+        return this.header.name
     }
 
     static from(buf:Buffer){
@@ -421,7 +445,7 @@ export class Level {
         const parts:Buffer[]=[]
 
         parts.push(this.header.serialize())
-        parts.push(delimitedBuffer(Buffer.from(this.name+'\x00','utf-8')))
+        // parts.push(delimitedBuffer(Buffer.from(this.name+'\x00','utf-8'))) # name now in header
         parts.push(this.tags.serialize())
 
         parts.push(this.grid.serialize())
@@ -444,9 +468,10 @@ export class Level {
     deserialize(buf:Buffer){
         let offset = this.header.deserialize(buf,0)
 
-        const namebuf = readDelimited(buf,offset)
-        offset+=4+namebuf.length
-        this.name = namebuf.slice(0,namebuf.length-1).toString('utf-8').trim()
+        // name now in header
+        // const namebuf = readDelimited(buf,offset)
+        // offset+=4+namebuf.length
+        // this.name = namebuf.slice(0,namebuf.length-1).toString('utf-8').trim()
 
         offset = this.tags.deserialize(buf,offset)
 

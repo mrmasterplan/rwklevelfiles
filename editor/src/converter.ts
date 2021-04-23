@@ -436,6 +436,11 @@ export class LevelConverter {
         //
         // const outbuf_w_grid= lvlana.setGrid(buf,this.grid!)
         // const outbuf_final = lvlana.setCallouts(outbuf_w_grid,this.calls.getBuffer())
+        try {
+            fs.unlinkSync(filename)
+        }catch (e) {
+            
+        }
         fs.writeFileSync(filename,this.lvl.serialize())
     }
 }
