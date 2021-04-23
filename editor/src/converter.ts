@@ -102,15 +102,22 @@ interface MapFile {
     properties?:CustomProperty[]
 }
 
-interface GridCell {
-    base:number,
+class GridCell {
+    base:number
     paint:number
+    map:number
+    constructor() {
+        this.base=0
+        this.paint=0
+        this.map=0
+    }
 }
 
 export class LevelConverter {
     isbad:boolean
     name:string
     tile_gid:{[gid:number]:number}
+    map_gid:{[gid:number]:number}
 
     offset?:{x:number,y:number}
     gridCells?:GridCell[][]
@@ -128,6 +135,7 @@ export class LevelConverter {
         this.name = path.basename(filename,'.json')
         this.isbad=false
         this.tile_gid={}
+        this.map_gid={}
         this.lvl = new Level({name:this.name})
         // this.calls = new CalloutListWriter()
         if(lvljson.type!=='map'){
@@ -243,6 +251,7 @@ export class LevelConverter {
             for(let i=0;i<this.lvl.grid.size_x;i++){
                 const cell = this.gridCells![j][i]
                 this.lvl.grid.setCell(i,j,cell.base+cell.paint)
+                this.lvl.grid.setMapCell(i,j,cell.map)
             }
         }
     }
@@ -263,32 +272,39 @@ export class LevelConverter {
 
                             if(gid == this.robot_gid || gid == this.kitty_gid){
                                 this._processKittyAndRobotPosition(gid,(x+0.5)*this.tile_w,(y+0.5)*this.tile_h)
+                                continue
                             }
 
                             const val = this.tile_gid[gid]
-                            if(!val) continue  // this will be the case for robot and kitty tiles
-                            const cell = this.gridCells![y][x] || {base:0,paint:0}
-                            //determine the kind of cell base vs paint vs combined.
-                            const base_val = val & 0x7f
+                            if(val) {
+                                const cell = this.gridCells![y][x] || {base: 0, paint: 0}
+                                //determine the kind of cell base vs paint vs combined.
+                                const base_val = val & 0x7f
 
-                            let paint_val = val & 0xffffff80
-                            if(paint_val<0) paint_val+=4294967296;
-                            if(base_val){
-                                // it's a base value
-                                if(cell.base != 0 ){
-                                    console.warn(`WARNING: The level cell at pos x,y=${i+chunk.x},${j+chunk.y} has more than one base value assignment. Ignoring the second one.`)
-                                }else{
-                                    cell.base = base_val
+                                let paint_val = val & 0xffffff80
+                                if (paint_val < 0) paint_val += 4294967296;
+                                if (base_val) {
+                                    // it's a base value
+                                    if (cell.base != 0) {
+                                        console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one base value assignment. Ignoring the second one.`)
+                                    } else {
+                                        cell.base = base_val
+                                    }
+                                }
+                                if (paint_val) {
+                                    // it's a paint value
+                                    if (cell.paint != 0) {
+                                        console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one paint value assignment. Ignoring the second one.`)
+                                    } else {
+                                        cell.paint = paint_val
+                                    }
                                 }
                             }
-                            if(paint_val){
-                                // it's a paint value
-                                if(cell.paint != 0 ){
-                                    console.warn(`WARNING: The level cell at pos x,y=${i+chunk.x},${j+chunk.y} has more than one paint value assignment. Ignoring the second one.`)
-                                }else{
-                                    cell.paint = paint_val
-                                }
+                            const map_val = this.map_gid[gid]
+                            if(map_val) {
+                                this.gridCells![y][x].map=map_val
                             }
+
                         }
                     }
 
@@ -318,7 +334,7 @@ export class LevelConverter {
         for(let j=0;j<this.lvl.grid.size_y;j++){
             this.gridCells[j]=[]
             for(let i=0;i<this.lvl.grid.size_x;i++){
-                this.gridCells[j][i]={base:0,paint:0}
+                this.gridCells[j][i]=new GridCell()
             }
 
         }
@@ -384,6 +400,10 @@ export class LevelConverter {
                 for(let prop of tile.properties){
                     if(prop.name == 'bytes'){
                         this.tile_gid[gid]=prop.value
+                        break;
+                    }
+                    if(prop.name == 'map'){
+                        this.map_gid[gid]=prop.value
                         break;
                     }
                     if(prop.name == 'kind'){

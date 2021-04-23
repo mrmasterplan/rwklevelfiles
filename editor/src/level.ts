@@ -98,12 +98,12 @@ class Grid {
     size_x: number
     size_y: number
     celldata:number[][]
-    postgrid:number[][]
+    mapgrid:number[][]
     constructor(x:number=10,y:number=7,default_cell:number=0) {
         this.size_x=0
         this.size_y=0
         this.celldata=[]
-        this.postgrid=[]
+        this.mapgrid=[]
         this.setSize(x,y,default_cell)
     }
 
@@ -131,7 +131,7 @@ class Grid {
         // write post-grid
         for (let j = 0; j < this.size_y; j++) {
             for (let i = 0; i < this.size_x; i++) {
-                buf.writeUInt8(this.postgrid[j][i],offset)
+                buf.writeUInt8(this.mapgrid[j][i],offset)
                 offset+=1
             }
         }
@@ -160,7 +160,7 @@ class Grid {
         // write post-grid
         for (let j = 0; j < this.size_y; j++) {
             for (let i = 0; i < this.size_x; i++) {
-                this.postgrid[j][i]=buf.readUInt8(offset)
+                this.setMapCell(i,j,buf.readUInt8(offset))
                 offset+=1
             }
         }
@@ -172,7 +172,7 @@ class Grid {
         this.size_y=y
         this.celldata=Array.from(Array(y),row=>Array.from(Array(x),cell=>default_cell))
         // console.log(this.celldata)
-        this.postgrid=Array.from(Array(y),row=>Array.from(Array(x),cell=>0))
+        this.mapgrid=Array.from(Array(y), row=>Array.from(Array(x), cell=>0))
     }
 
     setCell(x:number,y:number,val:number){
@@ -184,6 +184,17 @@ class Grid {
         if(x>=this.size_x || y>=this.size_y || x<0 || y<0) return 0;
 
         return this.celldata[y][x]
+    }
+    setMapCell(x:number,y:number,val:number){
+        if(x>=this.size_x || y>=this.size_y || x<0 || y<0) throw new Error('invalid grid index')
+
+        this.mapgrid[y][x]=val
+    }
+
+    getMapCell(x:number,y:number){
+        if(x>=this.size_x || y>=this.size_y || x<0 || y<0) return 0;
+
+        return this.mapgrid[y][x]
     }
 
 
