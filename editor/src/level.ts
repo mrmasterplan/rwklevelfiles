@@ -358,12 +358,17 @@ class Header {
     }
 
     deserialize(buf:Buffer,offset:number){
+        // console.log(`Deserializing header from offset ${offset}`)
         const length = buf.readUInt32LE(offset)
         offset+=4+length
+
         const name_length = buf.readUInt32LE(offset)
         offset+=4
-        this.name = buf.slice(offset,name_length-1).toString('utf-8')
+        // console.log(`Deserializing name from offset ${offset}, lenght ${name_length-1}`)
+        this.name = buf.slice(offset,offset+name_length-1).toString('utf-8')
         offset+=name_length
+
+        // console.log(`name is ${this.name}`)
         return offset
     }
 }

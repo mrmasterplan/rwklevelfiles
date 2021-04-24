@@ -116,7 +116,8 @@ class GridCell {
 export class LevelConverter {
     isbad:boolean
     name:string
-    tile_gid:{[gid:number]:number}
+    base_gid:{[gid:number]:number}
+    paint_gid:{[gid:number]:number}
     map_gid:{[gid:number]:number}
 
     offset?:{x:number,y:number}
@@ -134,7 +135,8 @@ export class LevelConverter {
         this.tile_h=40
         this.name = path.basename(filename,'.json')
         this.isbad=false
-        this.tile_gid={}
+        this.base_gid={}
+        this.paint_gid={}
         this.map_gid={}
         this.lvl = new Level({name:this.name})
         // this.calls = new CalloutListWriter()
@@ -143,6 +145,10 @@ export class LevelConverter {
             return
         }
         this._parseTilesets(lvljson.tilesets)
+        // console.log("base")
+        // console.log(this.base_gid)
+        // console.log("paint")
+        // console.log(this.paint_gid)
 
         this._setCellArrayLimits()
         console.log(`cols:${this.lvl.grid.size_x}, rows:${this.lvl.grid.size_y}`)
@@ -274,35 +280,38 @@ export class LevelConverter {
                                 this._processKittyAndRobotPosition(gid,(x+0.5)*this.tile_w,(y+0.5)*this.tile_h)
                                 continue
                             }
+                            const cell = this.gridCells![y][x] || new GridCell()
 
-                            const val = this.tile_gid[gid]
-                            if(val) {
-                                const cell = this.gridCells![y][x] || {base: 0, paint: 0}
-                                //determine the kind of cell base vs paint vs combined.
-                                const base_val = val & 0x7f
+                            const base_val = this.base_gid[gid]
+                            const paint_val = this.paint_gid[gid]
+                            const map_val = this.map_gid[gid]
 
-                                let paint_val = val & 0xffffff80
-                                if (paint_val < 0) paint_val += 4294967296;
-                                if (base_val) {
-                                    // it's a base value
-                                    if (cell.base != 0) {
-                                        console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one base value assignment. Ignoring the second one.`)
-                                    } else {
-                                        cell.base = base_val
-                                    }
-                                }
-                                if (paint_val) {
-                                    // it's a paint value
-                                    if (cell.paint != 0) {
-                                        console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one paint value assignment. Ignoring the second one.`)
-                                    } else {
-                                        cell.paint = paint_val
-                                    }
+                            if(base_val) {
+                                // it's a base value
+                                if (cell.base != 0) {
+                                    console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one base value assignment. Ignoring the second one.`)
+                                } else {
+                                    // console.log(`Cell at ${x},${y} now set to base ${base_val}`)
+                                    cell.base = base_val
                                 }
                             }
-                            const map_val = this.map_gid[gid]
+                            if(paint_val) {
+                                // it's a paint value
+                                if (cell.paint != 0) {
+                                    console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one paint value assignment. Ignoring the second one.`)
+                                } else {
+                                    // console.log(`Cell at ${x},${y} now set to paint ${paint_val}`)
+                                    cell.paint = paint_val
+                                }
+                            }
                             if(map_val) {
-                                this.gridCells![y][x].map=map_val
+                                // it's a paint value
+                                if (cell.map != 0) {
+                                    console.warn(`WARNING: The level cell at pos x,y=${i + chunk.x},${j + chunk.y} has more than one map value assignment. Ignoring the second one.`)
+                                } else {
+                                    // console.log(`Cell at ${x},${y} now set to map ${map_val}`)
+                                    cell.map = map_val
+                                }
                             }
 
                         }
@@ -398,24 +407,23 @@ export class LevelConverter {
                 const gid = tile.id + tlst.firstgid
                 // look for the bytes property
                 for(let prop of tile.properties){
-                    if(prop.name == 'bytes'){
-                        this.tile_gid[gid]=prop.value
-                        break;
+                    if(prop.name == 'base'){
+                        this.base_gid[gid]=prop.value
+                    }
+                    if(prop.name == 'paint'){
+                        this.paint_gid[gid]=prop.value
                     }
                     if(prop.name == 'map'){
                         this.map_gid[gid]=prop.value
-                        break;
                     }
                     if(prop.name == 'kind'){
                         if(prop.value == 'robot'){
                             if(this.robot_gid) console.warn("You have loaded more than one tileset with the robot tile. Only one of them will work.")
                             this.robot_gid = gid
-                            break
                         }
                         if(prop.value == 'kitty'){
                             if(this.kitty_gid) console.warn("You have loaded more than one tileset with the kitty tile. Only one of them will work.")
                             this.kitty_gid = gid
-                            break
                         }
                     }
                 }

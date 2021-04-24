@@ -69,14 +69,14 @@ export class Tileset {
     }
 
     getTiles(){
-        return this.tiles.map((tile,i)=>{
+        const all_tiles:JsonTile[] =  this.tiles.map((tile,i)=>{
             const json:JsonTile = {    "id":i,
                 "image":tile.path,
                 "imageheight":40,
                 "imagewidth":40,
                 "properties":[
                     {
-                        name: "bytes",
+                        name: this.is_paintable?'paint':'base',
                         type: "int",
                         value: tile.val
                     }
@@ -99,6 +99,33 @@ export class Tileset {
 
             return json
         })
+
+        // // spring special addition. Considered, but rejected.
+        // if(!this.is_paintable) {
+        //     //special base-set extension
+        //     all_tiles.push({
+        //         "id": all_tiles.length,
+        //         "image": `../${config.editor.tiles}/3d000300.png`,
+        //         "imageheight": 40,
+        //         "imagewidth": 40,
+        //         "properties": [
+        //             {
+        //                 name: "base",
+        //                 type: "int",
+        //                 value: 0x3003d
+        //             }
+        //         ]
+        //     })
+        //     for (let i = 0; i < all_tiles.length; i++) {
+        //         const prop = all_tiles[i].properties;
+        //         if(!prop) continue
+        //         if (prop[0].value==61) {
+        //                 prop[0].value=0x1003d
+        //                 all_tiles[i].image = `../${config.editor.tiles}/3d000100.png`
+        //         }
+        //     }
+        // }
+        return all_tiles
     }
 
     getValues(){
@@ -106,7 +133,7 @@ export class Tileset {
     }
 
     getTileset(){
-        const tilevals = this.getValues()
+        // const tilevals = this.getValues()
         const proto_tileset:JsonTileset =  {
             columns: 0,
             grid: {
@@ -117,7 +144,7 @@ export class Tileset {
             margin: 0,
             name: this.name,
             spacing: 0,
-            tilecount: tilevals.length,
+            tilecount: 0,
             tiledversion: "1.5.0",
             tileheight: 40,
             tiles: this.getTiles(),
@@ -126,6 +153,7 @@ export class Tileset {
             type: "tileset",
             version: 1.5
         }
+        proto_tileset.tilecount = proto_tileset.tiles.length
         if(this.is_paintable){
             proto_tileset.properties = proto_tileset.properties||[]
             proto_tileset.properties.push({
@@ -222,7 +250,7 @@ export async function CreateTilesets(){
         if(map_tileset){
             fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${map_tileset.name}.json`,JSON.stringify(map_tileset.getTileset(),null,2))
         }
-        fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${lvl.name}.json`,JSON.stringify(tileset.getTileset(),null,2))
-        fs.writeFileSync(`${config.editor.resources}/${config.editor.fuzz}/${lvl.name}.fuzz.json`,JSON.stringify(tileset.getValues(),null,2))
+        fs.writeFileSync(`${config.editor.resources}/${config.editor.tilesets}/${tileset.name}.json`,JSON.stringify(tileset.getTileset(),null,2))
+        fs.writeFileSync(`${config.editor.resources}/${config.editor.fuzz}/${tileset.name}.fuzz.json`,JSON.stringify(tileset.getValues(),null,2))
     }
 }
