@@ -1,3 +1,4 @@
+import {TileLayerEdit} from "./TileLayerEdit";
 
 export interface Layer{
     // id : int [read‑only]	Unique (map-wide) ID of the layer (since Tiled 1.5).
@@ -14,4 +15,7 @@ export interface Layer{
     // isObjectLayer : bool [read‑only]	Whether this layer is an ObjectGroup.
     // isGroupLayer : bool [read‑only]	Whether this layer is a GroupLayer.
     // isImageLayer : bool [read‑only]	Whether this layer is an ImageLayer.
+    tileAt: (x : number, y : number)=> Tile,
+    edit: () => TileLayerEdit,
+
 }
