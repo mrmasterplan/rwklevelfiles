@@ -67,15 +67,50 @@ export class Tile_library {
                 http.get(tile.url, (response)=> {
                     response.pipe(file);
                 });
-                file.on('close',()=>{createBaseDerivedMapTile(tile.index,tile_file)})
+                file.on('close',()=>{
+                    createBaseDerivedMapTile(tile.index,tile_file)
+                    treatSpecialTiles(tile.index,tile_file)
+                })
             }else{
                 createBaseDerivedMapTile(tile.index,tile_file)
+                treatSpecialTiles(tile.index,tile_file)
             }
         }
 
     }
 
 }
+
+async function treatSpecialTiles(index:number,tile_file:string) {
+    // // spring special addition. Considered, but rejected.
+    // switch (index){
+    //     case 61: { // string
+    //         // the special case here is that we need another image for a tile shaft.
+    //         // the index 61 without modifiers gives a spring shaft
+    //         // to make a spring top, we need to add a special bit: 0x00000200 (LE!)
+    //         const extra_index = index + 0x20000
+    //
+    //         // first we need to copy the image to the top index image.
+    //         fs.copyFileSync(tile_file,path.dirname(tile_file)+'/3d000300.png')
+    //
+    //         // then we need to creat the image of the shaft image.
+    //         const base_tile = await loadImage(tile_file);
+    //
+    //         const half_cv = createCanvas(base_tile.width, base_tile.height/2)
+    //         const half_ctx = half_cv.getContext('2d')
+    //         half_ctx.drawImage(base_tile, 0, -base_tile.height/2)
+    //         const final_cv = createCanvas(base_tile.width, base_tile.height)
+    //         const final_ctx = final_cv.getContext('2d')
+    //         final_ctx.drawImage(half_cv, 0, 0)
+    //         final_ctx.drawImage(half_cv, 0, base_tile.height/2)
+    //         fs.writeFileSync( path.dirname(tile_file)+'/3d000100.png',final_cv.toBuffer('image/png'))
+    //
+    //         break;
+    //     }
+    //
+    // }
+}
+
 
 async function createBaseDerivedMapTile(index:number,tile_file:string){
     const final_name = tile_file.slice(0,-10)+".map.png"
