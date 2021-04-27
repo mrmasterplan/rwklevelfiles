@@ -1,4 +1,6 @@
-interface Tileset {
+import {Tile} from './Tile'
+
+export interface Tileset {
     name : string,//	Name of the tileset.
     image : string,//	The file name of the image used by this tileset. Empty in case of image collection tilesets.
     tiles : Tile[],// [read‑only]	Array of all tiles in this tileset. Note that the index of a tile in this array does not always match with its ID.

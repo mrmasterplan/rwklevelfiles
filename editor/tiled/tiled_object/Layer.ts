@@ -1,4 +1,5 @@
 import {TileLayerEdit} from "./TileLayerEdit";
+import {Tile} from "./Tile";
 
 export interface Layer{
     // id : int [read‑only]	Unique (map-wide) ID of the layer (since Tiled 1.5).

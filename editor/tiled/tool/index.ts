@@ -2,7 +2,8 @@
 
 import {t} from "../tiled_object";
 import {Point} from "../tiled_object/Point";
-import {Tool} from "../tiled_object/Tool";
+import {Tile} from "../tiled_object/Tile";
+// import {Tool} from "../tiled_object/Tool";
 import {Layer} from "../tiled_object/Layer";
 
 

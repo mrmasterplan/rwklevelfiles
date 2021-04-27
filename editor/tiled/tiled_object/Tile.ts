@@ -1,6 +1,7 @@
 
+import {Tileset} from './Tileset'
 
-interface Tile {
+export interface Tile {
     id : number ,//[read‑only]	ID of this tile within its tileset.
     width : number ,//[read‑only]	Width of the tile in pixels.
     height : number ,//[read‑only]	Height of the tile in pixels.

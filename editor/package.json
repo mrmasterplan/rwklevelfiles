@@ -4,6 +4,9 @@
   "description": "Extract level files from RWK web version",
   "main": "app.ts",
   "scripts": {
+    "pack": "npx webpack",
+    "setup": "node --unhandled-rejections=strict -r ts-node/register ./tiled/setup.ts",
+    "install": "npm run pack && npm run setup",
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts-node": "ts-node",
     "build": "tsc",
@@ -39,11 +42,15 @@
     "bitwise": "^2.1.0",
     "canvas": "^2.7.0",
     "dotenv": "^8.2.0",
+    "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
     "idb": "^6.0.0",
     "inquirer": "^8.0.0",
     "pngjs": "^6.0.0",
     "puppeteer": "^8.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "ts-loader": "^9.1.1",
+    "webpack": "^5.36.0",
+    "webpack-cli": "^4.6.0"
   }
 }

@@ -1,11 +1,13 @@
-import {TiledMap} from "tiled-types";
 import {t} from "../tiled_object";
+import {TileMap} from "../tiled_object/TileMap";
+
+import {Level} from '../../src/level'
 
 var customMapFormat = {
     name: "RwK Level Files",
     extension: "kitty",
 
-    write: function(map:TiledMap, fileName:string) {
+    write: function(map:TileMap, fileName:string) {
         t.log("not supported yet")
     },
 }

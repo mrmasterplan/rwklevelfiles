@@ -1,4 +1,5 @@
-import {Tool} from "./Tool";
+// import {Tool} from "./Tool";
+import {MapEditor} from "./MapEditor";
 
 interface tiled_object {
     version : string ,//[read‑only]	Currently used version of Tiled.
@@ -15,7 +16,7 @@ interface tiled_object {
 
     log:(msg:string)=>void,
     alert:(msg:string,title?:string)=>void,
-    registerTool:(name:string,tool:Tool)=>void,
+    // registerTool:(name:string,tool:Tool)=>void,
 
 }
 
