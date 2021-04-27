@@ -842,14 +842,14 @@
     },
     {
       "id": 46,
-      "image": "../tiles/00740001.png",
+      "image": "../tiles/00748000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 16806912
+          "value": 8418304
         },
         {
           "name": "paint_grid",

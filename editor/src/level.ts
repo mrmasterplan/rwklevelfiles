@@ -126,11 +126,11 @@ class Grid {
         //write main grid
         for (let j = 0; j < this.size_y; j++) {
             for (let i = 0; i < this.size_x; i++) {
-                buf.writeUInt32LE(this.celldata[j][i],offset)
+                buf.writeUInt32LE(normalizedTileValue(this.celldata[j][i]),offset)
                 offset+=4
             }
         }
-        // write post-grid
+        // write map grid
         for (let j = 0; j < this.size_y; j++) {
             for (let i = 0; i < this.size_x; i++) {
                 buf.writeUInt8(this.mapgrid[j][i],offset)
@@ -155,7 +155,7 @@ class Grid {
         //write main grid
         for (let j = 0; j < this.size_y; j++) {
             for (let i = 0; i < this.size_x; i++) {
-                this.setCell(i,j,buf.readUInt32LE(offset))
+                this.setCell(i,j,normalizedTileValue(buf.readUInt32LE(offset)))
                 offset+=4
             }
         }
@@ -180,12 +180,12 @@ class Grid {
     setCell(x:number,y:number,val:number){
         if(x>=this.size_x || y>=this.size_y || x<0 || y<0) throw new Error('invalid grid index')
 
-        this.celldata[y][x]=val
+        this.celldata[y][x]=normalizedTileValue(val)
     }
     getCell(x:number,y:number){
         if(x>=this.size_x || y>=this.size_y || x<0 || y<0) return 0;
 
-        return this.celldata[y][x]
+        return normalizedTileValue(this.celldata[y][x])
     }
     setMapCell(x:number,y:number,val:number){
         if(x>=this.size_x || y>=this.size_y || x<0 || y<0) throw new Error('invalid grid index')
@@ -500,6 +500,16 @@ export class Level {
     }
 
 
+}
+
+export function normalizedTileValue(val:number){
+    // only touch the high two bytes if there are any values set there.
+    if(val<65536) return val;
+
+    const buf=Buffer.alloc(4)
+    buf.writeUInt32LE(val)
+    Buffer.from('8000','hex').copy(buf,2)
+    return buf.readUInt32LE()
 }
 
 export function extractLevelName(buf:Buffer){

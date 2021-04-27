@@ -464,14 +464,14 @@
     },
     {
       "id": 25,
-      "image": "../tiles/80008003.png",
+      "image": "../tiles/80008000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 58720384
+          "value": 8388736
         },
         {
           "name": "paint_grid",
@@ -482,14 +482,14 @@
     },
     {
       "id": 26,
-      "image": "../tiles/800e8001.png",
+      "image": "../tiles/800e8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25169536
+          "value": 8392320
         },
         {
           "name": "paint_grid",
@@ -500,14 +500,14 @@
     },
     {
       "id": 27,
-      "image": "../tiles/000f8001.png",
+      "image": "../tiles/000f8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25169664
+          "value": 8392448
         },
         {
           "name": "paint_grid",
@@ -518,14 +518,14 @@
     },
     {
       "id": 28,
-      "image": "../tiles/800f8001.png",
+      "image": "../tiles/800f8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25169792
+          "value": 8392576
         },
         {
           "name": "paint_grid",
@@ -536,14 +536,14 @@
     },
     {
       "id": 29,
-      "image": "../tiles/000e8001.png",
+      "image": "../tiles/000e8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25169408
+          "value": 8392192
         },
         {
           "name": "paint_grid",
@@ -554,14 +554,14 @@
     },
     {
       "id": 30,
-      "image": "../tiles/80088001.png",
+      "image": "../tiles/80088000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25168000
+          "value": 8390784
         },
         {
           "name": "paint_grid",
@@ -572,14 +572,14 @@
     },
     {
       "id": 31,
-      "image": "../tiles/00088001.png",
+      "image": "../tiles/00088000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25167872
+          "value": 8390656
         },
         {
           "name": "paint_grid",
@@ -590,14 +590,14 @@
     },
     {
       "id": 32,
-      "image": "../tiles/80098001.png",
+      "image": "../tiles/80098000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25168256
+          "value": 8391040
         },
         {
           "name": "paint_grid",
@@ -608,14 +608,14 @@
     },
     {
       "id": 33,
-      "image": "../tiles/000a8001.png",
+      "image": "../tiles/000a8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25168384
+          "value": 8391168
         },
         {
           "name": "paint_grid",
@@ -626,14 +626,14 @@
     },
     {
       "id": 34,
-      "image": "../tiles/000b8001.png",
+      "image": "../tiles/000b8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25168640
+          "value": 8391424
         },
         {
           "name": "paint_grid",
@@ -644,14 +644,14 @@
     },
     {
       "id": 35,
-      "image": "../tiles/800b8001.png",
+      "image": "../tiles/800b8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25168768
+          "value": 8391552
         },
         {
           "name": "paint_grid",
@@ -662,14 +662,14 @@
     },
     {
       "id": 36,
-      "image": "../tiles/800c8001.png",
+      "image": "../tiles/800c8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25169024
+          "value": 8391808
         },
         {
           "name": "paint_grid",
@@ -680,14 +680,14 @@
     },
     {
       "id": 37,
-      "image": "../tiles/000d8001.png",
+      "image": "../tiles/000d8000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25169152
+          "value": 8391936
         },
         {
           "name": "paint_grid",
@@ -698,14 +698,14 @@
     },
     {
       "id": 38,
-      "image": "../tiles/00068001.png",
+      "image": "../tiles/00068000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25167360
+          "value": 8390144
         },
         {
           "name": "paint_grid",
@@ -716,14 +716,14 @@
     },
     {
       "id": 39,
-      "image": "../tiles/80068001.png",
+      "image": "../tiles/80068000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25167488
+          "value": 8390272
         },
         {
           "name": "paint_grid",
@@ -734,14 +734,14 @@
     },
     {
       "id": 40,
-      "image": "../tiles/00078001.png",
+      "image": "../tiles/00078000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25167616
+          "value": 8390400
         },
         {
           "name": "paint_grid",
@@ -752,14 +752,14 @@
     },
     {
       "id": 41,
-      "image": "../tiles/80078001.png",
+      "image": "../tiles/80078000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25167744
+          "value": 8390528
         },
         {
           "name": "paint_grid",
@@ -770,14 +770,14 @@
     },
     {
       "id": 42,
-      "image": "../tiles/80028001.png",
+      "image": "../tiles/80028000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25166464
+          "value": 8389248
         },
         {
           "name": "paint_grid",
@@ -788,14 +788,14 @@
     },
     {
       "id": 43,
-      "image": "../tiles/00038001.png",
+      "image": "../tiles/00038000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25166592
+          "value": 8389376
         },
         {
           "name": "paint_grid",
@@ -806,14 +806,14 @@
     },
     {
       "id": 44,
-      "image": "../tiles/80038001.png",
+      "image": "../tiles/80038000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25166720
+          "value": 8389504
         },
         {
           "name": "paint_grid",
@@ -824,14 +824,14 @@
     },
     {
       "id": 45,
-      "image": "../tiles/00028001.png",
+      "image": "../tiles/00028000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 25166336
+          "value": 8389120
         },
         {
           "name": "paint_grid",
@@ -842,14 +842,14 @@
     },
     {
       "id": 46,
-      "image": "../tiles/00160004.png",
+      "image": "../tiles/00168000.png",
       "imageheight": 40,
       "imagewidth": 40,
       "properties": [
         {
           "name": "paint",
           "type": "int",
-          "value": 67114496
+          "value": 8394240
         },
         {
           "name": "paint_grid",
