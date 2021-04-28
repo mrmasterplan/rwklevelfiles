@@ -23,9 +23,12 @@ levels, please review [the Documentation](docs/README.md).
 First, install the dependencies:
 - [Tiled editor](https://www.mapeditor.org/)
 - [NodeJS](https://nodejs.org/)
+- Git version control
 
 Then build this project by opening a console and entering
 
+    git clone https://github.com/MrMasterplan/rwklevelfiles.git
+    cd rwklevelfiles
     npm install
 
 Follow the instruction on screen.
