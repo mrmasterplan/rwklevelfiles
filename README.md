@@ -12,7 +12,7 @@ This work is in no way associated with, endorsed or supported by Raptisoft. All 
 # The Idea
 
 RWK has recently had some updates. There is now a web version that can be played in a browser: http://www.robotwantskitty.com/web/
-Using Dev Tools I discovered that the game saves custom levels in a file scructure as a byte array. There has long been a desire by the level building community to have access to more level editor features, such as map view, copy pasting sections, backups, undo etc. If we had a access to the file structure, we could create levels outside the game and format them to work in the game. 
+Using Dev Tools I discovered that the game saves custom levels in a file structure as a byte array. There has long been a desire by the level building community to have access to more level editor features, such as map view, copy pasting sections, backups, undo etc. If we had a access to the file structure, we could create levels outside the game and format them to work in the game. 
 
 # The Plan
 
