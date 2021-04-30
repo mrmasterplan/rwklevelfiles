@@ -1,4 +1,4 @@
-import {Level, normalizedTileValue} from "../level";
+import {Level, normalizedTileValue} from "../../src/level";
 import {allPaintTilesets, baseTileset, mapTileset, robotTileset} from "../kittymenu";
 
 var Buffer = require('buffer/').Buffer

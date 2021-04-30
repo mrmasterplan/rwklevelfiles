@@ -12,7 +12,6 @@ function getExtBasePath(){
 }
 
 export function allPaintTilesets(){
-    const base_path =getExtBasePath()
     const paths = [
         `ext:/rwk/tilesets/acid.json`,
         `ext:/rwk/tilesets/alu.json`,
@@ -35,14 +34,12 @@ export function allPaintTilesets(){
 }
 
 export function baseTileset(){
-    const base_path =getExtBasePath()
     const tileset = tiled.open(`ext:/rwk/tilesets/base.json`)
     if(!tileset) throw new Error("Unable to open base tileset")
     return tileset as unknown as Tileset
 }
 
 export function mapTileset(){
-    const base_path =getExtBasePath()
     const tileset = tiled.open(`ext:/rwk/tilesets/map.json`)
     if(!tileset) throw new Error("Unable to open map tileset")
     return tileset as unknown as Tileset
@@ -50,7 +47,6 @@ export function mapTileset(){
 
 
 export function robotTileset(){
-    const base_path =getExtBasePath()
     const tileset = tiled.open(`ext:/rwk/tilesets/robot.json`)
     if(!tileset) throw new Error("Unable to open robot tileset")
     return tileset as unknown as Tileset
@@ -71,7 +67,7 @@ export function register(){
 
     action.text = "Open Kitty Tilesets"
     action.checkable = false
-    // action.shortcut = "Ctrl+K"
+    action.iconVisibleInMenu = false
 
     tiled.extendMenu("Edit", [
         { action: "OpenKittyTilesets", before: "SelectAll" },

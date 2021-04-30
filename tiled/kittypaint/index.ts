@@ -15,8 +15,8 @@ const kittypaint = {} as kittypaint_type
 
 kittypaint.name = 'kittypaint'
 
-kittypaint.icon = 'c:/work/PRIVATE/tile.svg'
-// kittypaint.icon = 'ext:/rwk/tiles/kittypaint.png'
+// kittypaint.icon = 'c:/work/PRIVATE/tile.svg'
+kittypaint.icon = 'ext:/rwk/tiles/80be8000.png'
 
 kittypaint.activated = function(){
     if(!this.isPaintable()){

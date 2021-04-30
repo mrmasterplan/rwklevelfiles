@@ -1,13 +1,18 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/kitty.ts',
+    entry: './tiled/kitty.ts',
     mode: 'production',
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
+                loader: 'ts-loader',
+                options: {
+                    configFile: "tsconfig_kitty.json"
+                },
+                // use: [{
+                // }],
                 exclude: /node_modules/,
             },
         ],
