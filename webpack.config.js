@@ -19,4 +19,8 @@ module.exports = {
         filename: 'kitty.js',
         path: path.resolve(__dirname, 'dist'),
     },
+    node: {
+        __filename: false,
+        __dirname: false,
+    },
 };

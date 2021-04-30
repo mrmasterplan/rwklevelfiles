@@ -1,5 +1,6 @@
 
 interface kittypaint_type extends Tool {
+    icon:string
     pressed:boolean
     isPaintable():boolean
     executeOnCurrentPos():void
@@ -13,6 +14,9 @@ interface kittypaint_type extends Tool {
 const kittypaint = {} as kittypaint_type
 
 kittypaint.name = 'kittypaint'
+
+kittypaint.icon = 'c:/work/PRIVATE/tile.svg'
+// kittypaint.icon = 'ext:/rwk/tiles/kittypaint.png'
 
 kittypaint.activated = function(){
     if(!this.isPaintable()){

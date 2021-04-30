@@ -14,16 +14,16 @@ function getExtBasePath(){
 export function allPaintTilesets(){
     const base_path =getExtBasePath()
     const paths = [
-        `${base_path}/tilesets/acid.json`,
-        `${base_path}/tilesets/alu.json`,
-        `${base_path}/tilesets/grate.json`,
-        `${base_path}/tilesets/lava.json`,
-        `${base_path}/tilesets/mario.json`,
-        `${base_path}/tilesets/mesh.json`,
-        `${base_path}/tilesets/panels.json`,
-        `${base_path}/tilesets/steel.json`,
-        `${base_path}/tilesets/velcro.json`,
-        `${base_path}/tilesets/warn.json`,
+        `ext:/rwk/tilesets/acid.json`,
+        `ext:/rwk/tilesets/alu.json`,
+        `ext:/rwk/tilesets/grate.json`,
+        `ext:/rwk/tilesets/lava.json`,
+        `ext:/rwk/tilesets/mario.json`,
+        `ext:/rwk/tilesets/mesh.json`,
+        `ext:/rwk/tilesets/panels.json`,
+        `ext:/rwk/tilesets/steel.json`,
+        `ext:/rwk/tilesets/velcro.json`,
+        `ext:/rwk/tilesets/warn.json`,
     ]
     const tilesets:Tileset[]=[]
     for (let p of paths){
@@ -36,14 +36,14 @@ export function allPaintTilesets(){
 
 export function baseTileset(){
     const base_path =getExtBasePath()
-    const tileset = tiled.open(`${base_path}/tilesets/base.json`)
+    const tileset = tiled.open(`ext:/rwk/tilesets/base.json`)
     if(!tileset) throw new Error("Unable to open base tileset")
     return tileset as unknown as Tileset
 }
 
 export function mapTileset(){
     const base_path =getExtBasePath()
-    const tileset = tiled.open(`${base_path}/tilesets/map.json`)
+    const tileset = tiled.open(`ext:/rwk/tilesets/map.json`)
     if(!tileset) throw new Error("Unable to open map tileset")
     return tileset as unknown as Tileset
 }
@@ -51,7 +51,7 @@ export function mapTileset(){
 
 export function robotTileset(){
     const base_path =getExtBasePath()
-    const tileset = tiled.open(`${base_path}/tilesets/robot.json`)
+    const tileset = tiled.open(`ext:/rwk/tilesets/robot.json`)
     if(!tileset) throw new Error("Unable to open robot tileset")
     return tileset as unknown as Tileset
 }
