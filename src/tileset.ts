@@ -100,31 +100,7 @@ export class Tileset {
             return json
         })
 
-        // // spring special addition. Considered, but rejected.
-        // if(!this.is_paintable) {
-        //     //special base-set extension
-        //     all_tiles.push({
-        //         "id": all_tiles.length,
-        //         "image": `../${config.editor.tiles}/3d000300.png`,
-        //         "imageheight": 40,
-        //         "imagewidth": 40,
-        //         "properties": [
-        //             {
-        //                 name: "base",
-        //                 type: "int",
-        //                 value: 0x3003d
-        //             }
-        //         ]
-        //     })
-        //     for (let i = 0; i < all_tiles.length; i++) {
-        //         const prop = all_tiles[i].properties;
-        //         if(!prop) continue
-        //         if (prop[0].value==61) {
-        //                 prop[0].value=0x1003d
-        //                 all_tiles[i].image = `../${config.editor.tiles}/3d000100.png`
-        //         }
-        //     }
-        // }
+
         return all_tiles
     }
 
@@ -167,10 +143,7 @@ export class Tileset {
     }
 
 }
-// export const base_tileset = new Tileset('base')
-// for(let val of config.editor.base_tile_values){
-//     base_tileset.addTile(val,`../${config.editor.tiles}/${val.toString(16).padStart(2,'0')}000000.png`)
-// }
+
 
 export async function CreateTilesets(){
     for(let reflvl of glob.sync(config.dev.base_levels+"/*")){
@@ -194,7 +167,6 @@ export async function CreateTilesets(){
             }
         }
 
-
         const magic_skip = 4;
         const magic_row = 1 + base_row; // after empty rows are skipped
 
@@ -203,6 +175,7 @@ export async function CreateTilesets(){
         if(is_base_tileset) map_tileset = new Tileset('map',false,true)
 
         for(let i = 0; i<lvl.grid.size_x; i+=magic_skip){
+            // console.log(`try i=${i} size=${lvl.grid.size_x}`)
             // const tileval = lvl.grid.getCellAsNumber(j,magic_row)
             let val = lvl.grid.getCell(i,magic_row)
             // const buf = lvl.grid.getCellAsBuff(i,magic_row)
@@ -229,15 +202,15 @@ export async function CreateTilesets(){
                 const y=magic_row
                 // grap the used/unused state of the surrounding cells.
                 const cases:boolean[]=[]
-                cases.push(!!lvl.grid.getCell(x-1,y-1))
-                cases.push(!!lvl.grid.getCell(x,y-1))
-                cases.push(!!lvl.grid.getCell(x+1,y-1))
-                cases.push(!!lvl.grid.getCell(x-1,y))
+                try{cases.push(!!lvl.grid.getCell(x-1,y-1))}catch {cases.push(false)}
+                try{cases.push(!!lvl.grid.getCell(x,y-1))}catch {cases.push(false)}
+                try{cases.push(!!lvl.grid.getCell(x+1,y-1))}catch {cases.push(false)}
+                try{cases.push(!!lvl.grid.getCell(x-1,y))}catch {cases.push(false)}
                 // cases.push(lvl.grid.getCell(x,y-1)) // the cell itself
-                cases.push(!!lvl.grid.getCell(x+1,y))
-                cases.push(!!lvl.grid.getCell(x-1,y+1))
-                cases.push(!!lvl.grid.getCell(x,y+1))
-                cases.push(!!lvl.grid.getCell(x+1,y+1))
+                try{cases.push(!!lvl.grid.getCell(x+1,y))}catch {cases.push(false)}
+                try{cases.push(!!lvl.grid.getCell(x-1,y+1))}catch {cases.push(false)}
+                try{cases.push(!!lvl.grid.getCell(x,y+1))}catch {cases.push(false)}
+                try{cases.push(!!lvl.grid.getCell(x+1,y+1))}catch {cases.push(false)}
                 cases.map(x=>x?"1":"0").join("")
 
                 tileset.addTile(val,`../${config.editor.tiles}/${buf.toString('hex')}.png`,cases.map(x=>x?"1":"0").join(""))

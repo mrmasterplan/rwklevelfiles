@@ -251,6 +251,7 @@ class Grid {
     }
 
     _checkLimits(x:number,y:number){
+        // console.log(`${x},${this.size_x},${x>=this.size_x}`)
         if(x>=this.size_x || y>=this.size_y || x<0 || y<0) throw new Error('invalid grid index')
     }
     setCell(x:number,y:number,val:number){
