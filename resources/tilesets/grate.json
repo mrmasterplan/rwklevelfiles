@@ -1,0 +1,872 @@
+{
+  "columns": 0,
+  "grid": {
+    "height": 1,
+    "orientation": "orthogonal",
+    "width": 1
+  },
+  "margin": 0,
+  "name": "grate",
+  "spacing": 0,
+  "tilecount": 47,
+  "tiledversion": "1.5.0",
+  "tileheight": 40,
+  "tiles": [
+    {
+      "id": 0,
+      "image": "../tiles/005c8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8412160
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11111111"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "image": "../tiles/804f8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408960
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01101011"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "image": "../tiles/00518000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409344
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00011111"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "image": "../tiles/80528000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409728
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11010110"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "image": "../tiles/00548000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410112
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11111000"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "image": "../tiles/004b8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407808
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00001011"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "image": "../tiles/804b8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407936
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00010110"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "image": "../tiles/004c8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408064
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11010000"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "image": "../tiles/804a8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407680
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01101000"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "image": "../tiles/805d8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8412544
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00011000"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "image": "../tiles/005d8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8412416
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01000010"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "image": "../tiles/00478000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8406784
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00001000"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "image": "../tiles/80478000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8406912
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00000010"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "image": "../tiles/00488000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407040
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00010000"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "image": "../tiles/80468000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8406656
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01000000"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "image": "../tiles/005a8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411648
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01111111"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "image": "../tiles/805b8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8412032
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11011111"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "image": "../tiles/005b8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411904
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11111110"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "image": "../tiles/805a8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411776
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11111011"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "image": "../tiles/00578000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410880
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01111011"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "image": "../tiles/80578000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411008
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01011111"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "image": "../tiles/00588000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411136
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11011110"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "image": "../tiles/80588000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411264
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11111010"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "image": "../tiles/00598000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411392
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01111110"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "image": "../tiles/80598000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8411520
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11011011"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "image": "../tiles/80568000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410752
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11011010"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "image": "../tiles/00558000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410368
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01111010"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "image": "../tiles/80558000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410496
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01011011"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "image": "../tiles/00568000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410624
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01011110"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "image": "../tiles/80548000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8410240
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01011010"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "image": "../tiles/004f8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408832
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01001011"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "image": "../tiles/804e8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408704
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01101010"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "image": "../tiles/00508000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409088
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00011011"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "image": "../tiles/80508000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409216
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00011110"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "image": "../tiles/80518000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409472
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01010110"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "image": "../tiles/00528000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409600
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11010010"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "image": "../tiles/00538000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409856
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01111000"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "image": "../tiles/80538000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8409984
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "11011000"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "image": "../tiles/804c8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408192
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01001010"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "image": "../tiles/004d8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408320
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00011010"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "image": "../tiles/804d8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408448
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01010010"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "image": "../tiles/004e8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8408576
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01011000"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "image": "../tiles/00498000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407296
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00001010"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "image": "../tiles/80498000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407424
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00010010"
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "image": "../tiles/004a8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407552
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01010000"
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "image": "../tiles/80488000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8407168
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "01001000"
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "image": "../tiles/805c8000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "paint",
+          "type": "int",
+          "value": 8412288
+        },
+        {
+          "name": "paint_grid",
+          "type": "string",
+          "value": "00000000"
+        }
+      ]
+    }
+  ],
+  "tilewidth": 40,
+  "type": "tileset",
+  "version": 1.5,
+  "properties": [
+    {
+      "name": "is_paintable",
+      "type": "bool",
+      "value": true
+    }
+  ]
+}
