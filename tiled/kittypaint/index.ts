@@ -15,17 +15,18 @@ const kittypaint = {} as kittypaint_type
 
 kittypaint.name = 'kittypaint'
 
-// kittypaint.icon = 'c:/work/PRIVATE/tile.svg'
-kittypaint.icon = 'ext:/rwk/tiles/80be8000.png'
+// // Restore this when issue is resolved: https://github.com/mapeditor/tiled/issues/3048
+// kittypaint.icon = 'ext:/rwk/tiles/80be8000.png'
 
 kittypaint.activated = function(){
-    if(!this.isPaintable()){
-        tiled.alert("Current tileset is not a paint tileset. Tool will not work.","Warning")
-        return
-    }
+    if(!this.isPaintable()) return
 }
+
 kittypaint.isPaintable=()=>{
-    return !!tiled.mapEditor.tilesetsView.currentTileset?.property("is_paintable")
+    const paintable = !!tiled.mapEditor.tilesetsView.currentTileset?.property("is_paintable")
+    if(!paintable)
+        tiled.alert("Current tileset is not a paint tileset. Tool will not work.","Warning")
+    return paintable
 }
 
 kittypaint.parsed_tileset=function (){
@@ -74,10 +75,8 @@ kittypaint.tilePositionChanged = function(){
 }
 
 kittypaint.mousePressed= function(){
-    if(!this.isPaintable()){
-        tiled.alert("Current tileset is not a paint tileset. Tool will not work.","Warning")
-        return
-    }
+
+    if(!this.isPaintable()) return
     this.pressed = true
     this.executeOnCurrentPos()
 }
