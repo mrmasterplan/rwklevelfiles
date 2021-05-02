@@ -152,7 +152,7 @@ export class RWKpage {
     }
 
     async db_addKey(key:string, obj_h:DB_file_hex) {
-        console.log(`Restoring DB key ${key}`)
+        // console.log(`Restoring DB key ${key}`)
 
         await this.page!.evaluate(async (config,key:string,obj_h:DB_file_hex) => {
 

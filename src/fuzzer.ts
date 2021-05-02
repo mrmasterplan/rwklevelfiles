@@ -29,9 +29,7 @@ export class RWK_db_handler {
         }
     }
     addCustomKitty(buf:Buffer){
-        console.log('db handler extract name')
         const name = extractLevelName(buf)
-        console.log(`got name ${name}`)
         this.db[custom_level_key_root+name+".kitty"]={
             ...level_base_obj,
             contents:buf.toString('hex')
