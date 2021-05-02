@@ -56,6 +56,7 @@ dotkitty.read = function (fileName:string){
 
     const bs = new BinaryFile(fileName,BinaryFile.ReadOnly);
     const buf = Buffer.from(bs.readAll())
+    bs.close()
     tiled.log('Binary file read to memory.')
 
     const lvl = Level.from(buf)
@@ -133,7 +134,7 @@ dotkitty.read = function (fileName:string){
     }
     map.addLayer(callout_layer)
 
-
+    tiled.trigger('FitInView')
     return map
 }
 
@@ -153,7 +154,7 @@ dotkitty.write=function(map:TileMap, fileName:string) {
     lvl.footer.music[0] = map.property('music_red')?.toString() ||''
     lvl.footer.music[1] = map.property('music_green')?.toString() ||''
     lvl.footer.music[2] = map.property('music_blue')?.toString() ||''
-    map.property('tags')?.toString().split(',').map(t=>{lvl.tags.set_tag(t.trim().toLowerCase())})
+    map.property('tags')?.toString().split(',').map(t=>{if(t)lvl.tags.set_tag(t.trim().toLowerCase())})
 
     // determine actual map size. (a bit complicated for infinite maps)
     let limits:{[key:string]:number} = {}
@@ -196,13 +197,15 @@ dotkitty.write=function(map:TileMap, fileName:string) {
                     if(!tile) continue
                     const props = tile.properties()
                     if(props.kind){
-                        const pos = map.tileToPixel(lvl_i,lvl_j) // here we intentionally convert the lvl coordinates.
+                        //// line commeted out and replaced with manual code until this is fixed: https://github.com/mapeditor/tiled/issues/3054
+                        // const pos = map.tileToPixel(lvl_i,lvl_j) // here we intentionally convert the lvl coordinates.
+                        const pos:point = {x:map.tileWidth*lvl_i,y:map.tileHeight*lvl_j}
                         if(props.kind === 'robot'){
                             lvl.robot.x = pos.x + map.tileWidth/2
-                            lvl.robot.y = pos.y - map.tileHeight/2
+                            lvl.robot.y = pos.y + map.tileHeight/2
                         }else if(props.kind === 'kitty'){
                             lvl.kitty.x = pos.x + map.tileWidth/2
-                            lvl.kitty.y = pos.y - map.tileHeight/2
+                            lvl.kitty.y = pos.y + map.tileHeight/2
                         }else return `Tile at ${i},${j} in layer ${layer.name} has unknown kind ${props.kind}`
                     }else if(props.base){
                         const base = parseInt(props.base.toString())
@@ -230,11 +233,11 @@ dotkitty.write=function(map:TileMap, fileName:string) {
                         y:mobj.y-limits.miny*map.tileHeight,
                     }
                     if(props.kind === 'robot'){
-                        lvl.robot.x = pos.x + mobj.tile.width/2
-                        lvl.robot.y = pos.y - mobj.tile.height/2
+                        lvl.robot.x = pos.x + map.tileWidth/2
+                        lvl.robot.y = pos.y - map.tileHeight/2
                     }else if(props.kind === 'kitty'){
-                        lvl.kitty.x = pos.x + mobj.tile.width/2
-                        lvl.kitty.y = pos.y - mobj.tile.height/2
+                        lvl.kitty.x = pos.x + map.tileWidth/2
+                        lvl.kitty.y = pos.y - map.tileHeight/2
                     }else return `Tile at ${mobj.x},${mobj.y} in layer ${layer.name} has unknown kind ${props.kind}`
                 }
                 else if(mobj.text){
@@ -257,7 +260,7 @@ dotkitty.write=function(map:TileMap, fileName:string) {
     bs.resize(buf.length)
     bs.write(buf.buffer)
     bs.commit()
-    // bs.close()
+    //bs.close()
 
 
     return ''
