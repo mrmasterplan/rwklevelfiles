@@ -37,6 +37,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@mapeditor/tiled-api": "^1.6.0-beta",
     "bitwise": "^2.1.0",
     "buffer": "^6.0.3",
     "canvas": "^2.7.0",

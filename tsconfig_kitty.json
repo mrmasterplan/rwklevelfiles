@@ -6,7 +6,7 @@
     "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     "typeRoots": [
       "./node_modules/@mapeditor",
-      "./node_modules/@types",
+      "./node_modules/@types"
 //      "./src/types",
     ],
     "outDir": "./build",                        /* Redirect output structure to the directory. */

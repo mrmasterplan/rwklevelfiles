@@ -11,8 +11,6 @@ module.exports = {
                 options: {
                     configFile: "tsconfig_kitty.json"
                 },
-                // use: [{
-                // }],
                 exclude: /node_modules/,
             },
         ],
@@ -22,7 +20,7 @@ module.exports = {
     },
     output: {
         filename: 'kitty.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'rwk'),
     },
     node: {
         __filename: false,
