@@ -1,6 +1,35 @@
 
 # File structure
 
+For a detailed run-down of how the data is encoded, please read the 
+file [level.ts](../src/level.ts)
+
+Kitty files contain the following information:
+- Level name
+- winnability (not implemented)
+- 1-up (not implemented)
+- bit whether the "win without dying to get 1-up"-banner has been shown (not implemented)
+- paint layer counter (not implemented)
+- level grid size x and y
+- level grid 4 bytes per cell
+    - Each cell is 4 bytes. The bytes are packed
+      with information. The lowest 7 bits are the base type. The next 9 bits are
+      the paint. The highest 9 bits are a counter that increases with each layer
+      of paint. Of the remaining 7 bits, two are used for spring shaft vs top.
+      The rest I don't know, may be unused.
+      For my work, I just reset the counter to 1 (mustn't be 0) for every cell,
+      and it works.
+      there are 47 types of paint for each style
+      (http://www.cr31.co.uk/stagecast/wang/blob.html) and there are 10 types of
+      paint. That is 470 tiles to encode in only 9 bits which have 512
+      possibilities (511 actually since 0 is no paint).
+      There would not have been space for an 11th paint in there.
+- the map grid 1 byte per cell (this is not settable in the in-game editor at all.)
+  - the map grid code is equals to the base type code
+- the call-out texts referenced to tile grid coordinates.
+- the robot and kitty positions as floating point pixel coordinates x,y. (using 40px as the tile size)
+
+
 What we know:
 - A level file is comprised of a header, the cell array, and a footer.
 - The serialization format does not use a table of contents. We know this because
