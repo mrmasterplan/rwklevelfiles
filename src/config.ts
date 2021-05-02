@@ -210,7 +210,7 @@ const config = {
     },
 
     install: {
-        dist: "./dist/",
+        dist: "./rwk/",
         tiled_extension_dir: (process.platform === "win32")?
             `${process.env.USERPROFILE}/AppData/Local/Tiled/extensions/`:
             `~/.config/tiled/extensions/`,

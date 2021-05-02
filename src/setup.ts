@@ -6,6 +6,8 @@ import {Fuzzer} from "./fuzzer";
 import inquirer from "inquirer";
 import {Tile_library} from "./tile_library";
 
+const yes_to_all = (process.argv[process.argv.length-1]==='yes')
+
 async function install_all() {
     console.log("Running installer...")
     console.log("  Building extension package...")
@@ -16,10 +18,12 @@ async function install_all() {
     if (Fuzzer.anything_to_fuzz()) {
         console.log("------------------------------------------------")
         console.log("You need to fuzz the tile graphics. Do that now?")
-        const next_action = (await inquirer.prompt([{ type: 'input', name: 'ready', message: "Yes/No:",  }])).ready
-        if(! 'yes'.startsWith(next_action.toLowerCase())){
-            console.log("Installation aborted.")
-            return
+        if(!yes_to_all){
+            const next_action = (await inquirer.prompt([{ type: 'input', name: 'ready', message: "Yes/No:",  }])).ready
+            if(! 'yes'.startsWith(next_action.toLowerCase())){
+                console.log("Installation aborted.")
+                return
+            }
         }
         const tilelib = new Tile_library()
         await tilelib.download_tile_library()
@@ -33,6 +37,19 @@ async function install_all() {
     console.log(`    Copy tile images to ${config.install.dist}`)
     fse.copySync(path.join(config.editor.resources, config.editor.tiles), path.join(config.install.dist, 'tiles'))
 
+    console.log("------------------------------------------------")
+    console.log(`The Tiled editor extension has been assembled in the folder ${config.install.dist}.`)
+    if(!yes_to_all){
+        const next_action = (await inquirer.prompt([{
+            type: 'input',
+            name: 'ready',
+            message: "Install extension to Tiled? yes/No:",
+        }])).ready
+        if (!'yes'.startsWith(next_action.toLowerCase())) {
+            console.log("Installation aborted.")
+            return
+        }
+    }
     console.log(`  Copy extension package to ${config.install.tiled_extension_dir}`)
     fse.copySync(config.install.dist, path.join(config.install.tiled_extension_dir, 'rwk'))
 }
