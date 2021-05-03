@@ -23,33 +23,33 @@ dotkitty.read = function (fileName:string){
 
     tiled.log('Read operation started')
     tiled.log('Parse all tilesets')
+
+    for (let set of [baseTileset(),mapTileset(),robotTileset()].concat(allPaintTilesets())) {
+        map.addTileset(set)
+        tiled.close(set)
+    }
+
     const paint_registry:{[key:number]:Tile} = {}
     const base_registry:{[key:number]:Tile} = {}
     const map_registry:{[key:number]:Tile} = {}
     const robot_registry:{robot?:Tile,kitty?:Tile} = {}
-    for (let set of allPaintTilesets()) {
+    for (let set of map.tilesets) {
         for (let tile of set.tiles) {
-            const index = tile.property('paint')
-            if (!index) throw new Error(`tile in paint tileset ${set.name} has no paint property`)
-            paint_registry[normalizedTileValue(+index)] = tile
+            const props = tile.properties()
+            if(props.paint){
+                paint_registry[normalizedTileValue(+props.paint)] = tile
+            }else if(props.base){
+                base_registry[normalizedTileValue(+props.base)] = tile
+            }else if(props.map){
+                map_registry[normalizedTileValue(+props.map)] = tile
+            }else if(props.kind){
+                if(props.kind === 'robot') robot_registry.robot = tile
+                else if(props.kind ==='kitty')robot_registry.kitty = tile
+                else throw new Error(`tile in robot tileset has invalid kind property ${props.kind}`)
+            }else{
+                throw new Error(`Tile of unknown type in tileset ${set.name}`)
+            }
         }
-    }
-    for (let tile of baseTileset().tiles) {
-        const index = tile.property('base')
-        if(!index)throw new Error(`tile in base tileset has no base property`)
-        base_registry[normalizedTileValue(+index)] = tile
-    }
-    for (let tile of mapTileset().tiles) {
-        const index = tile.property('map')
-        if(!index)throw new Error(`tile in map tileset has no map property`)
-        map_registry[normalizedTileValue(+index)] = tile
-    }
-    for (let tile of robotTileset().tiles) {
-        const kind = tile.property('kind')
-        if(!kind)throw new Error(`tile in robot tileset has no kind property`)
-        if(kind === 'robot') robot_registry.robot = tile
-        else if(kind ==='kitty')robot_registry.kitty = tile
-        else throw new Error(`tile in robot tileset has invalid kind property ${kind}`)
     }
 
     if(!robot_registry.robot || !robot_registry.kitty) throw new Error(`robot and/or kitty tiles not found`)
