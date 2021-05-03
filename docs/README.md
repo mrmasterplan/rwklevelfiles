@@ -22,6 +22,15 @@ After installing the necessary packages, scripts will be launched that do the fo
 - the tiled extension will be packaged for installation in a directory called `rwk/`
 - (after another confirmation) the extension will be copied to the global extension directory of the Tiled editor.
 
+## Uninstall
+
+To uninstall, open the Tiled extension folder (in Tiled go to Menu Edit=>Preferences=>Plugins then click to open the extension directory).
+In this directory delete the folder `rwk/`.
+
+Finally, simply delete the folder where you cloned this project.
+
+This concludes all uninstallation steps.
+
 # Using the puppeteer tool
 
 From the command line, launch
@@ -65,7 +74,7 @@ The tiled extension includes the following
 ## Getting started with making levels
 
 The recommended way to start making levels is to make basic level in the in-game
-editor, [Extract] it with the included tool, and then open the `.kitty` file in Tiled.
+editor, [extract](#extract) it with the included tool, and then open the `.kitty` file in Tiled.
 
 ## Kitty levels in Tiled
 
