@@ -5,6 +5,7 @@ For a detailed run-down of how the data is encoded, please read the
 file [level.ts](../src/level.ts)
 
 Kitty files contain the following information:
+- MakerMall level index (not implemented)
 - Level name
 - winnability (not implemented)
 - 1-up (not implemented)
