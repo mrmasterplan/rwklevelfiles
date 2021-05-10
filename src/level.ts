@@ -416,6 +416,7 @@ class Footer {
         offset += 8 //the value is doubled for some reason
 
         for(let i=0;i<3;i++){
+            if(offset==final_offset) return offset // The level Eyedea n Abilities does not have the following part.
             const length = buf.readUInt32LE(offset)
             offset+=4
             this.music[i] = buf.slice(offset,offset+length-1).toString('utf-8')
@@ -481,6 +482,7 @@ interface level_options {
     name?:string
     robot?:{x:number;y:number}
     kitty?:{x:number;y:number}
+    debug?:(s:string)=>void
 }
 
 class ExpectValue {
@@ -515,6 +517,8 @@ export class Level {
     zero:ExpectValue
     one:ExpectValue
 
+    debug?:(s:string)=>void
+
     constructor(options?:level_options) {
         this.header = new Header()
         this.header.name = options?.name||''
@@ -526,6 +530,7 @@ export class Level {
         this.footer = new Footer()
         this.zero = new ExpectValue(0)
         this.one = new ExpectValue(1)
+        this.debug = options?.debug
     }
     set name(s:string){
         this.header.name = s
@@ -534,14 +539,19 @@ export class Level {
         return this.header.name
     }
 
-    static from(buf:Buffer){
-        const lvl = new Level()
+    static from(buf:Buffer, debug?:(s:string)=>void){
+        const lvl = new Level({debug})
         lvl.deserialize(buf)
         return lvl
     }
 
     changeGridSize(x_size:number,y_size:number){
         this.grid = new Grid(x_size,y_size)
+    }
+    dbg(s:string){
+        if(this.debug){
+            this.debug(s)
+        }
     }
 
     serialize(){
@@ -570,21 +580,25 @@ export class Level {
     }
 
     deserialize(buf:Buffer){
+        this.dbg("beginning level deserialization")
         let offset = this.header.deserialize(buf,0)
-
+        this.dbg("header deser passed")
         // name now in header
         // const namebuf = readDelimited(buf,offset)
         // offset+=4+namebuf.length
         // this.name = namebuf.slice(0,namebuf.length-1).toString('utf-8').trim()
 
         offset = this.tags.deserialize(buf,offset)
+        this.dbg("tags deser passed")
 
         offset = this.grid.deserialize(buf,offset)
+        this.dbg("grid deser passed")
 
         offset = this.one.deserialize(buf,offset) // magic one. reason unknown.
 
 
         offset = this.callouts.deserialize(buf,offset)
+        this.dbg("callouts deser passed")
 
         offset = this.zero.deserialize(buf,offset)
         offset = this.robot.deserialize(buf,offset)
@@ -592,9 +606,14 @@ export class Level {
         offset = this.kitty.deserialize(buf,offset)
         offset = this.zero.deserialize(buf,offset)
 
+        this.dbg("robot and kitty deser passed")
+
         offset = this.footer.deserialize(buf, offset)
+        this.dbg("footer deser passed")
+
         offset = this.zero.deserialize(buf,offset)
         offset = this.zero.deserialize(buf,offset)
+        this.dbg("complete deserilaization passed")
 
     }
 

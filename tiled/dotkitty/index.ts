@@ -1,6 +1,8 @@
 import {Level, normalizedTileValue} from "../../src/level";
 import {allPaintTilesets, baseTileset, mapTileset, robotTileset} from "../kittymenu";
 
+import {config} from "../config";
+
 var Buffer = require('buffer/').Buffer
 
 interface dotkitty_type extends MapFormat {
@@ -13,16 +15,18 @@ const dotkitty = {
 } as dotkitty_type
 
 
-
+function dbg(s:string){
+    if(config.debug) tiled.log(s)
+}
 
 dotkitty.read = function (fileName:string){
-    tiled.log(`Attempting to open ${fileName}`)
+    dbg(`Attempting to open ${fileName}`)
     const map = new TileMap()
     map.setTileSize(40,40)
     map.infinite = true
 
-    tiled.log('Read operation started')
-    tiled.log('Parse all tilesets')
+    dbg('Read operation started')
+    dbg('Parse all tilesets')
 
     for (let set of [baseTileset(),mapTileset(),robotTileset()].concat(allPaintTilesets())) {
         map.addTileset(set)
@@ -59,7 +63,7 @@ dotkitty.read = function (fileName:string){
     bs.close()
     tiled.log('Binary file read to memory.')
 
-    const lvl = Level.from(buf)
+    const lvl = Level.from(buf,dbg)
     tiled.log(`Level parsed. Name: ${lvl.name}`)
 
     map.setProperty('name',lvl.name)
