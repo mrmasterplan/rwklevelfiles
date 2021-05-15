@@ -70,6 +70,10 @@ The tiled extension includes the following
 - When working with the kitty paint tilesets, a new tool called 'kittypaint' is 
   available in the toolbar. With this tool nicely connected tiles can be painted
   similar to the in-game level editor painter.
+- Flipped and rotated tiles are supported. To fix the flipped tiles to the correct
+  graphics, save the `.kitty` file or select Edit->Fix Kitty Map.
+- A new help item has been added to quickly check which version of the extension
+  you are running.
 
 ## Getting started with making levels
 

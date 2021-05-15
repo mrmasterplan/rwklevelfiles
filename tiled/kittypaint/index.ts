@@ -1,11 +1,10 @@
 
+
 interface kittypaint_type extends Tool {
     icon:string
     pressed:boolean
     isPaintable():boolean
     executeOnCurrentPos():void
-    parsed_tileset():{[grid:string]:Tile}
-    cleanPaintGrid(grid:string):string
     layer():TileLayer
     updateTileAt(x:number,y:number):void
 
@@ -16,7 +15,7 @@ const kittypaint = {} as kittypaint_type
 kittypaint.name = 'kittypaint'
 
 // // Restore this when issue is resolved: https://github.com/mapeditor/tiled/issues/3048
-// kittypaint.icon = 'ext:/rwk/tiles/80be8000.png'
+kittypaint.icon = 'rwk/tiles/80be8000.png'
 
 kittypaint.activated = function(){
     if(!this.isPaintable()) return
@@ -24,23 +23,59 @@ kittypaint.activated = function(){
 
 kittypaint.isPaintable=()=>{
     const paintable = !!tiled.mapEditor.tilesetsView.currentTileset?.property("is_paintable")
-    if(!paintable)
-        tiled.alert("Current tileset is not a paint tileset. Tool will not work.","Warning")
+    if(!paintable) {
+        tiled.alert("Current tileset is not a paint tileset. Kittypaint will not work.","Warning")
+        tiled.trigger("StampTool")
+    }
     return paintable
 }
 
-kittypaint.parsed_tileset=function (){
-    const tile_dict:{[grid:string]:Tile}={}
-    for(let tile of tiled.mapEditor.tilesetsView.currentTileset.tiles){
-        if(!tile) continue
-        const grid = tile.property('paint_grid')
-        if (!grid) continue
-        tile_dict[this.cleanPaintGrid(grid.toString())]=tile
+export function parsed_tileset(set:Tileset) {
+    let tile_dict: {
+        [name: string]: { [grid: string]: Tile }
+    } = {}
+    // @ts-ignore // assign globally
+    tile_dict =  tiled.__parsed_kitty_tilesets || {}
+
+    if(!tile_dict[set.name]){
+        tile_dict[set.name]={}
+        for(let tile of set.tiles){
+            if(!tile) continue
+            const grid = tile.resolvedProperty('paint_grid')
+            if (!grid) continue
+            tile_dict[set.name][cleanPaintGrid(grid.toString())]=tile
+        }
+        // @ts-ignore // assign globally
+        tiled.__parsed_kitty_tilesets = tile_dict
     }
-    return tile_dict
+
+    return tile_dict[set.name]
+}
+export function parsed_base_tileset(set:Tileset) {
+    let tile_dict: {
+        [name: string]: { [index: number]: Tile }
+    } = {}
+    // @ts-ignore // assign globally
+    tile_dict =  tiled.__parsed_kitty_tilesets || {}
+
+    if(!tile_dict[set.name]){
+        tile_dict[set.name]={}
+        for(let tile of set.tiles){
+            if(!tile) continue
+            const index = (tile.resolvedProperty('base') || tile.resolvedProperty('map')) as number
+            if (!index) continue
+            tile_dict[set.name][index]=tile
+        }
+        // @ts-ignore // assign globally
+        tiled.__parsed_kitty_tilesets = tile_dict
+    }
+
+    return tile_dict[set.name]
 }
 
-kittypaint.cleanPaintGrid=function(grid:string):string{
+
+
+export function cleanPaintGrid(grid:string):string{
     // reminder, the paint grid is the state of the neighboring cells.
     // top row, then left, the right, then bottom row. 8 in total.
     // a 1 indicates that it is of the same paint type, a 0 that it is not
@@ -140,17 +175,20 @@ kittypaint.updateTileAt=function(x:number,y:number){
     state.push(this.layer().tileAt(x+1,y+1)?.tileset.name==tileset.name)
 
     const raw_grid = state.map(b=>(+b).toString()).join("")
-    const paint_grid = this.cleanPaintGrid(raw_grid)
+    const paint_grid = cleanPaintGrid(raw_grid)
     // tiled.log(`Painting ${x},${y}: raw:${raw_grid}, grid ${paint_grid}`)
 
-    const tile = this.parsed_tileset()[paint_grid]
+    const tile = parsed_tileset(tileset)[paint_grid]
 
     const editable = this.layer().edit()
     editable.setTile(x,y,tile)
     editable.apply()
 }
 
+
+
 export function register(){
     tiled.log("Now registering Kitty Paint tool.")
     tiled.registerTool(kittypaint.name,kittypaint)
+
 }
