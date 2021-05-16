@@ -1,5 +1,6 @@
 import {getMapLimits} from "../dotkitty";
 import {parsed_base_tileset, parsed_tileset} from "../kittypaint";
+import {config} from "../config";
 
 function flipGridHorizontally(grid:string){
     if(grid.length!=8) throw new Error(`attempting to flip grid of invalid size ${grid.length}`)
@@ -71,23 +72,10 @@ export function fixFlippedCells(map:TileMap) {
                     if(props.base || props.map){
                         const index:number = (props.base || props.map) as number
                         const indexed_tileset = parsed_base_tileset(tile.tileset)
-                        const vertical_pairs = [
-                            [14,15], //red door
-                            [16,17], //green door
-                            [18,19], //blue door
-                            [51,52], //yellow door
-                            [68,69], //spikes
-                        ]
-                        const horizontal_pairs=[
-                            [54,55], //one way
-                            [59,60], //conveyors
-                        ]
-                        const parity_pairs =[
-                            [38,43] // teleport controllers
-                        ]
+
                         let tile_treated = false
                         if(flags & Tile.FlippedVertically) {
-                            for (let pair of vertical_pairs) {
+                            for (let pair of config.base_tiles.vertical_pairs) {
                                 if (pair.includes(index)) {
                                     const other_index = pair[pair.indexOf(index) ? 0 : 1]
                                     const other_tile = indexed_tileset[other_index]
@@ -102,7 +90,7 @@ export function fixFlippedCells(map:TileMap) {
                             }
                         }
                         if(!tile_treated && (flags & Tile.FlippedHorizontally)) {
-                            for (let pair of horizontal_pairs) {
+                            for (let pair of config.base_tiles.horizontal_pairs) {
                                 if (pair.includes(index)) {
                                     const other_index = pair[pair.indexOf(index) ? 0 : 1]
                                     const other_tile = indexed_tileset[other_index]
@@ -118,7 +106,7 @@ export function fixFlippedCells(map:TileMap) {
                         }
                         // != equates to XOR. To get parity we XOR all three flippings.
                         if(!tile_treated && ((!!(flags & Tile.FlippedHorizontally) != !!(flags & Tile.FlippedVertically)) != !!(flags & Tile.FlippedAntiDiagonally))){
-                            for (let pair of parity_pairs) {
+                            for (let pair of config.base_tiles.parity_pairs) {
                                 if (pair.includes(index)) {
                                     const other_index = pair[pair.indexOf(index) ? 0 : 1]
                                     const other_tile = indexed_tileset[other_index]

@@ -75,21 +75,30 @@ const dotkitty:ScriptedMapFormat = {
         map.addLayer(baseLayer)
         const paintLayer = new TileLayer('paint')
         map.addLayer(paintLayer)
+        const itemsLayer = new TileLayer('items')
+        map.addLayer(itemsLayer)
 
         const base_edit = baseLayer.edit()
         const map_edit = mapLayer.edit()
         const paint_edit = paintLayer.edit()
+        const items_edit = itemsLayer.edit()
         for(let j=0;j<lvl.grid.size_y;j++) {
             for (let i = 0; i < lvl.grid.size_x; i++) {
                 const cell = lvl.grid.getCellObj(i,j)
                 // stop! we need to open the tilesets, then parse them
-                base_edit.setTile(i,j,base_registry[cell.base])
+
                 paint_edit.setTile(i,j,paint_registry[cell.paint])
                 map_edit.setTile(i,j,map_registry[lvl.grid.getMapCell(i,j)])
+                if(config.base_tiles.elevated.includes(cell.base)){
+                    items_edit.setTile(i,j,base_registry[cell.base])
+                }else {
+                    base_edit.setTile(i,j,base_registry[cell.base])
+                }
             }
         }
 
         base_edit.apply()
+        items_edit.apply()
         paint_edit.apply()
         map_edit.apply()
 

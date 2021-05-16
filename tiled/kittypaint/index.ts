@@ -14,7 +14,6 @@ const kittypaint = {} as kittypaint_type
 
 kittypaint.name = 'kittypaint'
 
-// // Restore this when issue is resolved: https://github.com/mapeditor/tiled/issues/3048
 kittypaint.icon = 'rwk/tiles/80be8000.png'
 
 kittypaint.activated = function(){
@@ -177,6 +176,12 @@ kittypaint.updateTileAt=function(x:number,y:number){
     const raw_grid = state.map(b=>(+b).toString()).join("")
     const paint_grid = cleanPaintGrid(raw_grid)
     // tiled.log(`Painting ${x},${y}: raw:${raw_grid}, grid ${paint_grid}`)
+
+    const prev_tile = this.layer().tileAt(x,y)
+    if(paint_grid === prev_tile?.resolvedProperty('paint_grid') && prev_tile?.tileset.name === tileset.name){
+        // we wouldn't do anything. skip.
+        return
+    }
 
     const tile = parsed_tileset(tileset)[paint_grid]
 

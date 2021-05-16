@@ -213,6 +213,7 @@ const config = {
         dist: "./rwk/",
         tiled_extension_dir: (process.platform === "win32")?
             `${process.env.USERPROFILE}/AppData/Local/Tiled/extensions/`:
+            (process.platform === "darwin")? '~/Library/Preferences/Tiled/extensions/':
             `~/.config/tiled/extensions/`,
         extension_package:'rwk'
     }
