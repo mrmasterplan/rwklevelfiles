@@ -1,3 +1,4 @@
+import {config} from "../config";
 
 
 interface kittypaint_type extends Tool {
@@ -160,6 +161,8 @@ kittypaint.executeOnCurrentPos=function(){
 
 kittypaint.updateTileAt=function(x:number,y:number){
     const tileset = tiled.mapEditor.tilesetsView.currentTileset
+    if(config.debug) tiled.log(`Updating tile at ${x},${y} to ${tileset.name}.`)
+    if(config.debug) tiled.log(`Current layer is ${this.layer().name}.`)
 
 
     // grab the state of the surrounding tiles
@@ -175,15 +178,18 @@ kittypaint.updateTileAt=function(x:number,y:number){
 
     const raw_grid = state.map(b=>(+b).toString()).join("")
     const paint_grid = cleanPaintGrid(raw_grid)
-    // tiled.log(`Painting ${x},${y}: raw:${raw_grid}, grid ${paint_grid}`)
+    if(config.debug) tiled.log(`Painting ${x},${y}: raw:${raw_grid}, grid ${paint_grid}`)
 
     const prev_tile = this.layer().tileAt(x,y)
     if(paint_grid === prev_tile?.resolvedProperty('paint_grid') && prev_tile?.tileset.name === tileset.name){
         // we wouldn't do anything. skip.
+        if(config.debug) tiled.log(`paint_grid identical to target tile. editing skipped.`)
         return
     }
 
     const tile = parsed_tileset(tileset)[paint_grid]
+
+    if(config.debug && !tile) tiled.log(`Tile is blank. Tiles to in dict: ${Object.keys(parsed_tileset(tileset)).length}`)
 
     const editable = this.layer().edit()
     editable.setTile(x,y,tile)

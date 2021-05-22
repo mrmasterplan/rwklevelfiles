@@ -1,7 +1,7 @@
 
 
 export const config = {
-    debug: false,
+    debug: true,
     base_tiles: {
         vertical_pairs: [
             [14,15], //red door

@@ -35,6 +35,13 @@ export class RWK_db_handler {
             contents:buf.toString('hex')
         }
     }
+    addCustomSav(key:string, buf:Buffer){
+        const name =
+        this.db[`/RAPTISOFT_SANDBOX/RWK/${key}`]={
+            ...level_base_obj,
+            contents:buf.toString('hex')
+        }
+    }
     update(odb:RWK_db){
         for(let key of Object.keys(odb)){
             this.db[key] = odb[key]

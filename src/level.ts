@@ -637,3 +637,12 @@ export function extractLevelName(buf:Buffer){
     offset+=4
     return buf.slice(offset,offset+length-1).toString('utf-8').trim()
 }
+
+export function sav_to_lvl(buf:Buffer){
+    const namelength = buf.readUInt32LE(0x14)
+    const lvl_grid = new Grid()
+    const post_lvl_offset = lvl_grid.deserialize(buf,namelength+0x3B)
+    const lvl = new Level()
+    lvl.grid = lvl_grid
+    return lvl.serialize()
+}

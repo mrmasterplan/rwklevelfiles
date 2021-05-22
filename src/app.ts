@@ -1,21 +1,17 @@
-
 import config from './config'
+import inquirer from 'inquirer'
+import {RWK_db, RWKpage} from "./rwkpage";
+import {RWK_db_handler} from "./fuzzer";
+import {glob} from "glob";
+import * as fs from "fs";
+import {CreateTilesets} from "./tileset";
+import {extractLevelName, sav_to_lvl} from "./level";
+import path from "path";
+import {CLI_option} from "./cli";
 
 
 console.log("RWK Level Editor toolbox v2.0")
 
-import inquirer from 'inquirer'
-import {RWK_db, RWKpage} from "./rwkpage";
-import { RWK_db_handler} from "./fuzzer";
-import {glob} from "glob";
-import * as fs from "fs";
-import {CreateTilesets, Tileset} from "./tileset";
-import {extractLevelName, Level} from "./level";
-
-interface CLI_option {
-    description:string,
-    action: ()=>Promise<void>,
-}
 
 class CLI {
     options:{[key:string]:CLI_option};
@@ -54,10 +50,17 @@ class CLI {
             if(fs.existsSync(config.db.backup))
                 db_handler.update( JSON.parse(fs.readFileSync(config.db.backup,'utf-8')))
             console.log('base DB loaded. Now adding levels to inject')
+
             for(let filename of glob.sync(config.db.levels_in+'/*.kitty')){
                 console.log(`injecting ${filename}`)
                 db_handler.addCustomKitty(fs.readFileSync(filename))
             }
+
+            for(let filename of glob.sync(config.db.levels_in+'/*.sav')){
+                console.log(`injecting ${filename}`)
+                db_handler.addCustomSav(path.basename(filename),fs.readFileSync(filename))
+            }
+
             console.log('all injections handled.')
 
             await this.rwk.load_minimal();
@@ -76,6 +79,14 @@ class CLI {
                     fs.writeFileSync(`${config.db.levels_out}/${name}.kitty`,buf)
                     //delete db[key]
                 }
+                if( key.endsWith('.sav') && config.db.extract_sav){
+                    const buf = Buffer.from(db[key].contents!,'hex')
+                    console.log(`treating sav: ${key}`)
+                    // fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}.kitty`,sav_to_lvl(buf))
+                    fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}`,buf)
+                    //delete db[key]
+                }
+
             }
             fs.writeFileSync(config.db.backup,JSON.stringify(db,null,2))
 

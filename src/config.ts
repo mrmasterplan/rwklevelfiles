@@ -15,6 +15,7 @@ const config = {
         backup: process.env.RWK_FULL_DB || "db.json",
         levels_out: "levels_out",
         levels_in: "levels_in",
+        extract_sav:true
     },
     screenshots_dir: process.env.RWK_SCREENSHOTS || "screenshots",
 
