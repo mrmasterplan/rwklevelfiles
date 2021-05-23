@@ -206,6 +206,7 @@ export class RWKpage {
         await this.page!.mouse.click(rect.left + _x, rect.top + _y);
     }
 
+
     async screenshot(path:string){
         const element = await this.page!.$("#canvas");
         if(!element){

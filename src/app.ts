@@ -8,6 +8,7 @@ import {CreateTilesets} from "./tileset";
 import {extractLevelName, sav_to_lvl} from "./level";
 import path from "path";
 import {CLI_option} from "./cli";
+import {register_hardest} from "./hardest";
 
 
 console.log("RWK Level Editor toolbox v2.0")
@@ -34,6 +35,8 @@ class CLI {
     async start_CLI(){
         let exit = false;
         await this.rwk.ready();
+
+        register_hardest(this.options, this.rwk)
         // if(this.rwk.DB_avaialble()){
         //     // restore the DB
         //     console.log("DB backup found.")
