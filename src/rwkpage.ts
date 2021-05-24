@@ -1,8 +1,8 @@
-
 import puppeteer, {Browser, Page} from 'puppeteer'
 import config from "./config";
 import {IDBPDatabase} from "idb";
 import * as fs from "fs";
+import {DB_file_hex, RWK_db} from "./db";
 
 // import {Level_analysis} from "./level_analysis";
 
@@ -10,15 +10,6 @@ interface DB_file_browser {
     timestamp:any,
     mode:number,
     contents?:Int8Array|Uint8Array,
-}
-
-export interface RWK_db {[key:string]:DB_file_hex}
-
-export interface DB_file_hex {
-    timestamp:number,
-    mode:number,
-    contents?:string,
-    content_type?:string,
 }
 
 
