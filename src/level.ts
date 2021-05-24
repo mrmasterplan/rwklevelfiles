@@ -1,7 +1,6 @@
 import bitwise from "bitwise";
 
-var Buffer = require('buffer/').Buffer
-
+import {Buffer, delimitedBuffer} from './bin'
 
 const level_defaults ={
     // header : Buffer.from('000000000500000026000000ffffffff','hex'),
@@ -10,18 +9,6 @@ const level_defaults ={
 
     footer_head: Buffer.from('0100000000010000000000000000000000000000000000000000000000006666663f0000000000000000b800bc000000000000000000000000000000','hex'),
     footer: Buffer.from('0100000000010000000000000000000000000000000000000000000000006666663f0000000000000000b800bc0000000000000000000000000000000000003f0000003f010000000001000000000100000000','hex')
-}
-
-function delimitedBuffer(b:Buffer){
-    const newb = Buffer.alloc(b.length+4)
-    newb.writeUInt32LE(b.length)
-    b.copy(newb,4)
-    return newb;
-}
-function readDelimited(b_in:Buffer,offset:number){
-    const length = b_in.readUInt32LE(offset)
-    const payload = b_in.slice(offset+4,offset+4+length)
-    return payload
 }
 
 class Tags {

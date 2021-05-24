@@ -1,13 +1,13 @@
 import config from './config'
 import inquirer from 'inquirer'
-import {RWK_db, RWKpage} from "./rwkpage";
-import {RWK_db_handler} from "./fuzzer";
+import {RWKpage} from "./rwkpage";
 import {glob} from "glob";
 import * as fs from "fs";
 import {CreateTilesets} from "./tileset";
 import {extractLevelName, sav_to_lvl} from "./level";
 import path from "path";
 import {CLI_option} from "./cli";
+import {RWK_db, RWK_db_handler} from "./db";
 
 
 console.log("RWK Level Editor toolbox v2.0")
@@ -47,8 +47,7 @@ class CLI {
         const inject = async ()=>{
             console.log(`Now restarting and restoring backup from ${config.db.backup}`)
             const db_handler = new RWK_db_handler()
-            if(fs.existsSync(config.db.backup))
-                db_handler.update( JSON.parse(fs.readFileSync(config.db.backup,'utf-8')))
+            db_handler.load_file(config.db.backup)
             console.log('base DB loaded. Now adding levels to inject')
 
             for(let filename of glob.sync(config.db.levels_in+'/*.kitty')){
@@ -80,6 +79,13 @@ class CLI {
                     //delete db[key]
                 }
                 if( key.endsWith('.sav') && config.db.extract_sav){
+                    const buf = Buffer.from(db[key].contents!,'hex')
+                    console.log(`treating sav: ${key}`)
+                    // fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}.kitty`,sav_to_lvl(buf))
+                    fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}`,buf)
+                    //delete db[key]
+                }
+                if( key.endsWith('recent.levels') && config.db.extract_sav){
                     const buf = Buffer.from(db[key].contents!,'hex')
                     console.log(`treating sav: ${key}`)
                     // fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}.kitty`,sav_to_lvl(buf))
