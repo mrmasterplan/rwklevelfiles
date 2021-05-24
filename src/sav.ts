@@ -1,4 +1,11 @@
 import {CLI_options} from "./cli";
+import {db_contributor, RWK_db_handler} from "./db";
+import {glob} from "glob";
+import fs from "fs";
+import {extractLevelName} from "./level";
+import {custom_level_key_root} from "./fuzzer";
+import path from "path";
+import config from "./config";
 
 const sav_injection_base = [
     {
@@ -7,8 +14,43 @@ const sav_injection_base = [
     }
 ]
 
-const config ={
-    sav_base_dir:"sav_files",
+
+export class SavContributor implements db_contributor {
+    constructor(public db:RWK_db_handler) {
+        db.register_contributor(this)
+    }
+
+    async load(){
+        for(let filename of glob.sync(config.db.levels_in+'/*.sav')){
+            console.log(`injecting ${filename}`)
+            this.db.addBuffer(`/RAPTISOFT_SANDBOX/RWK/${path.basename(filename)}`,fs.readFileSync(filename))
+        }
+
+    }
+
+    async dump(){
+        for(let key of this.db.keys()){
+            if( key.endsWith('.sav') && config.db.extract_sav){
+                const buf = this.db.getBuf(key)
+                // const buf = Buffer.from(db[key].contents!,'hex')
+                console.log(`treating sav: ${key}`)
+                // fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}.kitty`,sav_to_lvl(buf))
+                fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}`,buf!)
+                //delete db[key]
+            }
+
+            if( key.endsWith('recent.levels') && config.db.extract_sav){
+                const buf = this.db.getBuf(key)
+                // const buf = Buffer.from(db[key].contents!,'hex')
+                console.log(`treating sav: ${key}`)
+                // fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}.kitty`,sav_to_lvl(buf))
+                fs.writeFileSync(`${config.db.levels_out}/${path.basename(key)}`,buf!)
+                //delete db[key]
+            }
+
+        }
+    }
+
 }
 
 

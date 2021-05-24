@@ -5,7 +5,8 @@ import config from "./config";
 import path from "path";
 
 export interface db_contributor {
-    contribute:()=>Promise<void>
+    load:()=>Promise<void>
+    dump:()=>Promise<void>
 }
 
 export interface DB_file_hex {
@@ -23,12 +24,26 @@ export class RWK_db_handler {
     db: RWK_db
     contributors: db_contributor[]
 
-    constructor(empty = false) {
+    constructor() {
         this.db = {}
         this.contributors=[]
-        if (!empty) {
-            this.update(minimal_DB)
-        }
+        this.reset()
+    }
+
+    reset(){
+        this.update(minimal_DB)
+    }
+
+    keys(){
+        return Object.keys(this.db)
+    }
+
+    getBuf(key:string){
+        const obj = this.db[key]
+        if(!obj) return undefined;
+        const conts = obj.contents;
+        if(!conts) return undefined;
+        return Buffer.from(conts,"hex");
     }
 
     addBuffer(key:string,buf:Buffer){
@@ -71,12 +86,11 @@ export class RWK_db_handler {
         //     }
     }
 
-    load_file(filename:string){
-        if(!fs.existsSync(filename))
-            return
-        const odb=JSON.parse(fs.readFileSync(filename,'utf-8'))
-
-        this.update(odb)
+    async load_file(filename:string){
+        this.reset()
+        if(fs.existsSync(filename))
+            this.update(JSON.parse(fs.readFileSync(filename,'utf-8')))
+        await this.call_contributors_load()
     }
 
     update(odb:RWK_db){
@@ -85,7 +99,8 @@ export class RWK_db_handler {
         }
     }
 
-    dump_file(filename:string){
+    async dump_file(filename:string){
+        await this.call_contributors_dump()
         fs.writeFileSync(config.db.backup,JSON.stringify(this.db,null,2))
     }
 
@@ -94,7 +109,10 @@ export class RWK_db_handler {
         this.contributors.push(contributor)
     }
 
-    async call_contributors(){
-        await Promise.all(this.contributors.map(con=>con.contribute()))
+    async call_contributors_load(){
+        await Promise.all(this.contributors.map(con=>con.load()))
+    }
+    async call_contributors_dump(){
+        await Promise.all(this.contributors.map(con=>con.dump()))
     }
 }
