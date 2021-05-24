@@ -222,7 +222,8 @@ const config = {
             (process.platform === "darwin")? '~/Library/Preferences/Tiled/extensions/':
             `~/.config/tiled/extensions/`,
         extension_package:'rwk'
-    }
+    },
+    sav_base_dir:"sav_files",
 }
 
 if (!fs.existsSync(config.db.levels_in)){
