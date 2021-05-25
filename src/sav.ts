@@ -6,6 +6,7 @@ import {extractLevelName} from "./level";
 import {custom_level_key_root} from "./fuzzer";
 import path from "path";
 import config from "./config";
+import {delimitedBuffer, delimitedStringBuffer} from "./bin";
 
 const sav_injection_base = [
     {
@@ -21,10 +22,13 @@ export class SavContributor implements db_contributor {
     }
 
     async load(){
+        const savr = new SavAssembler()
         for(let filename of glob.sync(config.db.levels_in+'/*.sav')){
             console.log(`injecting ${filename}`)
             this.db.addBuffer(`/RAPTISOFT_SANDBOX/RWK/${path.basename(filename)}`,fs.readFileSync(filename))
         }
+        this.db.addBuffer(`/RAPTISOFT_SANDBOX/RWK/recent.levels`,savr.getRecentLevels())
+
 
     }
 
@@ -51,6 +55,18 @@ export class SavContributor implements db_contributor {
         }
     }
 
+}
+
+class SavAssembler {
+    constructor() {
+    }
+
+    getRecentLevels(){
+        return Buffer.concat([
+            delimitedStringBuffer("[NAME]who me[/NAME][AUTHOR]unpublished[/AUTHOR][ID]61695[/ID]"),
+            delimitedStringBuffer("[NAME]hi there[/NAME][AUTHOR]unpublished[/AUTHOR][ID]61694[/ID]"),
+        ])
+    }
 }
 
 
