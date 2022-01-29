@@ -1,5 +1,6 @@
 import fs from "fs";
 import http from "http";
+import https from "https";
 import config from "./config";
 import {glob} from "glob";
 import path from "path";
@@ -64,7 +65,7 @@ export class Tile_library {
 
                 const file = fs.createWriteStream(tile_file);
                 console.log(`Downloading for tile ${tile.index} from ${tile.url}`)
-                http.get(tile.url, (response)=> {
+                https.get(tile.url, (response)=> {
                     response.pipe(file);
                 });
                 file.on('close',()=>{
@@ -115,7 +116,8 @@ async function treatSpecialTiles(index:number,tile_file:string) {
 async function createBaseDerivedMapTile(index:number,tile_file:string){
     const final_name = tile_file.slice(0,-10)+".map.png"
     if(fs.existsSync(final_name)) return
-    console.log(`Now creating map tile for index ${index}`)
+    console.log(`Now creating map tile for index ${index}, tile_file ${tile_file}`)
+    // console.log(`Now creating map tile for index ${index}`)
 
     const base_tile = await loadImage(tile_file);
 

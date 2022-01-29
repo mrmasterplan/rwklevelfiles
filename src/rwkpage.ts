@@ -39,7 +39,7 @@ export class RWKpage {
         this.page = (await this.browser.pages())[0];
         await this.page.setRequestInterception(true)
         this.page.on('request', (request) => {
-            if (request.url().endsWith('.js') && !(request.url().startsWith('http://robotwantskitty.com')|| request.url().startsWith('https://unpkg.com/idb'))) {
+            if (request.url().endsWith('.js') && !(request.url().startsWith('https://robotwantskitty.com')|| request.url().startsWith('https://unpkg.com/idb'))) {
                 request.respond({
                     status: 200,
                     contentType: 'application/javascript; charset=utf-8',
@@ -80,7 +80,7 @@ export class RWKpage {
         // found a good talk about IndexedDB here: https://filipvitas.medium.com/indexeddb-with-promises-and-async-await-3d047dddd313
         // this injects a script needed by all the db interactions below
 
-        await this.page!.addScriptTag({ url: 'https://unpkg.com/idb/build/iife/index-min.js' });
+        await this.page!.evaluate(config.rwk.idb_code);
 
         //https://www.sqlpac.com/en/documents/javascript-listing-active-event-listeners.html
         //window.onload = undefined
