@@ -27,7 +27,7 @@ async function install_all() {
         }
         const tilelib = new Tile_library()
         await tilelib.download_tile_library()
-        const fuzz = new Fuzzer();
+        const fuzz = new Fuzzer(yes_to_all);
         await fuzz.fuzz()
         console.log("------------------------------------------------")
     } else {
