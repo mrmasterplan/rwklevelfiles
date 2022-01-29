@@ -1,1 +1,4 @@
 *.png
+node_modules
+build
+rwk
