@@ -318,11 +318,11 @@ class FuzzLevelLibrary{
 }
 
 export class Fuzzer{
-    yes_to_all:boolean
+    headless:boolean
 
-    constructor(yes_to_all = false) {
+    constructor(headless = false) {
         console.log("OK! Let's fuzz")
-        this.yes_to_all = yes_to_all
+        this.headless = headless
     }
 
     static anything_to_fuzz(){
@@ -401,7 +401,7 @@ export class Fuzzer{
         console.log(`${count_allocations} tiles allocated to ${lib.lvls.length} levels`)
 
         const rwk = new RWKpage()
-        await rwk.ready(this.yes_to_all);
+        await rwk.ready(this.headless);
         await rwk.load_minimal()
 
         console.log('minimal loaded')
@@ -411,7 +411,7 @@ export class Fuzzer{
 
         await rwk.load_full()
 
-        if(!this.yes_to_all){
+        if(!this.headless){
             await inquirer.prompt([{ type: 'input', name: 'ready', message: "Please wait until the game has loaded (don't touch anything), then press ENTER.",  }]);
         }else{
             console.log("Auto-run selected. Waiting for game load by blindly assuming it is done after 60s.")

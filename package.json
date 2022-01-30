@@ -7,7 +7,7 @@
     "pack": "npx webpack",
     "build": "tsc",
     "setup": "ts-node src/setup.ts",
-    "install": "npm run pack && npm run build",
+    "install": "npm run pack && npm run build && npm run setup",
     "start": "node build/app.js",
     "start:dev": "ts-node src/app.ts"
   },

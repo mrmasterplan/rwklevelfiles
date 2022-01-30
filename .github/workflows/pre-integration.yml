@@ -38,10 +38,14 @@ jobs:
           xdg-utils wget chromium-browser libgbm-dev
 
       - uses: actions/checkout@v2
-      - run: npm install
-      - name: extra puppeteer install step
+      - name: fully install puppeteer
         run: |
+          echo 'RWK_CANCEL_SETUP="true"' > .env
+          npm install
           cd ./node_modules/puppeteer
           npm run install
           cd ../..
-      - run: npm run setup yes
+      - name: Run full fuzzing
+        run: |
+          echo 'RWK_HEADLESS="true"' > .env
+          npm run setup
