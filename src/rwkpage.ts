@@ -35,7 +35,7 @@ export class RWKpage {
     async ready(headless=false){
         // await this.anlyzer.ready();
 
-        this.browser = await puppeteer.launch({headless});
+        this.browser = await puppeteer.launch({headless, args: ['--no-sandbox']});
         this.page = (await this.browser.pages())[0];
         await this.page.setRequestInterception(true)
         this.page.on('request', (request) => {
