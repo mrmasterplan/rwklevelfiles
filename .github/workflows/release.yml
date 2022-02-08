@@ -60,7 +60,7 @@ jobs:
         with:
           files: rwk.zip
           name: RWK Tiled Plugin
-          tag: ${{ steps.gettag.outputs.tag_val }}
+          tag_name: ${{ steps.gettag.outputs.tag_val }}
           body_path: docs/INSTALLATION.md
           draft: false
           
