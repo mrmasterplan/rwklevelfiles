@@ -50,11 +50,17 @@ jobs:
         run: |
           sudo apt install zip
           zip -r rwk.zip rwk
+      - name: Prepare Tag
+        id: gettag
+        run: |
+          apt-get install jq
+          echo ::set-output name=tag_val::v(cat .\package.json | jq ".version")
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
           files: rwk.zip
-          name: RWK Tiled Plugin 2.5.2
+          name: RWK Tiled Plugin
+          tag: ${{ steps.gettag.outputs.tag_val }}
           body_path: docs/INSTALLATION.md
           draft: false
           
