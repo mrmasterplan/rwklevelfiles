@@ -1,3 +1,7 @@
+# Version 2.5.2
+- First Release of complete extension for download
+- Non-technical documentation
+
 # Version 2.5.1
 - fixed macOS install (it now has a chance to succeed), but completely untested.
 - better undo in kittypaint

@@ -54,9 +54,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: rwk.zip
-          name: RwkLevelFiles
-          body: |
-            Tiled Extension for .kitty files
-            _Go get it!_
-          draft: true
+          name: RWK Tiled Plugin 2.5.2
+          body_path: docs/INSTALLATION.md
+          draft: false
           
