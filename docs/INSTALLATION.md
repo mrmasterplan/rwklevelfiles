@@ -6,17 +6,17 @@ assets area.
 
 To install the extension, open the Tiled editor, and go to preferences
 
-![Tiled_edit_peferences](https://github.com/mrmasterplan/rwklevelfiles/main/docs/pictures/Tiled_edit_preferences.png?raw=true)
+![Tiled_edit_peferences](https://github.com/mrmasterplan/rwklevelfiles/raw/main/docs/pictures/Tiled_edit_preferences.png)
 
 Use the preferences menu to open the extensions directory
 
-![Tiled_plugins_open](https://github.com/mrmasterplan/rwklevelfiles/main/docs/pictures/Tiled_plugins_open.png?raw=true)
+![Tiled_plugins_open](https://github.com/mrmasterplan/rwklevelfiles/raw/main/docs/pictures/Tiled_plugins_open.png)
 
 Copy the `rwk` folder from this release into the Tiled 
 extensions location so that it appears as follows 
 (note the lack of subfolders - don't make it appear as `rwk\rwk`!)
 
-![Tiled_rwk](https://github.com/mrmasterplan/rwklevelfiles/main/docs/pictures/Tiled_rwk.png?raw=true)
+![Tiled_rwk](https://github.com/mrmasterplan/rwklevelfiles/raw/main/docs/pictures/Tiled_rwk.png)
 
 Installation completed. 
 
