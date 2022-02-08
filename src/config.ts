@@ -206,7 +206,8 @@ const config = {
         tiles:"resources/tiles",
         db: "db",
         sleep: 300,
-        headless:false,
+        headless:(process.env.RWK_HEADLESS == 'true'),
+        cancel_setup:(process.env.RWK_CANCEL_SETUP == 'true'),
     },
 
     dev:{
