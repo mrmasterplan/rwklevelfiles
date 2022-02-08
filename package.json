@@ -1,6 +1,6 @@
 {
   "name": "rwklevelfiles",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Extract level files from RWK web version",
   "main": "srd/app.ts",
   "scripts": {
