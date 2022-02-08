@@ -15,6 +15,15 @@ jobs:
         node_version:
           - "16"
     steps:
+      - uses: actions/checkout@v2
+      - name: Prepare Tag
+        id: gettag
+        run: |
+          sudo apt-get install jq
+          echo ::set-output name=tag_val::v$(cat ./package.json | jq -r ".version")
+      - name: Mock Publish
+        run: |
+          echo "Would now publish tag: ${{ steps.gettag.outputs.tag_val }}"
       - name: Setup NodeJs
         uses: actions/setup-node@v2
         with:
@@ -37,7 +46,6 @@ jobs:
           fonts-liberation libappindicator1 libnss3 lsb-release \
           xdg-utils wget chromium-browser libgbm-dev
 
-      - uses: actions/checkout@v2
       - name: fully install puppeteer
         run: |
           echo 'RWK_CANCEL_SETUP="true"' > .env
@@ -49,3 +57,10 @@ jobs:
         run: |
           echo 'RWK_HEADLESS="true"' > .env
           npm run setup
+      - name: zip
+        run: |
+          sudo apt install zip
+          zip -r rwk.zip rwk
+          ls -l rwk.zip
+
+

@@ -53,8 +53,8 @@ jobs:
       - name: Prepare Tag
         id: gettag
         run: |
-          apt-get install jq
-          echo ::set-output name=tag_val::v(cat .\package.json | jq ".version")
+          sudo apt-get install jq
+          echo ::set-output name=tag_val::v$(cat ./package.json | jq -r ".version")
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
