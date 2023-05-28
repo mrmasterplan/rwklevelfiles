@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rwklevelfiles"
+authors = [
+    {name = "Simon Heisterkamp", email = "simon@heisterkamp.dk"},
+]
+description = "Fan project around robotwantskitty.com/"
+readme = "README.rst"
+requires-python = ">=3.11"
+#keywords = ["one", "two"]
+license = {text = "GPLv3"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "selenium",
+    "selenium-wire",
+    "pyyaml",
+    "pillow",
+    "numpy",
+    "opencv-python",
+    "webdriver-manager",
+    "platformdirs"
+]
+dynamic = ["version"]
+
+
+
+[project.scripts]
+rwk = "rwklevelfiles.main:main"

@@ -4,3 +4,5 @@ build
 rwk
 .idea
 venv
+__pycache__
+*.egg-info

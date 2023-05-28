@@ -18,7 +18,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920,1080" )
 # chrome_options.add_argument("--window-size=736,414" )
 # chrome_options.binary_location = CHROME_PATH
@@ -44,10 +44,11 @@ canvas: WebElement= driver.find_element(By.ID, "canvas")
 # driver.get_screenshot_as_file('out.png')
 for i in range(20):
     time.sleep(1)
+    canvas: WebElement = driver.find_element(By.ID, "canvas")
 
     img = Image.open(io.BytesIO(canvas.screenshot_as_png))
 
-    r,g,b,a = img.getpixel((240,250))
+    r,g,b,a = img.getpixel((146,295))
     img.save(f'iter{i}_{r}_{g}_{b}.png')
 
     if (r<220) or (g<220 )or (b<220):
@@ -64,15 +65,22 @@ for i in range(20):
 # {'height': 471, 'width': 838, 'x': 351.0500183105469, 'y': 25}
 # canvas.location
 # {'x': 351, 'y': 25}
-doc = driver.find_element(By.TAG_NAME,'html')
-rect = canvas.rect
-loc_x = rect['x']
-loc_y = rect['y']
-width=rect['width']
-height=rect['height']
+def click(x,y):
+    # doc = driver.find_element(By.TAG_NAME,'html')
+    rect = canvas.rect
+    # loc_x = rect['x']
+    # loc_y = rect['y']
+    width=rect['width']
+    height=rect['height']
 
-# ActionChains(driver).move_to_element_with_offset(doc, loc_x+(3*width/4), loc_y+(height/2)).click()
-ActionChains(driver).move_by_offset(loc_x+(3*width/4), loc_y+(height/2)).click()
+    (
+        ActionChains(driver)
+        .move_to_element_with_offset(canvas, -(width/2) + x, -(height/2) + y)
+        .click()
+        .perform()
+    )
+    # ActionChains(driver).move_by_offset(loc_x+(3*width/4), loc_y+(height/2)).click()
+click(500,200)
 time.sleep(1)
 img = Image.open(io.BytesIO (driver.get_screenshot_as_png())).crop((322,25,1598,743))
 # img.show()
@@ -80,26 +88,6 @@ img.save(f'afterclick.png')
 # input("done?")
 # driver.close()
 
-def getAllKeys():
-    keys =driver.execute_async_script("""
-        var done = arguments[0];
-        let db;
-        db = await idb.openDB("/RAPTISOFT_SANDBOX");
-        done( await db.getAllKeys("FILE_DATA"));
-    """)
-    return keys
-
-def getKey(key:str):
-    data =driver.execute_async_script(f"""
-        var done = arguments[0];
-        let db;
-        db = await idb.openDB("/RAPTISOFT_SANDBOX");
-        
-        const obj= await db.get("FILE_DATA", "{key}");
-        obj.timestamp= +obj.timestamp
-        done(obj.contents);
-    """)
-    print("".join(chr(i) for i in data))
 
 #
 # # read keys from indexed db
@@ -145,5 +133,5 @@ def getKey(key:str):
 # # };
 # # """)
 #
-# driver.close()
+driver.close()
 #
