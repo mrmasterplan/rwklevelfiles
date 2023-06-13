@@ -1,0 +1,14 @@
+name: Release
+
+on:
+ workflow_dispatch:
+
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: PublishPyPI
+    steps:
+      - name: Nothing here yet
+        run: sleep 10
+
