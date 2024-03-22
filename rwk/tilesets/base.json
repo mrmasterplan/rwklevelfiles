@@ -1,0 +1,981 @@
+{
+  "columns": 0,
+  "grid": {
+    "height": 1,
+    "orientation": "orthogonal",
+    "width": 1
+  },
+  "margin": 0,
+  "name": "base",
+  "spacing": 0,
+  "tilecount": 74,
+  "tiledversion": "1.5.0",
+  "tileheight": 40,
+  "tiles": [
+    {
+      "id": 0,
+      "image": "../tiles/02000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "image": "../tiles/01000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "image": "../tiles/03000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "image": "../tiles/1d000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 29
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "image": "../tiles/2f000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 47
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "image": "../tiles/1e000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "image": "../tiles/21000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 33
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "image": "../tiles/22000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 34
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "image": "../tiles/23000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 35
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "image": "../tiles/14000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 20
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "image": "../tiles/0e000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 14
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "image": "../tiles/0f000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "image": "../tiles/10000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 16
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "image": "../tiles/11000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 17
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "image": "../tiles/12000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 18
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "image": "../tiles/13000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 19
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "image": "../tiles/33000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 51
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "image": "../tiles/34000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 52
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "image": "../tiles/0b000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 11
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "image": "../tiles/0c000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 12
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "image": "../tiles/0d000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 13
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "image": "../tiles/32000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 50
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "image": "../tiles/04000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "image": "../tiles/05000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "image": "../tiles/06000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "image": "../tiles/07000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 7
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "image": "../tiles/08000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "image": "../tiles/09000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 9
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "image": "../tiles/0a000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "image": "../tiles/2a000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 42
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "image": "../tiles/48000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 72
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "image": "../tiles/19000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 25
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "image": "../tiles/1a000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 26
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "image": "../tiles/41000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 65
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "image": "../tiles/1b000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 27
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "image": "../tiles/15000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 21
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "image": "../tiles/16000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 22
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "image": "../tiles/17000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 23
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "image": "../tiles/35000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 53
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "image": "../tiles/38000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 56
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "image": "../tiles/47000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 71
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "image": "../tiles/24000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 36
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "image": "../tiles/18000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 24
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "image": "../tiles/29000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 41
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "image": "../tiles/25000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 37
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "image": "../tiles/1f000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 31
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "image": "../tiles/20000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 32
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "image": "../tiles/1c000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 28
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "image": "../tiles/26000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 38
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "image": "../tiles/2b000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 43
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "image": "../tiles/27000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 39
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "image": "../tiles/28000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 40
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "image": "../tiles/2c000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "image": "../tiles/2d000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 45
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "image": "../tiles/2e000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 46
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "image": "../tiles/30000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 48
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "image": "../tiles/31000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 49
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "image": "../tiles/36000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 54
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "image": "../tiles/37000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 55
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "image": "../tiles/40000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 64
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "image": "../tiles/39000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 57
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "image": "../tiles/3a000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 58
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "image": "../tiles/3b000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 59
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "image": "../tiles/3c000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 60
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "image": "../tiles/3e000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 62
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "image": "../tiles/3d000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 61
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "image": "../tiles/3f000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 63
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "image": "../tiles/42000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 66
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "image": "../tiles/43000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 67
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "image": "../tiles/44000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 68
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "image": "../tiles/45000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 69
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "image": "../tiles/46000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 70
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "image": "../tiles/49000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 73
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "image": "../tiles/51000000.png",
+      "imageheight": 40,
+      "imagewidth": 40,
+      "properties": [
+        {
+          "name": "base",
+          "type": "int",
+          "value": 81
+        }
+      ]
+    }
+  ],
+  "tilewidth": 40,
+  "type": "tileset",
+  "version": 1.5
+}

@@ -1,13 +1,11 @@
 {
   "name": "rwklevelfiles",
-  "version": "2.5.2",
+  "version": "3.0.0",
   "description": "Extract level files from RWK web version",
-  "main": "srd/app.ts",
   "scripts": {
     "pack": "npx webpack",
     "build": "tsc",
-    "setup": "ts-node src/setup.ts",
-    "install": "npm run pack && npm run build && npm run setup",
+    "install": "npm run pack",
     "start": "node build/app.js",
     "start:dev": "ts-node src/app.ts"
   },
@@ -22,35 +20,18 @@
   },
   "homepage": "https://github.com/mrmasterplan/rwklevelfiles",
   "devDependencies": {
-    "@types/bitwise": "^2.0.0",
-    "@types/dotenv": "^8.2.0",
-    "@types/fs-extra": "^9.0.11",
-    "@types/glob": "^7.1.3",
-    "@types/inquirer": "^7.3.1",
-    "@types/node": "^14.14.45",
-    "@types/pngjs": "^6.0.0",
-    "@types/puppeteer": "^5.4.3",
-    "@types/rimraf": "^3.0.0",
-    "@types/xml-js": "^1.0.0",
-    "ts-node": "^9.1.1",
-    "ts-node-dev": "^1.1.6",
-    "typescript": "^4.2.4"
+    "@types/glob": "*",
+    "@types/node": "*",
+    "ts-node": "*",
+    "ts-node-dev": "*",
+    "typescript": "*"
   },
   "dependencies": {
-    "@mapeditor/tiled-api": "^1.6.0",
-    "bitwise": "^2.1.0",
-    "buffer": "^6.0.3",
-    "canvas": "^2.7.0",
-    "dotenv": "^8.6.0",
-    "fs-extra": "^9.1.0",
-    "glob": "^7.1.7",
-    "idb": "^6.0.0",
-    "inquirer": "^8.0.0",
-    "pngjs": "^6.0.0",
-    "puppeteer": "^8.0.0",
-    "rimraf": "^3.0.2",
-    "ts-loader": "^9.1.2",
-    "webpack": "^5.37.0",
-    "webpack-cli": "^4.7.0"
+    "@mapeditor/tiled-api": "*",
+    "bitwise": "*",
+    "buffer": "*",
+    "ts-loader": "*",
+    "webpack": "*",
+    "webpack-cli": "*"
   }
 }
