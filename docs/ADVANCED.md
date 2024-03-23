@@ -1,3 +1,5 @@
+***This entire guid is deprecated and useless now.***
+
 # rwklevelfiles
 
 In this project I have reverse-engineered the structure of the level files for
