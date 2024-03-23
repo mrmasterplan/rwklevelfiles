@@ -2,8 +2,7 @@
 
 Welcome to the fan-made editor for Robot-wants-kitty levels!
 
-- Non technical users should start with the [Manual Installation](docs/INSTALLATION.md)
-- Technical users can read the [full instructions](docs/ADVANCED.md)
+- Read the [Installation Guide](docs/INSTALLATION.md)
 - Once you have the setup, [read how to make levels](docs/MAKING_LEVELS.md)
 
 # Quick Start
@@ -13,7 +12,7 @@ The quickest way to get started is to get the
 folder `rwk` from the 
 [release area](https://github.com/mrmasterplan/rwklevelfiles/releases)
 into the extensions folder of Tiled (Edit ➔ Preferences ➔ Plugins ➔ Open...).
-You can now use Tiled to edit `.kitty` files that you backed up into your iCloud.
+You can now use Tiled to edit `.kitty` files.
 
 Was that too fast? No problem, go read the full [Getting-Started Guide](docs/INSTALLATION.md).
 
