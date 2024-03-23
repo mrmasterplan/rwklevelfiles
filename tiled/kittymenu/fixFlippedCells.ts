@@ -1,4 +1,4 @@
-import {getMapLimits} from "../dotkitty";
+import {getMapLimits} from "../tiledkitty";
 import {parsed_base_tileset, parsed_tileset} from "../kittypaint";
 import {config} from "../config";
 

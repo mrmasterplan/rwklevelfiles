@@ -24,7 +24,7 @@ export function register(){
     }
     {
         const action = tiled.registerAction("FixKittyMap", function (action) {
-            if (!tiled.activeAsset.isTileMap) throw new Error("Action is only applicable to maps.")
+            if (!tiled.activeAsset?.isTileMap) throw new Error("Action is only applicable to maps.")
             fixFlippedCells(tiled.activeAsset as TileMap)
         })
         action.text = "Fix Kitty Map"

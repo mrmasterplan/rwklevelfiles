@@ -1,5 +1,5 @@
 *.png
 node_modules
 build
-rwk
 .idea
+.DS_Store
