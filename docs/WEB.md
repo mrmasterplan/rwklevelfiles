@@ -45,7 +45,7 @@ web. How do you get the level into the web?
 Say you want to pull another developer's level from the maker mall, to cheat, change 
 or improve it. This is how to get it.
 
-1. In the browser, go to https://robotwantskitty.com/web/
+1. In the browser, go to https://robotwantskitty.com/web/ and start playing the level you want to extract.
 2. Open the "developer tools" and go to the javascript console.
 3. paste this scipt in the console:
 ```javascript
@@ -84,3 +84,6 @@ function uint8ArrayToBase64(uint8Array) {
 5. In an editor, create a text-file, paste the data, and save it as `MY FILE.kitty.b64` or similar.
 6. Use tiled to open the file.
 7. Start by saving as `.kitty`, then start editing.
+
+Advanced details:
+- notice the key "downloaded.kitty" in the script above. If you replace that with key that you find in a .kitty.js export file (see above), you can also extract levels from your "My Levels" area.
