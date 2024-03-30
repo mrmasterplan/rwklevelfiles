@@ -1,9 +1,7 @@
 # iCloud instructions
 
-Access to the `.kitty` level files for non-technical
-users is only through and iOS device (iPhone or iPad).
-The only other method is much more technical and is described
-in the [advanced documentation](ADVANCED.md).
+Access to the `.kitty` level files for is very easy to achieve with an iOS device (iPhone or iPad).
+Another method is described in the [Web Guide](WEB.md).
 
 You will need:
  - iOS device with RWK installed.
